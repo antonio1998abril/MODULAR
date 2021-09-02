@@ -1,0 +1,11 @@
+element.style {
+    width: 57%;
+}
+.bg-green, .bg-green>a {
+    color: #fff!important;
+}
+.bg-green {
+    background-color: #28a745!important;
+}
+
+

@@ -14,7 +14,6 @@ function CreatePaciente() {
         sexo:'',
         edad:'', 
         diabetesTipo:'',
-        presion:'',
         IncioEnfermedad:''
     }
 
@@ -30,15 +29,10 @@ function CreatePaciente() {
 
      /* SET DATA */
     const handleClose=()=>{
- 
         setShow(false);
         setPaciente(initialState)
-    
-      
         setidPaciente('')
     }
-
-
     const handleChangeInput=e=>{
         const {name,value}=e.target
         setPaciente({...paciente,[name]:value})
@@ -65,14 +59,10 @@ function CreatePaciente() {
                     headers:{Authorization:token}
                 })
                 swal({icon:"success",text:`Nuevo Paciente Agregado ${paciente.name}`,timer:"2000",buttons: false});
-        
-      
             setShow(false);
             setPaciente(initialState)
             setidPaciente('')
             setCallback(!callback)
-
-
         }catch(err){
             console.log(err.response)
             swal({
@@ -81,10 +71,8 @@ function CreatePaciente() {
                 icon:"error",
                 button:"OK"
             })
-
         }
     }
-
     return (
         <>
             <div  onClick={handleShow} className="frame">
@@ -136,14 +124,14 @@ function CreatePaciente() {
 
                 <Form.Group >
                     <Form.Label>Peso</Form.Label>
-                    <Form.Control  name="peso"   placeholder="peso" 
+                    <Form.Control  name="peso"  type="number" min="10" max="300" placeholder="peso" 
                          value={paciente.peso} onChange={handleChangeInput}
                     />
                 </Form.Group>
 
                 <Form.Group >
                     <Form.Label>Telefono Celular</Form.Label>
-                    <Form.Control name="tel"   placeholder="Tel" 
+                    <Form.Control name="tel" type="tel" placeholder="Telefono Celular" 
                      value={paciente.tel} onChange={handleChangeInput}
                     />
                 </Form.Group>
@@ -155,34 +143,31 @@ function CreatePaciente() {
                      value={paciente.email} onChange={handleChangeInput}
                     />
                 </Form.Group>
-                
-                <Form.Group >
-                    <Form.Label>Sexo</Form.Label>
-                    <Form.Control name="sexo"  placeholder="Sexo" 
-                     value={paciente.sexo} onChange={handleChangeInput}
-                    />
-                </Form.Group>
-                
-                <Form.Group >
+
+                <Form.Group>
                     <Form.Label>Edad</Form.Label>
-                    <Form.Control name="edad"  placeholder="Edad" 
+                    <Form.Control name="edad"  type="number" placeholder="Ingresa la edad del paciente" 
                      value={paciente.edad} onChange={handleChangeInput}
                     />
                 </Form.Group>
+
+
+                <Form.Group >
+                    <Form.Label>Sexo Biologico </Form.Label>
+                    <select  className="form-select form-select-lg mb-3"  name="sexo" value={paciente.sexo} onChange={handleChangeInput}>
+                    <option value="">Click</option>
+                            <option value="mujer" >Mujer</option>
+                            <option value="hombre" >Hombre</option>
+                    </select>
+                </Form.Group>  
                 
                 <Form.Group >
                     <Form.Label>Tipo de diabetes</Form.Label>
-                    <Form.Control name="diabetesTipo"   placeholder="Tipo de diabetes" 
+                    <Form.Control name="diabetesTipo"   placeholder="Escribe el topo de diabetes" 
                      value={paciente.diabetesTipo} onChange={handleChangeInput}
                     />
                 </Form.Group>
 
-                <Form.Group >
-                    <Form.Label>Presion</Form.Label>
-                    <Form.Control name="presion"  placeholder="Presion arterial" 
-                     value={paciente.presion} onChange={handleChangeInput}
-                    />
-                </Form.Group>
 
                 <Form.Group >
                     <Form.Label>Inicio Enfermedad</Form.Label>
@@ -190,28 +175,6 @@ function CreatePaciente() {
                      value={paciente.IncioEnfermedad} onChange={handleChangeInput}
                     />
                 </Form.Group>
-
-
-
-{/*                 <Form.Row>
-                    <Form.Group as={Col} controlId="formGridCategory">
-                    <Form.Label>Category</Form.Label>
-                    <Form.Control name="category" as="select" value={product.category} onChange={handleChangeInput} >
-                        <option value="">Choose...</option>
-                        {
-                            categories.map(category =>(
-                                <option value={category.categoryName} key={category._id}>
-                                    {category.categoryName}
-                                </option>
-                            ))
-                        }
-                    </Form.Control>
-                    </Form.Group>
-                </Form.Row> */}
-
-  
-
-
             <Button variant="primary" type="submit" >
             {onEdit ? "Actualizar" : "Hecho"}
             </Button>

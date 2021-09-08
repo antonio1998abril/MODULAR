@@ -8,6 +8,10 @@ const UserExpediente = new Schema({
         required: false,
         default:''
     },
+    presion:{
+        type:String,
+        required: true
+    },
     Medicamentos:{
         type:String,
         required: false,
@@ -93,7 +97,9 @@ const UserExpediente = new Schema({
         type:Schema.Types.ObjectId,
         ref:'paciente'
     }
-})
+},{
+    timestamps: true
+  })
 
 module.exports = UserExpediente
 

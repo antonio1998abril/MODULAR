@@ -43,7 +43,9 @@ const RegimenExpediente = new Schema({
         type:Schema.Types.ObjectId,
         ref:'paciente'
     }
-})
+},{
+    timestamps: true
+  })
 
 module.exports = RegimenExpediente
 

@@ -3,10 +3,10 @@ import { GlobalState } from '../../components/GlobalState';
 import Router/* ,{ useRouter } */ from 'next/router';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faFileMedical,faEye,faTrash} from '@fortawesome/free-solid-svg-icons'
+import {faFileMedical} from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import profilePic from '../../public/testuser.png'
-
+import ExpedienteItem from '../../components/Item/Expediente';
 
 
 
@@ -19,7 +19,8 @@ const Expediente =({data,result}) =>{
   const [actualPaciente]= useState(data[0])
   const [actualExpediente]= useState(data[0].Expediente)
   const [actualRegimen] = useState(data[0].Regimen)
-  
+  const [allExpedientes] = useState([data[0].allExpedientes])
+ 
   const ExpedienteState = { 
     InicioEnfermedadMentales:actualExpediente.InicioEnfermedadMentales,
     Medicamentos:actualExpediente.Medicamentos, 
@@ -36,7 +37,8 @@ const Expediente =({data,result}) =>{
     dialisis:actualExpediente.dialisis,
     OtrasEnfermedades:actualExpediente.OtrasEnfermedades,
     FactorRiesgo:actualExpediente.FactorRiesgo,
-    EstadoMental:actualExpediente.EstadoMental
+    EstadoMental:actualExpediente.EstadoMental,
+    presion:actualExpediente.presion
   }
   
   const RegimenState = {
@@ -133,7 +135,10 @@ const handleSubmitRegimen=async e=>{
   
 }
 /* SAVE INFORMATION */
-if (!loaded) { return <div></div> } 
+if (!loaded) { return <div></div> }
+
+console.log(allExpedientes)
+
    return (
     <div>
       <div className="expediente">
@@ -154,7 +159,7 @@ if (!loaded) { return <div></div> }
         <div><span><b>Sexo: </b></span> {actualPaciente.sexo}</div>
         <div><span><b>Edad: </b></span> {actualPaciente.edad}</div>
         <div><span><b>Diabetes Tipo: </b></span> {actualPaciente.diabetesTipo}</div>
-        <div><span><b>Presion: </b></span> {actualPaciente.presion}</div>
+        <div><span><b>Inicio Enfermedad: </b></span> {actualPaciente.IncioEnfermedad}</div> 
         </div>
 
         <div className="data-expe ">
@@ -231,10 +236,19 @@ if (!loaded) { return <div></div> }
                     </div>
                 </div>
 
+                <div className="form-group ">
+                    <label className="col-sm-12 col-form-label">Presion</label>
+                    <div className="col-sm-12">
+                      <input type="text"  name="presion"
+                      value={expediente.presion} 
+                      onChange={handleChangeExpediente} className="form-control"  placeholder="Presion"/>
+                    </div>
+                </div>
+
                 </div>
             
                 <div className="card-footer">
-                  <button type="submit" className="btn btn-warning">Actualizar</button>
+                  <button type="submit" className="btn btn-warning text-white font-weight-bold">Actualizar</button>
                 </div>
             
               </form>
@@ -309,7 +323,7 @@ if (!loaded) { return <div></div> }
                 </div>
             
                 <div className="card-footer">
-                  <button type="submit"  className="btn btn-warning">Actualizar</button>
+                  <button type="submit"  className="btn btn-warning text-white font-weight-bold">Actualizar</button>
                 </div>
             
               </form>
@@ -327,7 +341,7 @@ if (!loaded) { return <div></div> }
                 <div className="card-body">
 
                 <div className="form-group row">
-                    <label  className="col-sm-3 col-form-label">Inicio Complicaciones</label>
+                    <label  className="col-sm-3 col-form-label">Cuando iniciaron las Complicaciones</label>
                     <div className="col-sm-9">
                       <textarea type="text"  name="InicioEnfermedadMentales"
                       onChange={handleChangeExpediente} value={expediente.InicioEnfermedadMentales} 
@@ -356,7 +370,7 @@ if (!loaded) { return <div></div> }
 
                 </div>           
                 <div className="card-footer">
-                  <button type="submit" className="btn btn-warning">Actualizar</button>
+                  <button type="submit" className="btn btn-warning text-white font-weight-bold">Actualizar</button>
                 </div>
             
               </form>
@@ -452,7 +466,7 @@ if (!loaded) { return <div></div> }
                 </div>
             
                 <div className="card-footer">
-                  <button type="submit" className="btn btn-info">Actualizar</button>
+                  <button type="submit" className="btn btn-warning text-white font-weight-bold">Actualizar</button>
                 </div>
             
               </form>
@@ -465,7 +479,7 @@ if (!loaded) { return <div></div> }
         </div>
     
         <div className="historial">
-         <div className="paciente btn-success ">
+         <div className="paciente btn-warning ">
               <button type="submit"  onClick={setHistorial}>
                 <h3 className="card-title-nuevoExpediente">Crear un nuevo Expediente</h3>
                 <FontAwesomeIcon icon={faFileMedical}   className="iconCardButton "  />
@@ -480,65 +494,14 @@ if (!loaded) { return <div></div> }
               </div>
           </div> 
         </div>
-
-
-        <div className="result-expe">
         
-        <div><span>Fecha:</span> <span>item-value</span></div>
-        <div>
-          <span>Eliminar </span> 
-        
-            <button className="btn btn-danger">
-              <span>
-                <FontAwesomeIcon icon={faTrash}    />
-              </span>
-            </button>
-        </div>
-
-        <div>
-          <span>Ver </span> 
-                    
-            <button  className="btn btn-primary">
-            <span>    
-                <FontAwesomeIcon icon={faEye}     />
-                </span>
-            </button>
-          
-        </div>
-
-        </div> 
-
-
-        <div className="result-expe">
-        
-        <div><span>Fecha:</span> <span>item-value</span></div>
-        <div>
-          <span>Eliminar </span> 
-        
-            <button className="btn btn-danger">
-              <span>
-                <FontAwesomeIcon icon={faTrash}    />
-              </span>
-            </button>
-        </div>
-
-        <div>
-          <span>Ver </span> 
-                    
-            <button  className="btn btn-primary">
-            <span>    
-                <FontAwesomeIcon icon={faEye}     />
-                </span>
-            </button>
-          
-        </div>
-
-        </div> 
-        
-
+        {
+         data[0].allExpedientes.map( item => {
+            return <ExpedienteItem key={item._id} data={item} />
+          })
+        }
+   
       </div>
-
-
     </div>
     )
 }

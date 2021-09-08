@@ -36,10 +36,6 @@ const PacienteSchema = new Schema({
         type:String,
         required: true
     },
-    presion:{
-        type:String,
-        required: true
-    },
     IncioEnfermedad: {
         type:String,
         required: true
@@ -47,10 +43,6 @@ const PacienteSchema = new Schema({
     Citas:[{
         type:Schema.Types.ObjectId,
         ref:'citas'
-      }],
-    allRegimen:[{
-        type:Schema.Types.ObjectId,
-        ref:'regimen'
       }],
     Activities:[{
         type:Schema.Types.ObjectId,
@@ -72,7 +64,9 @@ const PacienteSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'user'
     }
-})
+},{
+    timestamps: true
+  })
 
 module.exports = PacienteSchema
 

@@ -10,25 +10,24 @@ const controller = {
            }).catch(next)
     },
     NewPaciente: async (req,res,next)=>{
-        const {name,lastname,tel,email,peso,sexo,edad, diabetesTipo,presion,IncioEnfermedad} = req.body
+        const {name,lastname,tel,email,peso,sexo,edad, diabetesTipo,IncioEnfermedad} = req.body
         const existeEmail = await Paciente.findOne({email})
         const existeTel= await Paciente.findOne({tel})
         
         if (existeEmail || existeTel) return res.status(302).json({msg:"Este Usuario ya esta Registrado, con Email o Telefono iguales, Buscalo en la seccion."})
         
-        if (!name || !lastname  || !tel  || !email || !peso || !sexo || !edad || !diabetesTipo  || !presion  || !IncioEnfermedad) return res.status(302).json({msg:"Completa todos los campos."})
+        if (!name || !lastname  || !tel  || !email || !peso || !sexo || !edad || !diabetesTipo  || !IncioEnfermedad) return res.status(302).json({msg:"Completa todos los campos."})
 
         const newPaciente = new Paciente({
-            name, lastname, tel, peso, sexo, edad, diabetesTipo, presion,email, IncioEnfermedad ,Encargado_id:req.user.id,Expediente:{
+            name, lastname, tel, peso, sexo, edad, diabetesTipo, email, IncioEnfermedad ,Encargado_id:req.user.id,Expediente:{
                 InicioEnfermedadMentales:'', Medicamentos:'', Alergias:'', Antecedentes:'',EstatusDental:'',GlucosaSangre:'',
             HemoglobinaGlucosilada:'', Microalbuminuria:'',  NivelCoresterol:'',
-            NivelTrigliseridos:'', Electrocadriograma:'',Cuerpodaño:'',dialisis:'',OtrasEnfermedades:'',
+            NivelTrigliseridos:'', Electrocadriograma:'',Cuerpodaño:'',dialisis:'',OtrasEnfermedades:'',presion:'',
             FactorRiesgo:'',EstadoMental:''
             }, Regimen:{Lunes:'', Martes:'', Miercoles:'',Jueves:'',Viernes:'',Sabado:'',Domingo:'',Ejercicio:'',Comida:''}
         })
 
         await newPaciente.save().then(()=>{
-            console.log(newPaciente)
             res.json({msg:"Nuevo paciente"})
         }).catch(next) 
     
@@ -69,6 +68,7 @@ const controller = {
             OtrasEnfermedades:req.body.OtrasEnfermedades,
             FactorRiesgo: req.body.FactorRiesgo,
             EstadoMental: req.body.EstadoMental, 
+            presion:req.body.presion,
             StatusViejoExpediente:true,
 
             //INFORMACION DEL REGIMEN ALIMENTICIO
@@ -90,8 +90,7 @@ const controller = {
                 InicioEnfermedadMentales:'', Medicamentos:'', Alergias:'', Antecedentes:'',EstatusDental:'',GlucosaSangre:'',
                 HemoglobinaGlucosilada:'', Microalbuminuria:'',  NivelCoresterol:'',
                 NivelTrigliseridos:'', Electrocadriograma:'',Cuerpodaño:'',dialisis:'',OtrasEnfermedades:'',
-                FactorRiesgo:'',EstadoMental:''
-                    }, 
+                FactorRiesgo:'',EstadoMental:'',presion:''}, 
                 Regimen:    {
                     Lunes:'', Martes:'', Miercoles:'',Jueves:'',Viernes:'',Sabado:'',Domingo:'',Ejercicio:'',Comida:''
                 }
@@ -125,13 +124,13 @@ const controller = {
         const { InicioEnfermedadMentales, Medicamentos, Alergias, Antecedentes,EstatusDental,GlucosaSangre,
             HemoglobinaGlucosilada, Microalbuminuria,  NivelCoresterol,
             NivelTrigliseridos, Electrocadriograma,Cuerpodaño,dialisis,OtrasEnfermedades,
-            FactorRiesgo,EstadoMental} = req.body;
+            FactorRiesgo,EstadoMental,presion} = req.body;
 
             const newExpediente  = new Expediente ({
                 Medicamentos, Alergias,Antecedentes,InicioEnfermedadMentales,
                 GlucosaSangre,EstatusDental,HemoglobinaGlucosilada, Microalbuminuria,  NivelCoresterol,
                 NivelTrigliseridos, Electrocadriograma,Cuerpodaño,dialisis,OtrasEnfermedades,
-                FactorRiesgo,EstadoMental,paciente_id:req.params.id
+                FactorRiesgo,EstadoMental,presion,paciente_id:req.params.id
             });
             await Paciente.findByIdAndUpdate({_id:req.params.id},{
                 Expediente:newExpediente

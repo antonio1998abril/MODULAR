@@ -49,7 +49,55 @@ const controller = {
             res.json(result)
            }).catch(next) 
     },
-    setHistorialExpediente : async(req, res , next) => {
+    NewHistorial : async(req,res,next) => {
+        console.log(req.body)
+        const dataExpediente = await Paciente.findById({_id:req.params.id})
+        const newExpediente = new Expediente ({
+            InicioEnfermedadMentales:req.body.InicioEnfermedadMentales,
+            Medicamentos:req.body.Medicamentos,
+            Alergias :req.body.Alergias,
+            Antecedentes: req.body.Antecedentes ,
+            EstatusDental:req.body.EstatusDental ,
+            GlucosaSangre: req.body.GlucosaSangre ,
+            HemoglobinaGlucosilada: req.body.HemoglobinaGlucosilada,
+            Microalbuminuria: req.body.Microalbuminuria,
+            NivelCoresterol: req.body.NivelCoresterol,
+            NivelTrigliseridos: req.body.NivelTrigliseridos,
+            Electrocadriograma: req.body.Electrocadriograma,
+            Cuerpodaño:req.body.Cuerpodaño,
+            dialisis: req.body.dialisis,
+            OtrasEnfermedades:req.body.OtrasEnfermedades,
+            FactorRiesgo: req.body.FactorRiesgo,
+            EstadoMental: req.body.EstadoMental, 
+            StatusViejoExpediente:true,
+
+            //INFORMACION DEL REGIMEN ALIMENTICIO
+            Lunes: req.body. Lunes,
+            Martes: req.body.Martes,
+            Miercoles: req.body.Miercoles,
+            Jueves: req.body.Jueve,
+            Viernes: req.body.Viernes,
+            Sabado: req.body.Sabado,
+            Domingo: req.body.Domingo,
+            Ejercicio: req.body.Ejercicio,
+            Comida: req.body.Comida
+       }) 
+       dataExpediente.allExpedientes.push(newExpediente)
+       dataExpediente.save().then(async()=>{
+            newExpediente.save(); 
+            await Paciente.findByIdAndUpdate({_id:req.params.id},{
+                Expediente: {
+                InicioEnfermedadMentales:'', Medicamentos:'', Alergias:'', Antecedentes:'',EstatusDental:'',GlucosaSangre:'',
+                HemoglobinaGlucosilada:'', Microalbuminuria:'',  NivelCoresterol:'',
+                NivelTrigliseridos:'', Electrocadriograma:'',Cuerpodaño:'',dialisis:'',OtrasEnfermedades:'',
+                FactorRiesgo:'',EstadoMental:''
+                    }, 
+                Regimen:    {
+                    Lunes:'', Martes:'', Miercoles:'',Jueves:'',Viernes:'',Sabado:'',Domingo:'',Ejercicio:'',Comida:''
+                }
+            })
+            return res.json("Expediente se Guardo correctamente en en Historial")
+       })
 
     },
 
@@ -91,14 +139,14 @@ const controller = {
             return res.json({msg:"Expediente Creado Exitosamente"})
     },
      updateExpediente: async (req,res, next) => {
-        await Expediente.findByIdAndUpdate({paciente_id:req.params.id},{EstadoSalud, NivelAzucar, IncioEnfermedad,GlucosaSangre,
+  /*       await Expediente.findByIdAndUpdate({paciente_id:req.params.id},{EstadoSalud, NivelAzucar, IncioEnfermedad,GlucosaSangre,
             HemoglobinaGlucosilada, Microalbuminuria, NivelCoresterol,
             NivelTrigliseridos, Electrocadriograma,Cuerpodaño,dialisis,OtrasEnfermedades,
             FactorRiesgo,EstadoMental}).then(()=>{
             res.json({msg:"Expediente Actualizado"})
-        }).catch(next) 
-        } 
-    
+        }).catch(next)  */
+    } 
+
     
     
     

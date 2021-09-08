@@ -45,6 +45,10 @@ module.exports = {
         source: '/api/upExpediente/:id',
         destination: 'http://localhost:5000/api/upExpediente/:id'
       },
+      {
+        source:'/api/NewHistorial/:id',
+        destination:'http://localhost:5000/api/NewHistorial/:id'
+      },
 
     ]
   }

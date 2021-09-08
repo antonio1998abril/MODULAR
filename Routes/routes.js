@@ -20,7 +20,7 @@ const routes = {
     .post('/createRegimen/:id',auth,PacienteController.createRegimen)
     .get('/getExpediente/:id',PacienteController.getExpediente)
     .put('/upExpediente/:id',auth,PacienteController.updateExpediente)
-
+    .post('/NewHistorial/:id',auth,PacienteController.NewHistorial)
 
 
 }

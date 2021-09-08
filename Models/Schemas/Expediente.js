@@ -13,19 +13,16 @@ const UserExpediente = new Schema({
         required: false,
         default:''
     },
-
     Alergias:{
         type:String,
         required: false,
         default:''
     },
-
     Antecedentes:{
         type:String,
         required: false,
         default:''
     },
-
     EstatusDental:{
         type:String,
         required: false,

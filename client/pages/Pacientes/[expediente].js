@@ -68,6 +68,24 @@ const Expediente =({data,result}) =>{
 const [expediente, setExpediente] = useState(ExpedienteState)
 const [regimen, setRegimen] = useState(RegimenState)
 
+
+const setHistorial = async e => {
+  e.preventDefault()
+  try {
+    await axios.post(`/api/NewHistorial/${actualPaciente._id}`,{...expediente,...regimen},{
+      headers:{Authorization: token}
+    })
+    swal({icon:"success",title:"Bien",text:"Expediente Actualizado",timer:"2000"});
+  } catch(err) {
+    swal ({
+      title:"ERROR",
+      text:err.response.data.msg,
+      icon:"error",
+      button:"OK"
+    })
+  }
+}
+
 const handleChangeExpediente = e =>{
   e.preventDefault()
   const {name,value}=e.target
@@ -448,7 +466,7 @@ if (!loaded) { return <div></div> }
     
         <div className="historial">
          <div className="paciente btn-success ">
-              <button >
+              <button type="submit"  onClick={setHistorial}>
                 <h3 className="card-title-nuevoExpediente">Crear un nuevo Expediente</h3>
                 <FontAwesomeIcon icon={faFileMedical}   className="iconCardButton "  />
               </button>

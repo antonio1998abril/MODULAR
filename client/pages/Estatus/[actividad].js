@@ -3,7 +3,7 @@ import React from 'react'
 function Actividad() {
     return (
         <div>
-                   <div className="container-fluid">
+        <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <div className="paciente ">

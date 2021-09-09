@@ -19,9 +19,8 @@ const routes = {
     .post('/createExpediente/:id',auth,PacienteController.CreateExpediente)
     .post('/createRegimen/:id',auth,PacienteController.createRegimen)
     .get('/getExpediente/:id',PacienteController.getExpediente)
-    .put('/upExpediente/:id',auth,PacienteController.updateExpediente)
     .post('/NewHistorial/:id',auth,PacienteController.NewHistorial)
-
+    .delete('/DeleteHistorial/:id',PacienteController.DeleteExpediente)
 
 }
 

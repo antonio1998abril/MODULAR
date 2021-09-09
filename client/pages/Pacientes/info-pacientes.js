@@ -24,11 +24,10 @@ function Info() {
        /*      let hello = async () => { return "Hello" }; */
        const deletePaciente=axios.delete(`/api/deletePaciente/${id}`)
        await deletePaciente
-
-       swal({icon:"success",text:"Paciente Eliminado",timer:"2000", buttons: false}).then(function(){
-           setCallback(!callback)
-       },1000)
-          }
+          swal({icon:"success",text:"Paciente Eliminado",timer:"2000", buttons: false}).then(function(){
+              setCallback(!callback)
+          },1000)
+        }
       })
     }catch(err){
         swal({

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEye,faTrash} from '@fortawesome/free-solid-svg-icons'
-import {Modal} from 'react-bootstrap' 
+import {Form, Modal} from 'react-bootstrap' 
 
-function Expediente({data}) {
+function Expediente({data,Deletehistorial}) {
     let ShowDate = new Date(data.createdAt);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -15,7 +15,7 @@ function Expediente({data}) {
             <div>
             <span>Eliminar </span> 
             
-                <button className="btn btn-danger">
+                <button  onClick={()=>Deletehistorial(data._id)} className="btn btn-danger">
                 <span>
                     <FontAwesomeIcon icon={faTrash}    />
                 </span>
@@ -31,6 +31,7 @@ function Expediente({data}) {
                     </span>
                 </button>
             </div>
+      
 
             {/* MODAL */}
 
@@ -38,8 +39,8 @@ function Expediente({data}) {
         <Modal.Header closeButton>
           <Modal.Title>Informacion</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-            
+            <Modal.Body>
+            <Form.Label>{data.Alergias}</Form.Label>
             </Modal.Body>
         <Modal.Footer>
           <button variant="secondary" onClick={handleClose}>

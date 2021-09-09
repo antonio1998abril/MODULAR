@@ -281,7 +281,7 @@ height: 1px;
   font-size: 1.2rem;
   color: #fff;
   font-weight: 600;
-  font-family: 'ubuntu'
+  font-family: 'ubuntu';
 } 
 .historial{
   grid-column: 1/4;

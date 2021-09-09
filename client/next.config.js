@@ -48,7 +48,10 @@ module.exports = {
       {
         source:'/api/NewHistorial/:id',
         destination:'http://localhost:5000/api/NewHistorial/:id'
-      },
+      },{
+        source:'/api/DeleteHistorial/:id',
+        destination:'http://localhost:5000/api/DeleteHistorial/:id'
+      }
 
     ]
   }

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-import Router from 'next/router';
-
 function Paciente(token) {
     const [pacientes, setPacientes] = useState([])
     const [callback,setCallback]=useState(false)

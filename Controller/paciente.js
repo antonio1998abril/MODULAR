@@ -1,7 +1,6 @@
 const Paciente = require ("../Models/PacienteSchema")
 const User = require ("../Models/UserSchema")
 const Expediente = require ("../Models/ExpedienteSchema")
-const Regimen = require ("../Models/RegimenSchema")
 
 const controller = {
     GetPaciente: async (req ,res ,next) => {
@@ -49,8 +48,8 @@ const controller = {
            }).catch(next) 
     },
     NewHistorial : async(req,res,next) => {
-        console.log(req.body)
         const dataExpediente = await Paciente.findById({_id:req.params.id})
+
         const newExpediente = new Expediente ({
             InicioEnfermedadMentales:req.body.InicioEnfermedadMentales,
             Medicamentos:req.body.Medicamentos,
@@ -72,7 +71,7 @@ const controller = {
             StatusViejoExpediente:true,
 
             //INFORMACION DEL REGIMEN ALIMENTICIO
-            Lunes: req.body. Lunes,
+            Lunes: req.body.Lunes,
             Martes: req.body.Martes,
             Miercoles: req.body.Miercoles,
             Jueves: req.body.Jueve,
@@ -103,9 +102,9 @@ const controller = {
     /* CREATE REGIMEN */
     createRegimen: async(req, res, next) => {
         const {Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo,Ejercicio,Comida} = req.body;
-            const newRegimen  = new Regimen ({
+            const newRegimen  = {
                 Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo,Ejercicio,Comida,paciente_id:req.params.id
-            });
+            };
             await Paciente.findByIdAndUpdate({_id:req.params.id},{
                 Regimen:newRegimen
             }).catch(next)
@@ -137,13 +136,10 @@ const controller = {
             }).catch(next)
             return res.json({msg:"Expediente Creado Exitosamente"})
     },
-     updateExpediente: async (req,res, next) => {
-  /*       await Expediente.findByIdAndUpdate({paciente_id:req.params.id},{EstadoSalud, NivelAzucar, IncioEnfermedad,GlucosaSangre,
-            HemoglobinaGlucosilada, Microalbuminuria, NivelCoresterol,
-            NivelTrigliseridos, Electrocadriograma,Cuerpodaño,dialisis,OtrasEnfermedades,
-            FactorRiesgo,EstadoMental}).then(()=>{
-            res.json({msg:"Expediente Actualizado"})
-        }).catch(next)  */
+     DeleteExpediente: async (req,res, next) => {
+        await Expediente.findByIdAndRemove({_id:req.params.id}).then(()=>{
+            res.json({msg:"Expediente Elminado"})
+        }).catch(next)  
     } 
 
     

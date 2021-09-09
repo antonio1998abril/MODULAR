@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalState } from '../../components/GlobalState';
-import Router/* ,{ useRouter } */ from 'next/router';
+import Router,{ useRouter } from 'next/router';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faFileMedical} from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import profilePic from '../../public/testuser.png'
 import ExpedienteItem from '../../components/Item/Expediente';
+import Link from 'next/link';
+import swal from 'sweetalert';
 
 
-
-const Expediente =({data,result}) =>{
+const Expediente =({data}) =>{
   const state = useContext(GlobalState);
   const [loaded,setLoaded] = useState(false)
   const [islogged]= state.User.isLogged
@@ -20,7 +21,9 @@ const Expediente =({data,result}) =>{
   const [actualExpediente]= useState(data[0].Expediente)
   const [actualRegimen] = useState(data[0].Regimen)
   const [allExpedientes] = useState([data[0].allExpedientes])
- 
+  const [callback,setCallback] = state.Paciente.callback
+
+
   const ExpedienteState = { 
     InicioEnfermedadMentales:actualExpediente.InicioEnfermedadMentales,
     Medicamentos:actualExpediente.Medicamentos, 
@@ -70,14 +73,21 @@ const Expediente =({data,result}) =>{
 const [expediente, setExpediente] = useState(ExpedienteState)
 const [regimen, setRegimen] = useState(RegimenState)
 
-
+/* HSITORIAL */
 const setHistorial = async e => {
   e.preventDefault()
   try {
-    await axios.post(`/api/NewHistorial/${actualPaciente._id}`,{...expediente,...regimen},{
-      headers:{Authorization: token}
-    })
-    swal({icon:"success",title:"Bien",text:"Expediente Actualizado",timer:"2000"});
+    if((Object.values({...expediente}).every(data => data === ''))  && (Object.values({...regimen}).every(data => data === '')) ) {
+      swal({icon:"warning",title:"Esta todo vacio, guarda algun dato que sea de importancia cuando menos",text:"Es importante guardar aunque sea un dato",timer:"9000"})
+    } else {
+      await axios.post(`/api/NewHistorial/${actualPaciente._id}`,{...expediente,...regimen},{
+        headers:{Authorization: token}
+      })
+      swal({icon:"success",title:"Agregado Al Historial",text:"Historial Actualizado",timer:"2000"}).then(function(){
+        Router.push(`/Pacientes/${actualPaciente._id}`)
+      });
+    }
+
   } catch(err) {
     swal ({
       title:"ERROR",
@@ -87,6 +97,33 @@ const setHistorial = async e => {
     })
   }
 }
+const DeleteHistorial = async (id)=> {
+  try {
+    swal({
+      title:"Seguro?",
+      text: "Quieres Eliminar este Expediente para siempre?",
+      icon:"warning",
+      buttons:["No","Yes"]
+  }).then(async (res)=>{
+      if(res){
+        const deleteItem = axios.delete(`/api/DeleteHistorial/${id}`)
+        await deleteItem
+        swal({icon:"success",text:"Expediente Eliminado",timer:"2000", buttons: false}).then(function(){
+          Router.push(`/Pacientes/${actualPaciente._id}`)
+        },1000)
+      }
+  })
+
+  }catch(err){
+    swal ({
+      title:"ERROR",
+      text:err.response.data.msg,
+      icon:"error",
+      button:"OK"
+    })
+  }
+}
+/* HISTORIAL */
 
 const handleChangeExpediente = e =>{
   e.preventDefault()
@@ -105,7 +142,9 @@ const handleSubmitExpediente=async e=>{
        await axios.post(`/api/createExpediente/${actualPaciente._id}`,{...expediente},{
         headers:{Authorization: token}
        })
-       swal({icon:"success",title:"Bien",text:"Datos Actualizados!!",timer:"2000"});
+       swal({icon:"success",title:"Expediente Actualizado",text:"Se agrego al expediente!!",timer:"2000"}).then(function(){
+        setCallback(!callback)
+      });
   }catch(err){
    swal({
        title:"ERROR",
@@ -123,7 +162,9 @@ const handleSubmitRegimen=async e=>{
         await axios.post(`/api/createRegimen/${actualPaciente._id}`,{...regimen},{
           headers:{Authorization: token}
          })
-       swal({icon:"success",text:"Bien!!",timer:"2000"}) ;
+       swal({icon:"success",text:"Regimen Agregadoo!!",timer:"2000"}).then(function(){
+        setCallback(!callback)
+      });
   }catch(err){
    swal({
        title:"ERROR",
@@ -136,9 +177,6 @@ const handleSubmitRegimen=async e=>{
 }
 /* SAVE INFORMATION */
 if (!loaded) { return <div></div> }
-
-console.log(allExpedientes)
-
    return (
     <div>
       <div className="expediente">
@@ -472,21 +510,16 @@ console.log(allExpedientes)
               </form>
             </div> 
             </div>
-
-
-
             </div>
         </div>
-    
-        <div className="historial">
+        <div className="historial" >
          <div className="paciente btn-warning ">
-              <button type="submit"  onClick={setHistorial}>
+              <button   type="submit"  onClick={setHistorial}>
                 <h3 className="card-title-nuevoExpediente">Crear un nuevo Expediente</h3>
                 <FontAwesomeIcon icon={faFileMedical}   className="iconCardButton "  />
               </button>
           </div> 
         </div>
-
         <div className="historial">
          <div className="paciente card-info ">
               <div className="card-header ">
@@ -497,7 +530,7 @@ console.log(allExpedientes)
         
         {
          data[0].allExpedientes.map( item => {
-            return <ExpedienteItem key={item._id} data={item} />
+            return <ExpedienteItem key={item._id} data={item} Deletehistorial={DeleteHistorial}/>
           })
         }
    

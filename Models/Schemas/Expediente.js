@@ -10,7 +10,7 @@ const UserExpediente = new Schema({
     },
     presion:{
         type:String,
-        required: true
+        required: false
     },
     Medicamentos:{
         type:String,
@@ -92,7 +92,42 @@ const UserExpediente = new Schema({
         required: false,
         default:false
     },
-    
+    Lunes:{
+        type:String,
+        required: false
+    },
+    Martes:{
+        type:String,
+        required: false
+    },
+    Miercoles:{
+        type:String,
+        required: false
+    },
+    Jueves:{
+        type:String,
+        required: false
+    },
+    Viernes:{
+        type:String,
+        required: false
+    },
+    Sabado:{
+        type:String,
+        required: false
+    },
+    Domingo:{
+        type:String,
+        required: false
+    },
+    Ejercicio:{
+        type:String,
+        required: false
+    },
+    Comida:{
+        type:String,
+        required: false
+    },
     paciente_id:{
         type:Schema.Types.ObjectId,
         ref:'paciente'

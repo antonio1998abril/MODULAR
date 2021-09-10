@@ -131,7 +131,7 @@ function CreatePaciente() {
 
                 <Form.Group >
                     <Form.Label>Telefono Celular</Form.Label>
-                    <Form.Control name="tel" type="tel" placeholder="Telefono Celular" 
+                    <Form.Control type="number" name="tel"  placeholder="Telefono Celular" 
                      value={paciente.tel} onChange={handleChangeInput}
                     />
                 </Form.Group>

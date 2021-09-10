@@ -211,7 +211,7 @@ if (!loaded) { return <div></div> }
                 <div className="card-body expe-row">
 
                 <div className="form-group ">
-                    <label className="col-sm-12 col-form-label">Nivel de Glucosa</label>
+                    <label className="col-sm-12 col-form-label">Nivel de Glucosa General</label>
                     <div className="col-sm-12">
                       <input type="text" name="GlucosaSangre"   value={expediente.GlucosaSangre}
                       onChange={handleChangeExpediente} className="form-control"  placeholder="Glucosa"/>

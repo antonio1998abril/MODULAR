@@ -2,6 +2,7 @@ const express = require ('express');
 const UserController = require('../Controller/user')
 const PacienteController = require('../Controller/paciente')
 const auth = require('../Middleware/auth');
+const BuscarController = require('../Controller/Buscar');
 
 const routes = {
     user: express.Router()
@@ -21,7 +22,7 @@ const routes = {
     .get('/getExpediente/:id',PacienteController.getExpediente)
     .post('/NewHistorial/:id',auth,PacienteController.NewHistorial)
     .delete('/DeleteHistorial/:id',PacienteController.DeleteExpediente)
-
+    .get('/findPaciente',BuscarController.findPaciente)
 }
 
 module.exports = routes

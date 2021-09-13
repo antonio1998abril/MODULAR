@@ -51,8 +51,12 @@ module.exports = {
       },{
         source:'/api/DeleteHistorial/:id',
         destination:'http://localhost:5000/api/DeleteHistorial/:id'
+      },
+      /* Search for  patients*/
+      {
+        source: '/api/findPaciente',
+        destination: 'http://localhost:5000/api/findPaciente'
       }
-
     ]
   }
 }

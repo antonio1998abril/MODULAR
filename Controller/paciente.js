@@ -74,7 +74,7 @@ const controller = {
             Lunes: req.body.Lunes,
             Martes: req.body.Martes,
             Miercoles: req.body.Miercoles,
-            Jueves: req.body.Jueve,
+            Jueves: req.body.Jueves,
             Viernes: req.body.Viernes,
             Sabado: req.body.Sabado,
             Domingo: req.body.Domingo,

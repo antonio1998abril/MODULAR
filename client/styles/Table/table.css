@@ -29,7 +29,7 @@
     }   
   
 /* TABLE AVATAR STATUS */
-    .projects .table-avatar img, .projects img.table-avatar {
+  .projects .table-avatar img, .projects img.table-avatar {
       border-radius: 50%;
       display: inline;
       width: 2.5rem;

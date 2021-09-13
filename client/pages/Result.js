@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch} from '@fortawesome/free-solid-svg-icons'
 import Router from 'next/router';
 import { GlobalState } from '../components/GlobalState';
 import Image from 'next/image'
 import profilePic from '../public/testuser.png'
-
+import Filter from '../components/Search/Filter'
 function Result() {
 
     const state = useContext(GlobalState);
@@ -29,7 +27,7 @@ function Result() {
     return (
         <>
 
-<div className="container-fluid">
+{/* <div className="container-fluid">
             <h2 className="text-center display-4">Buscar</h2>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
@@ -45,8 +43,8 @@ function Result() {
                     </form>
                 </div>
             </div>
-        </div>
-
+        </div> */}
+<Filter/>
         <div className="paciente result">
             <div className="card-body">
                 <div className="row">
@@ -54,7 +52,7 @@ function Result() {
                         <h4> Result</h4>
                         <div className="post">
                             <div className="user-block">
-                            <Image className="img-circle img-bordered-sm" src={profilePic} width="20" height="20" alt="user image"/>
+                            <Image className="img-circle img-bordered-sm" src={profilePic}  alt="user image"/>
                                 <span className="username">
                                 <a href="#">Jonathan Burke Jr.</a>
                                 </span>

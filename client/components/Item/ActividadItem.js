@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFolderOpen,faEdit,faTrash,faPlusCircle,faProcedures} from '@fortawesome/free-solid-svg-icons'
+import { faEdit,faChartLine,faProcedures} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import Image from 'next/image'
 import profilePic from '../../public/testuser.png'
@@ -37,18 +37,11 @@ function ActividadItem({actividad}) {
                 <span className="badge badge-success">Success</span>
             </td>
             <td className="project-actions text-right">
-              <a className="btn btn-primary btn-sm" href="#">
-                <FontAwesomeIcon icon={faFolderOpen} />&nbsp;
-                View Perfil
-              </a>&nbsp;
               <a className="btn btn-info btn-sm" href="#">
-                <FontAwesomeIcon icon={faEdit} />&nbsp;
-                Edit
+                <FontAwesomeIcon icon={faChartLine} />&nbsp;
+               Niveles de Glucosa
               </a>&nbsp;
-              <a className="btn btn-danger btn-sm" href="#">
-                <FontAwesomeIcon icon={faTrash} />
-                Delete
-              </a>&nbsp;
+
             </td>
           </tr>
      </>

@@ -459,3 +459,15 @@ transition: .5s;
     text-align: right;
   }
 }
+
+/* Search patients */
+.filter_menu {
+  width: 100%;
+  min-height: 40px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}

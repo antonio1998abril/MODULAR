@@ -275,7 +275,7 @@ if (!loaded) { return <div></div> }
                 </div>
 
                 <div className="form-group ">
-                    <label className="col-sm-12 col-form-label">Presion</label>
+                    <label className="col-sm-12 col-form-label">Presion General</label>
                     <div className="col-sm-12">
                       <input type="text"  name="presion"
                       value={expediente.presion} 

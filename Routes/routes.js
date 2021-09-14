@@ -13,6 +13,7 @@ const routes = {
     .get('/info',auth,UserController.getUser),
 
     paciente: express.Router()
+    .get('/findPaciente',BuscarController.findPaciente)
     .get('/getpaciente',auth,PacienteController.GetPaciente)
     .post('/createpaciente',auth,PacienteController.NewPaciente)
     .delete('/deletePaciente/:id',PacienteController.DeletePaciente)
@@ -22,7 +23,7 @@ const routes = {
     .get('/getExpediente/:id',PacienteController.getExpediente)
     .post('/NewHistorial/:id',auth,PacienteController.NewHistorial)
     .delete('/DeleteHistorial/:id',PacienteController.DeleteExpediente)
-    .get('/findPaciente',BuscarController.findPaciente)
+    
 }
 
 module.exports = routes

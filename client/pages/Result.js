@@ -4,8 +4,10 @@ import { GlobalState } from '../components/GlobalState';
 import Image from 'next/image'
 import profilePic from '../public/testuser.png'
 import Filter from '../components/Search/Filter'
+import LoadMore from '../components/Search/LoadMore';
+import Loading from '../components/Loader/Loader';
+import SearchItem from '../components/Item/SearchItem';
 function Result() {
-
     const state = useContext(GlobalState);
     const [loaded,setLoaded] = useState(false)
     const [islogged]= state.User.isLogged
@@ -23,6 +25,12 @@ function Result() {
   }, [!islogged]);
   
     if (!loaded) { return <div></div> } 
+    /* SET DATA TO GET PACIENTES AND LOAD MORE ELEMENTS */
+    const [pacientes,setpacientes] = state.Paciente.GlobalPaciente
+    const [token] = state.token
+    const [callback,setCallback] = state.Paciente.callback
+
+
 
     return (
         <>
@@ -50,88 +58,18 @@ function Result() {
                 <div className="row">
                     <div className="col-12">
                         <h4> Result</h4>
-                        <div className="post">
-                            <div className="user-block">
-                            <Image className="img-circle img-bordered-sm" src={profilePic}  alt="user image"/>
-                                <span className="username">
-                                <a href="#">Jonathan Burke Jr.</a>
-                                </span>
-
-                                <span className="description">Shared publicly - 7:45 PM today</span>
-
-                            </div>
-                            <p>
-                            Lorem ipsum represents a long-held tradition for designers,
-                            typographers and the like. Some people hate it and argue for
-                            its demise, but others ignore.
-                            </p>  
-                            <div className="bodyButton">
-                            <button className="buttonOption">
-                                <span className="buttonOption__inner">See</span>
-                            </button>
-
-                            <button className="buttonOption buttonOption--secondary">
-                                <span className="buttonOption__inner">Image</span>
-                            </button>
-                            </div>
-                        </div>
-
-
-                        <div className="post">
-                            <div className="user-block">
-                            <Image className="img-circle img-bordered-sm" src={profilePic} width="20" height="20" alt="user image"/>
-                                <span className="username">
-                                <a href="#">Jonathan Burke Jr.</a>
-                                </span>
-
-                                <span className="description">Shared publicly - 7:45 PM today</span>
-
-                            </div>
-                            <p>
-                            Lorem ipsum represents a long-held tradition for designers,
-                            typographers and the like. Some people hate it and argue for
-                            its demise, but others ignore.
-                            </p>  
-                            <div className="bodyButton">
-                            <button className="buttonOption">
-                                <span className="buttonOption__inner">See</span>
-                            </button>
-
-                            <button className="buttonOption buttonOption--secondary">
-                                <span className="buttonOption__inner">Image</span>
-                            </button>
-                            </div>
-                        </div>
-
-                        <div className="post">
-                            <div className="user-block">
-                            <Image className="img-circle img-bordered-sm" src={profilePic} width="20" height="20" alt="user image"/>
-                                <span className="username">
-                                <a href="#">Jonathan Burke Jr.</a>
-                                </span>
-
-                                <span className="description">Shared publicly - 7:45 PM today</span>
-
-                            </div>
-                            <p>
-                            Lorem ipsum represents a long-held tradition for designers,
-                            typographers and the like. Some people hate it and argue for
-                            its demise, but others ignore.
-                            </p>  
-                            <div className="bodyButton">
-                            <button className="buttonOption">
-                                <span className="buttonOption__inner">See</span>
-                            </button>
-
-                            <button className="buttonOption buttonOption--secondary">
-                                <span className="buttonOption__inner">Image</span>
-                            </button>
-                            </div>
-                        </div>
+                            {
+                                pacientes.map(paciente => {
+                                    return <SearchItem key={paciente._id} paciente={paciente}/>
+                                })
+                            }
                     </div>
                 </div>
             </div>
+            <LoadMore/>
+        {pacientes.length === 0 && <Loading/>}
         </div>
+
     </>
     )
 }

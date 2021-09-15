@@ -4,17 +4,29 @@ class APIfeature{
         this.query=query;
         this.queryString=queryString;
     }
-    filtering(){
+    /* FILTROS */
+    filteringEmail(){
         const queryObj={...this.queryString}
-        const excludedFields=['page','sort','limit']
+        const excludedFields=['page','sort','limit','name']
         excludedFields.forEach(el=>delete(queryObj[el]))
-
         let queryStr =JSON.stringify(queryObj)
         queryStr=queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g,match=>'$'+match)
-
-        this.query.find(JSON.parse(queryStr))
+        console.log(queryStr)
+        /* const test= JSON.parse(queryStr.replace(/}{/g,',')); */
+        this.query.find(JSON.parse(queryStr)) 
         return this;
     }
+    filteringName(){
+        const queryObj={...this.queryString}
+        const excludedFields=['page','sort','limit','email']
+        excludedFields.forEach(el=>delete(queryObj[el]))
+        let queryStr =JSON.stringify(queryObj)
+        queryStr=queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g,match=>'$'+match)
+        console.log(queryStr)
+        this.query.find(JSON.parse(queryStr)) 
+        return this;
+    }
+    /* FIN DE FILTROS */
     sorting(){
         if(this.queryString.sort){
             const sortBy=this.queryString.sort.split(',').join(' ')
@@ -36,13 +48,28 @@ const controller = {
     findPaciente :async(req,res) => {
         try{
         const features = new APIfeature(Paciente.find().lean(),req.query)
-        .filtering().sorting().paginating()
+        .filteringEmail().sorting().paginating()
         const paciente = await features.query
-        res.json({
-            status:'Exito en la bsuqueda',
-            result:paciente.length,
-            paciente:paciente
-        })
+            if(paciente.length === 0){
+
+                const features = new APIfeature(Paciente.find().lean(),req.query)
+        .filteringName().sorting().paginating()
+        const paciente = await features.query
+                console.log("No se encontro nada pasa al siguiente datos")
+                res.json({
+                    status:'Exito en la bsuqueda',
+                    result:paciente.length,
+                    paciente:paciente
+                })
+            }else{
+                res.json({
+                    status:'Exito en la bsuqueda',
+                    result:paciente.length,
+                    paciente:paciente
+                })
+            }
+  
+
     }catch(err){
         return res.status(500).json({msg:err.message});
         }

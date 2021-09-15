@@ -1,29 +1,26 @@
 import React from 'react'
 import profilePic from '../../public/testuser.png'
 import Image from 'next/image'
-function SearchItem() {
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+function SearchItem({paciente}) {
     return (
     <>
         <div className="post">
             <div className="user-block">
                 <Image className="img-circle img-bordered-sm" src={profilePic} width="20" height="20" alt="user image"/>
                     <span className="username">
-                        <a href="#">Jonathan Burke Jr.</a>
+                        <a href="#">{paciente.name} {paciente.lastname}</a>
                     </span>
-            <span className="description">Shared publicly - 7:45 PM today</span>
+            <span className="description">Email - {paciente.email}, Tel - {paciente.tel}</span>
             </div>
-                <p>
-                Lorem ipsum represents a long-held tradition for designers,
-                typographers and the like. Some people hate it and argue for
-                its demise, but others ignore.
-                </p>  
+                <p></p>  
             <div className="bodyButton">
                 <button className="buttonOption">
-                    <span className="buttonOption__inner">See</span>
+                    <span className="buttonOption__inner">Ver Expedientes</span>
                 </button>
 
                 <button className="buttonOption buttonOption--secondary">
-                    <span className="buttonOption__inner">Image</span>
+                    <span className="buttonOption__inner">Ver Info del paciente</span>
                 </button>
             </div>
         </div>

@@ -16,7 +16,7 @@ function PacienteItem({paciente,deletePaciente}) {
         setidPaciente(paciente._id)
     }
     return (
-        <div className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+        <div className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column space-card">
             <div className="card bg-light d-flex flex-fill">
                 <div className="card-result text-muted border-bottom-0">
                 <FontAwesomeIcon icon={faMailBulk} /> {paciente.email}
@@ -53,6 +53,8 @@ function PacienteItem({paciente,deletePaciente}) {
                 </div>
             </div>
         </div>
+     
+       
     )
 }
 

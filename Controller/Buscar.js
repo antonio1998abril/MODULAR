@@ -47,13 +47,13 @@ class APIfeature{
 const controller = {
     findPaciente :async(req,res) => {
         try{
-        const features = new APIfeature(Paciente.find().lean(),req.query)
+        const features = new APIfeature(Paciente.find().lean().populate([{path:'allExpedientes'},{path:'Encargado_id'}]),req.query)
         .filteringEmail().sorting().paginating()
         const paciente = await features.query
             if(paciente.length === 0){
 
-                const features = new APIfeature(Paciente.find().lean(),req.query)
-        .filteringName().sorting().paginating()
+              /*   const features = new APIfeature(Paciente.find().lean(),req.query)
+        .filteringName().sorting().paginating() */
         const paciente = await features.query
                 console.log("No se encontro nada pasa al siguiente datos")
                 res.json({
@@ -65,7 +65,7 @@ const controller = {
                 res.json({
                     status:'Exito en la bsuqueda',
                     result:paciente.length,
-                    paciente:paciente
+                    paciente:paciente,
                 })
             }
   

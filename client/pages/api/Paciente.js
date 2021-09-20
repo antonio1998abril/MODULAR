@@ -15,7 +15,7 @@ function Paciente(token) {
 
     useEffect(() =>{
         const getPacientes = async() => {
-            const result = await axios.get(`/api/findPaciente?limit=${page*5}&${sort}&email[regex]=${search}&name[regex]=${search}`)
+            const result = await axios.get(`/api/findPaciente?limit=${page*5}&${sort}&email=${search}`)
             setGlobalPaciente(result.data.paciente)
             setResult(result.data.result) 
         }
@@ -34,7 +34,7 @@ function Paciente(token) {
     }
     },[token,callback])
 
-    console.log("buscar",GlobalPaciente)
+    console.log("buscar",search)
 
 
     return {

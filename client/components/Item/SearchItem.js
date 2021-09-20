@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import profilePic from '../../public/testuser.png'
 import Image from 'next/image'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { GlobalState } from '../GlobalState';
 import { Modal } from 'react-bootstrap';
+
+
 function SearchItem({paciente}) {
     const [medico,setMedico] = useState(false);
     const [role] = (paciente.Encargado_id.role)
-       
     useEffect(() =>  {
         if(role === '1') setMedico(true)
     },[role]);
@@ -56,7 +56,8 @@ function SearchItem({paciente}) {
                 <Modal.Title> Informacion del Paciente {paciente.name}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-
+                
+            
             </Modal.Body>
 
         </Modal>

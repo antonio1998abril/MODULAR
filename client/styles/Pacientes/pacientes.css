@@ -460,6 +460,8 @@ transition: .5s;
   }
 }
 
+
+
 /* Search patients */
 .filter_menu {
   width: 100%;
@@ -488,6 +490,7 @@ margin-top: 10px;
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
 
 /* -------------------- Load More --------------- */
 .load_more{

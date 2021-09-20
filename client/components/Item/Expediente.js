@@ -8,99 +8,187 @@ function Expediente({data,Deletehistorial}) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const Expedientestyle= {
-      fontSize: "2rem"    
-    }
+
     return (
         <div className="result-expe">
         <div><span>Fecha:</span> <span>{ShowDate.getUTCDate()}/{ShowDate.getMonth()}/{ShowDate.getFullYear()} a las {ShowDate.getHours()}:{ShowDate.getMinutes()}</span></div>
             <div>
             <span>Eliminar </span> 
-            
                 <button  onClick={()=>Deletehistorial(data._id)} className="btn btn-danger">
-                <span>
-                    <FontAwesomeIcon icon={faTrash}    />
-                </span>
+                  <span>
+                      <FontAwesomeIcon icon={faTrash}    />
+                  </span>
                 </button>
             </div>
-
             <div>
-            <span>Ver </span> 
-                        
+            <span>Ver </span>        
                 <button  className="btn btn-primary"  onClick={handleShow}>
                 <span>    
                     <FontAwesomeIcon icon={faEye}     />
                     </span>
                 </button>
             </div>
-      
-
             {/* MODAL */}
 
             <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Informacion</Modal.Title>
         </Modal.Header>
-
             <Modal.Body>
             <Modal.Title>Datos de Laboratorio</Modal.Title>
-            <Form.Group>
-              <Form.Label className="font-weight-bold">Nivel de Glucosa general: </Form.Label>
-              <p style={Expedientestyle}>{data.GlucosaSangre}</p>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="font-weight-bold">Nivel de Microalbuminuria: </Form.Label>
-              <p style={Expedientestyle}>{data.Microalbuminuria}</p>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="font-weight-bold">Nivel de Hemoglobina Glucosilada:</Form.Label>
-              <p style={Expedientestyle}>{data.HemoglobinaGlucosilada}</p>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="font-weight-bold">Nivel de Colesterol: </Form.Label>
-              <p style={Expedientestyle}>{data.NivelCorestero}</p>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="font-weight-bold">Nivel de Trigliseridos: </Form.Label>
-              <p style={Expedientestyle}>{data.NivelTrigliseridos}</p>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="font-weight-bold">Nivel de Electrocadriograma: </Form.Label>
-              <p style={Expedientestyle}>{data.Electrocadriograma}</p>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="font-weight-bold">Nivel de Dialisis: </Form.Label>
-              <p style={Expedientestyle}>{data.dialisis}</p>
-            </Form.Group>
-              <Form.Label className="font-weight-bold">Presion General: </Form.Label>
-              <p style={Expedientestyle}>{data.presion}</p>
+          
+
+ 
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.GlucosaSangre}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.Microalbuminuria}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.HemoglobinaGlucosilada}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.NivelTrigliseridos}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.Electrocadriograma}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.dialisis}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.presion}
+        </label>
+      </div>
+    </div>
             </Modal.Body>
 
             <Modal.Body>
             <Modal.Title>Informacion de Valoraciones Fisicas</Modal.Title>
+
+
+            <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.Antecedentes}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.GlucosaSangre}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.GlucosaSangre}
+        </label>
+      </div>
+    </div>
+    <div className="form-group">
+      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text"></span>
+        </div>
+        <label type="text" className="form-control font-weight-bold">
+        {data.GlucosaSangre}
+        </label>
+      </div>
+    </div>
             <Form.Group>  
               <Form.Label className="font-weight-bold">Antecedentes: </Form.Label>
-              <p style={Expedientestyle}>{data.Antecedentes}</p>
+              <p >{data.Antecedentes}</p>
             </Form.Group>  
             <Form.Group>  
               <Form.Label className="font-weight-bold">Medicamentos:</Form.Label>
-              <p style={Expedientestyle}>{data.Medicamentos}</p>
+              <p >{data.Medicamentos}</p>
             </Form.Group>
             <Form.Group> 
               <Form.Label className="font-weight-bold">Alergias: </Form.Label>
-              <p style={Expedientestyle}>{data.Alergias}</p>
+              <p >{data.Alergias}</p>
             </Form.Group>
             <Form.Group> 
               <Form.Label className="font-weight-bold">Problemas en el cuerpo:</Form.Label>
-              <p style={Expedientestyle}>{data.Cuerpodaño}</p>
+              <p >{data.Cuerpodaño}</p>
             </Form.Group>  
             <Form.Group>
               <Form.Label className="font-weight-bold">Otras enfermedades: </Form.Label>
-              <p style={Expedientestyle}>{data.OtrasEnfermedades}</p>
+              <p >{data.OtrasEnfermedades}</p>
             </Form.Group>  
             <Form.Group>
               <Form.Label className="font-weight-bold"> Estado Dental: </Form.Label>
-              <p style={Expedientestyle}>{data.EstatusDental}</p>
+              <p >{data.EstatusDental}</p>
             </Form.Group>
             </Modal.Body>
             
@@ -108,15 +196,15 @@ function Expediente({data,Deletehistorial}) {
               <Modal.Title>Informacion de Valoraciones Mentales: </Modal.Title>
               <Form.Group>
                 <Form.Label className="font-weight-bold">En que momento iniciaron: </Form.Label>
-                <p style={Expedientestyle}>{data.InicioEnfermedadMentales}</p>
+                <p >{data.InicioEnfermedadMentales}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold">Padecimiento: </Form.Label>
-                <p style={Expedientestyle}>{data.EstadoMental}</p>
+                <p >{data.EstadoMental}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold">Complicaciones en su dia dia: </Form.Label>
-                <p style={Expedientestyle}>{data.FactorRiesgo}</p>
+                <p >{data.FactorRiesgo}</p>
               </Form.Group>
             </Modal.Body>
 
@@ -124,39 +212,39 @@ function Expediente({data,Deletehistorial}) {
             <Modal.Title>Informacion del Regimen Alimenticio</Modal.Title>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Ejercicio General al dia: </Form.Label>
-                <p style={Expedientestyle}>{data.Ejercicio}</p>
+                <p>{data.Ejercicio}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Regimen Alimenticio al dia: </Form.Label>
-                <p style={Expedientestyle}>{data.Comida}</p>
+                <p >{data.Comida}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Lunes: </Form.Label>
-                <p style={Expedientestyle}>{data.Lunes}</p>
+                <p >{data.Lunes}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Martes: </Form.Label>
-                <p style={Expedientestyle}>{data.Martes}</p>
+                <p >{data.Martes}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Miercoles: </Form.Label>
-                <p style={Expedientestyle}>{data.Miercoles}</p>
+                <p >{data.Miercoles}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Jueves: </Form.Label>
-                <p style={Expedientestyle}>{data.Jueves}</p>
+                <p >{data.Jueves}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Viernes: </Form.Label>
-                <p style={Expedientestyle}>{data.Viernes}</p>
+                <p >{data.Viernes}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Sabado </Form.Label>
-                <p style={Expedientestyle}>{data.Sabado}</p>
+                <p >{data.Sabado}</p>
               </Form.Group>
               <Form.Group>
                 <Form.Label className="font-weight-bold"> Domingo: </Form.Label>
-                <p style={Expedientestyle}>{data.Domingo}</p>
+                <p >{data.Domingo}</p>
               </Form.Group>
               </Modal.Body>
         <Modal.Footer>

@@ -7,27 +7,17 @@ class APIfeature{
     /* FILTROS */
     filteringEmail(){
         const queryObj={...this.queryString}
-        const excludedFields=['page','sort','limit','name']
+        const excludedFields=['page','sort','limit']
         excludedFields.forEach(el=>delete(queryObj[el]))
-        let queryStr =JSON.stringify(queryObj)
-        queryStr=queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g,match=>'$'+match)
-        console.log(queryStr)
+        let s = {$or:[{email:{$regex:this.queryString.email}}, {name:{$regex:this.queryString.email}}, {lastname:{$regex:this.queryString.email}}]}
+        s = JSON.stringify(s)        
         /* const test= JSON.parse(queryStr.replace(/}{/g,',')); */
-        this.query.find(JSON.parse(queryStr)) 
-        return this;
-    }
-    filteringName(){
-        const queryObj={...this.queryString}
-        const excludedFields=['page','sort','limit','email']
-        excludedFields.forEach(el=>delete(queryObj[el]))
-        let queryStr =JSON.stringify(queryObj)
-        queryStr=queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g,match=>'$'+match)
-        console.log(queryStr)
-        this.query.find(JSON.parse(queryStr)) 
+        this.query.find(JSON.parse(s)) 
         return this;
     }
     /* FIN DE FILTROS */
     sorting(){
+        console.log(this.queryString)
         if(this.queryString.sort){
             const sortBy=this.queryString.sort.split(',').join(' ')
             this.query=this.query.sort(sortBy)
@@ -47,14 +37,11 @@ class APIfeature{
 const controller = {
     findPaciente :async(req,res) => {
         try{
-        const features = new APIfeature(Paciente.find().lean().populate([{path:'allExpedientes'},{path:'Encargado_id'}]),req.query)
+        const features = new APIfeature(Paciente.find().lean().populate([{path:'allExpedientes'},{path:'Encargado_id', model:'user'}]),req.query)
         .filteringEmail().sorting().paginating()
-        const paciente = await features.query
-            if(paciente.length === 0){
+        let paciente = await features.query
 
-              /*   const features = new APIfeature(Paciente.find().lean(),req.query)
-        .filteringName().sorting().paginating() */
-        const paciente = await features.query
+            if(paciente.length === 0){
                 console.log("No se encontro nada pasa al siguiente datos")
                 res.json({
                     status:'Exito en la bsuqueda',

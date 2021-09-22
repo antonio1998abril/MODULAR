@@ -53,7 +53,7 @@ function Login() {
             <div className="log">
             <Image src={log} alt="log" />
             </div>
-            <span className="login100-form-title p-b-43">Log In Para Continuar</span>
+            <span className="login100-form-title p-b-43">Inicia Sesion Para Continuar</span>
             <Form.Group className="mb-3" >
                 <Form.Label className="ubuntu">Email</Form.Label>
                 <Form.Control onChange={handleChangeInput} name="email" className="form-control-lg ubuntu" type="email" placeholder="Ingresa tu Email" />
@@ -66,13 +66,13 @@ function Login() {
 
             <div className="container-login100-form-btn">
                 <button className="login100-form-btn ubuntu">
-                Login
+                Entrar
                 </button>
             </div>
 
             <div className="text-center p-t-46 ">
                 <Link href="/register">  
-                    <a className="txt2">or Register</a>
+                    <a className="txt2">o Registrate</a>
                 </Link>
             </div>
 

@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import profilePic from '../../public/testuser.png'
 import Image from 'next/image'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { Modal } from 'react-bootstrap';
-
+import { Modal,Form,Col } from 'react-bootstrap';
+import ExpedienteSearch from '../../components/Item/ExpedienteSearch';
 
 function SearchItem({paciente}) {
     const [medico,setMedico] = useState(false);
@@ -23,8 +22,9 @@ function SearchItem({paciente}) {
         setShowExpediente(false);
     }
 
-
-
+    const handleAdd =() =>{
+        console.log("Copeado")
+    }
     return (
     <>
         <div className="post">
@@ -35,7 +35,7 @@ function SearchItem({paciente}) {
                     </span>
             <span className="description">Email - {paciente.email}, Tel - {paciente.tel}</span>
             </div>
-                <p>A cargo del {medico ? <>Medico</> : <>Usuario</> } {paciente.Encargado_id.name} {paciente.Encargado_id.lastname} </p>  
+                <p>En caso de Emergencias llama al {medico ? <>Medico</> : <>Usuario</> } {paciente.Encargado_id.name} {paciente.Encargado_id.lastname} - {paciente.tel}</p>  
                 <p>Email de contacto: {paciente.Encargado_id.email}</p>
             <div className="bodyButton">
                 <button className="buttonOption">
@@ -45,6 +45,11 @@ function SearchItem({paciente}) {
                 <button className="buttonOption buttonOption--secondary">
                     <span className="buttonOption__inner" onClick={handleShowInfo}>Ver Info del paciente</span>
                 </button>
+
+                <button className="buttonOption addExpediente buttonOption--teal">
+                    <span className="buttonOption__inner" onClick={handleAdd}>Agrear A mis Pacientes</span>
+                </button>
+
             </div>
         </div>
 
@@ -56,7 +61,61 @@ function SearchItem({paciente}) {
                 <Modal.Title> Informacion del Paciente {paciente.name}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                
+            <Form.Group as={Col} >
+                <Form.Label>Nombre:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.name}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Apellidos:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.lastname}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Telefono:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.tel}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Correo Electronico:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.email}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Peso:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.peso}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Sexo:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.sexo}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Edad:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.edad}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Tipo de Diabetes:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.diabetesTipo}
+            </label>
+            </Form.Group>
+            <Form.Group as={Col} >
+                <Form.Label>Inicio de la Enfermedad:</Form.Label>
+            <label className="form-control font-weight-bold">
+                {paciente.IncioEnfermedad}
+            </label>
+            </Form.Group>
+
             
             </Modal.Body>
 
@@ -71,6 +130,11 @@ function SearchItem({paciente}) {
                 <Modal.Title> Expediente del Usuario {paciente.name}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {
+                    paciente.allExpedientes.map(item => {
+                        return <ExpedienteSearch key= {item._id} data={item}/>
+                    })
+                }
 
             </Modal.Body>
 

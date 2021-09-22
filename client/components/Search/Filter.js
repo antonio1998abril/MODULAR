@@ -9,39 +9,19 @@ function Filter() {
     const [searchPaciente,setSearchPaciente] = state.Paciente.search
     return (
 <>
-<h2 className="text-center display-4">Buscar</h2> 
+    <h2 className="text-center display-4">Buscar</h2> 
     <div className="filter_menu">
-      {/*   <div className="container-fluid"> */}
-             
-{/*             <div className="row"> */}
-               {/*  <div className="col-md-8 offset-md-2">
-                    <form>
-                        <div className="input-group"> */}
-                            <input type="text" name="" value={searchPaciente} onChange={e=>setSearchPaciente(e.target.value)} className="form-control form-control-lg" placeholder="Buscar algun Paciente..."/>
-{/*                             <div className="input-group-append">
-                                <button type="submit" className=" btn-lg btn-search">
-                                 <FontAwesomeIcon icon={faSearch}  className="searchC" transform="shrink-3"  /> 
-                                </button>
-                            </div> */}
-                                <div className="sort">
-                                    <span>Buscar por: </span>
-                                    <select className="form-select" value={sort} onChange={e=>setSort(e.target.value)}> 
-                                        <option value=''>Pacientes recien registrados</option>
-                                        <option value='sort=oldest'>Pacientes agregados mas anitiguos </option>
-                                        <option value='sort=-edad'>Mayores de 18 años</option>
-                                        <option value='sorrt=-edad'>Menores de 18 años</option>
-                                    </select>
-                                </div>
-                            
-                        </div>
-                
-
-{/* 
-                    </form>
-                </div>
+        <input type="text" name="" value={searchPaciente} onChange={e=>setSearchPaciente(e.target.value)} className="form-control form-control-lg" placeholder="Buscar algun Paciente..."/>
+{/*             <div className="sort">
+                <span>Buscar por: </span>
+            <select className="form-select" value={sort} onChange={e=>setSort(e.target.value)}> 
+                <option value=''>Pacientes recien registrados</option>
+                <option value='sort=oldest'>Pacientes agregados mas anitiguos </option>
+                <option value='sort=-edad'>Mayores de 18 años</option>
+                <option value='sorrt=-edad'>Menores de 18 años</option>
+            </select>
             </div> */}
-{/*         </div> */}
-  {/*   </div>  */}   
+        </div>  
 </>
     )
 }

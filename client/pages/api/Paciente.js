@@ -34,9 +34,6 @@ function Paciente(token) {
     }
     },[token,callback])
 
-    console.log("buscar",search)
-
-
     return {
     pacientes:[pacientes,setPacientes],
     callback:[callback,setCallback],

@@ -34,24 +34,6 @@ function Result() {
 
     return (
         <>
-
-{/* <div className="container-fluid">
-            <h2 className="text-center display-4">Buscar</h2>
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    <form>
-                        <div className="input-group">
-                            <input type="search" className="form-control form-control-lg" placeholder="Escribe..."/>
-                            <div className="input-group-append">
-                                <button type="submit" className=" btn-lg btn-search">
-                                 <FontAwesomeIcon icon={faSearch}  className="searchC" transform="shrink-3"  /> 
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> */}
 <Filter/>
         <div className="paciente result">
             <div className="card-body">

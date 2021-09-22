@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEye,faTrash} from '@fortawesome/free-solid-svg-icons'
-import {Form, Modal, Button} from 'react-bootstrap' 
+import {Modal, Button} from 'react-bootstrap' 
 
-function Expediente({data,Deletehistorial}) {
+function ExpedienteSearch({data}) {
     let ShowDate = new Date(data.createdAt);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -12,14 +12,6 @@ function Expediente({data,Deletehistorial}) {
     return (
         <div className="result-expe">
         <div><span>Fecha:</span> <span>{ShowDate.getUTCDate()}/{ShowDate.getMonth()}/{ShowDate.getFullYear()} a las {ShowDate.getHours()}:{ShowDate.getMinutes()}</span></div>
-            <div>
-            <span>Eliminar </span> 
-                <button  onClick={()=>Deletehistorial(data._id)} className="btn btn-danger">
-                  <span>
-                      <FontAwesomeIcon icon={faTrash}    />
-                  </span>
-                </button>
-            </div>
             <div>
             <span>Ver </span>        
                 <button  className="btn btn-primary"  onClick={handleShow}>
@@ -342,4 +334,4 @@ function Expediente({data,Deletehistorial}) {
     )
 }
 
-export default Expediente
+export default ExpedienteSearch

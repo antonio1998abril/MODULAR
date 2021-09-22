@@ -113,6 +113,8 @@
   border-radius: 3px;
   width: 15rem;
 }
+
+
 @media (min-width: 40em) {
   .buttonOption {
     font-size: 2rem;
@@ -179,6 +181,29 @@
 .buttonOption:hover .buttonOption__inner, .buttonOption:focus .buttonOption__inner {
   background-color: #fff;
 }
+
+.buttonOption--teal {
+  /*  background-col3r: #14d89a; */
+  background-color: teal;
+   z-index: 0;
+   margin-left: 20px;
+ 
+ }
+ .buttonOption--teal:after {
+  /*  background-color: #08c086; */
+  background-color: teal;
+ }
+ 
+ .buttonOption--teal .buttonOption__inner {
+   /* background-color: #06e9a5; */
+   background-color: teal;
+   color: white;
+ }
+ .buttonOption--teal:hover .buttonOption__inner, .buttonOption--teal:focus .buttonOption__inner {
+  /*  background-color: #11ffb3; */
+  background-color: teal;
+ }
+
 
 .buttonOption--secondary {
  /*  background-color: #14d89a; */

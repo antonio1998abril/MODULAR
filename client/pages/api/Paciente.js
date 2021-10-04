@@ -28,6 +28,7 @@ function Paciente(token) {
              const res= await axios.get("/api/getpaciente",{
                 headers: {Authorization: token}
              })
+             console.log(res.data)
              setPacientes(res.data)
             }
         getCommonUser()

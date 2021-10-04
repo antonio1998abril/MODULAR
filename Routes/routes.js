@@ -23,6 +23,7 @@ const routes = {
     .get('/getExpediente/:id',PacienteController.getExpediente)
     .post('/NewHistorial/:id',auth,PacienteController.NewHistorial)
     .delete('/DeleteHistorial/:id',PacienteController.DeleteExpediente)
+    .post('/addCopy',auth,PacienteController.addCopy)
     
 }
 

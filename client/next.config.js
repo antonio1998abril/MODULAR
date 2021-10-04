@@ -56,6 +56,11 @@ module.exports = {
       {
         source: '/api/findPaciente',
         destination: 'http://localhost:5000/api/findPaciente'
+      },
+      /* Copy Expediente  */
+      {
+        source: '/api/addCopy',
+        destination: 'http://localhost:5000/api/addCopy'
       }
     ]
   }

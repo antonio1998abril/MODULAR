@@ -63,6 +63,10 @@ const PacienteSchema = new Schema({
     Encargado_id:{
         type:Schema.Types.ObjectId,
         ref:'user'
+    },
+    MedicoDeCabecera: {
+        type:Array,
+        default:[]
     }
 },{
     timestamps: true

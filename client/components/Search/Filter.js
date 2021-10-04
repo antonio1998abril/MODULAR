@@ -11,7 +11,7 @@ function Filter() {
 <>
     <h2 className="text-center display-4">Buscar</h2> 
     <div className="filter_menu">
-        <input type="text" name="" value={searchPaciente} onChange={e=>setSearchPaciente(e.target.value)} className="form-control form-control-lg" placeholder="Buscar algun Paciente..."/>
+        <input type="text" name="" value={searchPaciente} onChange={e=>setSearchPaciente(e.target.value)} className="form-control form-control-lg" placeholder="Buscar algun Paciente por Nombre o Correo..."/>
 {/*             <div className="sort">
                 <span>Buscar por: </span>
             <select className="form-select" value={sort} onChange={e=>setSort(e.target.value)}> 

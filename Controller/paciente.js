@@ -4,9 +4,11 @@ const Expediente = require ("../Models/ExpedienteSchema")
 
 const controller = {
     GetPaciente: async (req ,res ,next) => {
-        await Paciente.find({Encargado_id:req.user.id}).then(pacientes => {
-            res.json(pacientes)
-           }).catch(next)
+        await Paciente.find({Encargado_id:req.user.id}).lean().then(paciente => {
+             
+                res.json(paciente) 
+            
+           })
     },
     NewPaciente: async (req,res,next)=>{
         const {name,lastname,tel,email,peso,sexo,edad, diabetesTipo,IncioEnfermedad} = req.body
@@ -140,9 +142,22 @@ const controller = {
         await Expediente.findByIdAndRemove({_id:req.params.id}).then(()=>{
             res.json({msg:"Expediente Elminado"})
         }).catch(next)  
-    } 
-
-    
+    } ,
+/* Agregar Expediente */
+    addCopy: async (req,res,next) => {
+        const {pacienteAdd} = req.body
+        const alreadyCopy = await Paciente.find({Encargado_id:req.user.id,_id:pacienteAdd})
+        const paciente = await Paciente.findById({_id:pacienteAdd})
+        const alreadyMedic = await Paciente.find({_id:pacienteAdd,MedicoDeCabecera:req.user.id})
+        if(alreadyCopy.length === 0 && alreadyMedic.length === 0) {
+                paciente.MedicoDeCabecera.push(req.user.id)
+                paciente.save()
+                res.json({msg:"Paciente Agregado Exitosamente"})
+        }else {
+            return res.status(302).json({msg:"Este Paciente ya ha sido Agregado"}) 
+        }
+    }
+/* Agergar expediente */
     
     
     }

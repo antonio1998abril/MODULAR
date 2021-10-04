@@ -3,8 +3,19 @@ import profilePic from '../../public/testuser.png'
 import Image from 'next/image'
 import { Modal,Form,Col } from 'react-bootstrap';
 import ExpedienteSearch from '../../components/Item/ExpedienteSearch';
+import swal from 'sweetalert';
+import axios from 'axios';
+import { GlobalState } from '../GlobalState';
+
 
 function SearchItem({paciente}) {
+    /* AGREGAR USUARIO PACIENTE*/
+    const initialState = {
+        pacienteAdd:paciente._id
+    }
+    const [addPaciente, setaddPaciente] = useState(initialState)
+    /* FIN AGREGAR PACIENTE */
+    const state = useContext(GlobalState);
     const [medico,setMedico] = useState(false);
     const [role] = (paciente.Encargado_id.role)
     useEffect(() =>  {
@@ -13,17 +24,34 @@ function SearchItem({paciente}) {
 
     const [showInfo,setShowInfo]= useState(false);
     const [showExpediente,setShowExpediente] = useState(false);
-
     const handleShowInfo = () => setShowInfo(true);
     const handleShowExpediente = () => setShowExpediente(true);
 
     const handleClose = () =>{
         setShowInfo(false);
         setShowExpediente(false);
+        setaddPaciente(initialState)
     }
 
-    const handleAdd =() =>{
-        console.log("Copeado")
+    const [token] = state.token
+
+
+
+    const handleSubmit = async e => {
+        e.preventDefault()
+        try {
+            const result = await axios.post('/api/addCopy',{...addPaciente},{
+                headers:{Authorization:token}
+            })
+            swal({icon:"success",title:result.data.msg, text:`Nuevo paciente ${paciente.name}`,timer:"2000",buttons: false});
+        }catch (err) {
+            swal({
+                title:"¡Hubo un Error Con este Paciente",
+                text:err.response.data.msg,
+                icon:"error",
+                button:"OK"
+            })
+        }
     }
     return (
     <>
@@ -43,15 +71,16 @@ function SearchItem({paciente}) {
                 </button>
 
                 <button className="buttonOption buttonOption--secondary">
-                    <span className="buttonOption__inner" onClick={handleShowInfo}>Ver Info del paciente</span>
+                    <span className="buttonOption__inner" onClick={handleShowInfo}>Ver info del Paciente</span>
                 </button>
 
-                <button className="buttonOption addExpediente buttonOption--teal">
-                    <span className="buttonOption__inner" onClick={handleAdd}>Agrear A mis Pacientes</span>
+                <button  className="buttonOption initialState buttonOption--teal">
+                    <span   className="buttonOption__inner" onClick={handleSubmit}>Agrear a mis Pacientes</span>
                 </button>
 
             </div>
         </div>
+   
 
         <Modal show={showInfo} onHide={handleClose}
             size='lg'

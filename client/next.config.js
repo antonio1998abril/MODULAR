@@ -1,6 +1,7 @@
 module.exports = {
   async rewrites() {
-    return [{
+    return [
+      {
         source: '/api/register',
         destination: 'http://localhost:5000/api/register'
       },{
@@ -61,6 +62,13 @@ module.exports = {
       {
         source: '/api/addCopy',
         destination: 'http://localhost:5000/api/addCopy'
+      }, 
+      {
+        source: '/api/postGlucosa',
+        destination: 'http://localhost:5000/api/postGlucosa'
+      },{
+        source:'/api/getGlucosa',
+        destination: 'http://localhost:5000/api/getGlucosa'
       }
     ]
   }

@@ -3,6 +3,7 @@ const UserController = require('../Controller/user')
 const PacienteController = require('../Controller/paciente')
 const auth = require('../Middleware/auth');
 const BuscarController = require('../Controller/Buscar');
+const GlucosaController = require('../Controller/Glucosa');
 
 const routes = {
     user: express.Router()
@@ -24,7 +25,10 @@ const routes = {
     .post('/NewHistorial/:id',auth,PacienteController.NewHistorial)
     .delete('/DeleteHistorial/:id',PacienteController.DeleteExpediente)
     .post('/addCopy',auth,PacienteController.addCopy)
-    
+
+    /* GLUCOSA */
+    .post('/postGlucosa',auth,GlucosaController.postGlucosa)
+    .get('/getGlucosa',auth,GlucosaController.getGlucosaList)
 }
 
 module.exports = routes

@@ -54,7 +54,6 @@ function CreatePaciente() {
     const handleSubmit=async e=>{
         e.preventDefault()
         try{
-            console.log(paciente)
                 await axios.post('/api/createpaciente',{...paciente},{
                     headers:{Authorization:token}
                 })

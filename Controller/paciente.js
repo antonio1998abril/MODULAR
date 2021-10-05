@@ -1,14 +1,13 @@
 const Paciente = require ("../Models/PacienteSchema")
 const User = require ("../Models/UserSchema")
 const Expediente = require ("../Models/ExpedienteSchema")
+/* Encargado_id:req.user.id */
 
 const controller = {
     GetPaciente: async (req ,res ,next) => {
-        await Paciente.find({Encargado_id:req.user.id}).lean().then(paciente => {
-             
-                res.json(paciente) 
-            
-           })
+        await Paciente.find({$or:[{ Encargado_id:req.user.id},{MedicoDeCabecera:req.user.id}]}).lean().then(paciente => {
+                res.json(paciente)
+           }).catch(next)
     },
     NewPaciente: async (req,res,next)=>{
         const {name,lastname,tel,email,peso,sexo,edad, diabetesTipo,IncioEnfermedad} = req.body
@@ -27,7 +26,6 @@ const controller = {
             FactorRiesgo:'',EstadoMental:''
             }, Regimen:{Lunes:'', Martes:'', Miercoles:'',Jueves:'',Viernes:'',Sabado:'',Domingo:'',Ejercicio:'',Comida:''}
         })
-
         await newPaciente.save().then(()=>{
             res.json({msg:"Nuevo paciente"})
         }).catch(next) 

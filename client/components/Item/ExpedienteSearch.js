@@ -15,9 +15,9 @@ function ExpedienteSearch({data}) {
             <div>
             <span>Ver </span>        
                 <button  className="btn btn-primary"  onClick={handleShow}>
-                <span>    
+                  <span>    
                     <FontAwesomeIcon icon={faEye}     />
-                    </span>
+                  </span>
                 </button>
             </div>
             {/* MODAL */}

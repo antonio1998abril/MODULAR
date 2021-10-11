@@ -11,6 +11,7 @@ function Info() {
   const [loaded,setLoaded] = useState(false)
   const [islogged]= state.User.isLogged
   const [callback,setCallback]=state.Paciente.callback
+  const  [token] = state.token
 
   const deletePaciente=async(id)=>{
     try {        
@@ -22,7 +23,9 @@ function Info() {
       }).then(async (res)=>{
           if(res){
        /*      let hello = async () => { return "Hello" }; */
-       const deletePaciente=axios.delete(`/api/deletePaciente/${id}`)
+       const deletePaciente=axios.delete(`/api/deletePaciente/${id}`,{
+         headers:{Authorization:token}
+       })
        await deletePaciente
           swal({icon:"success",text:"Paciente Eliminado",timer:"2000", buttons: false}).then(function(){
               setCallback(!callback)

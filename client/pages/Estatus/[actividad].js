@@ -1,5 +1,6 @@
 import React from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 function Actividad() {
     return (
         <div>
@@ -81,6 +82,7 @@ function Actividad() {
             <h3 className="card-title">
               HACER
             </h3>
+            <FontAwesomeIcon className="circlePaciente" icon={faPlusCircle} />
           </div>
           <div className="card-body">
             <div className="paciente card-info card-outline">

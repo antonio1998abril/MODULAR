@@ -20,7 +20,6 @@ const ActivitySchema = new Schema({
         type:Boolean,
         required: true
     },
-
     paciente_id:{
         type:Schema.Types.ObjectId,
         ref:'paciente'

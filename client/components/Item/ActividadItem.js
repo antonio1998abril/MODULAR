@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare,faChartLine,faProcedures} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import { Modal ,Container,Col,Row,Button,Form} from 'react-bootstrap'
 import axios from 'axios';
 import swal from 'sweetalert';
 import { GlobalState } from '../GlobalState';
-
+import  GlucosaList  from '../Item/GlucosaList';
 
 function ActividadItem({actividad}) {
   const initialState = {
@@ -21,9 +21,22 @@ function ActividadItem({actividad}) {
   const state = useContext(GlobalState);
   const [token] = state.token
   const [glucosa,setGlucosa] = useState(initialState);
-  const [historialGlucosa,setHistorialGlucosa] = state.Paciente.GlucosaHsitorial
   const [callback,setCallback]=state.Paciente.callback
 
+  const [GlucosaHistorial,setGlucosaHistorial] = useState([])
+
+
+
+  useEffect(()=>{
+    const getHistorialGlucosa = async () =>{
+      const res= await axios.get(`/api/getGlucosa/${actividad._id}`,{
+        headers: {Authorization: token}
+     })
+     setGlucosaHistorial(res.data)
+    }
+    getHistorialGlucosa()
+  },[callback])
+  
   const handleChangeInput= e =>{
     const {name,value} = e.target
     setGlucosa({...glucosa,[name]:value})
@@ -50,7 +63,7 @@ function ActividadItem({actividad}) {
     })
     }
   }
-  console.log(historialGlucosa)
+ 
     return (
         <>
           <tr>
@@ -90,15 +103,15 @@ function ActividadItem({actividad}) {
             </td>
           </tr>
 
-          <MydModalWithGrid show={modalShow} onHide={() => setModalShow(false)} />
+          <MydModalWithGrid show={modalShow}  onHide={() => setModalShow(false)} />
 {/* Value continue  */}
-          <Modal show={modalAdd} onHide={handleClose}>
+          <Modal show={modalAdd} onHide={handleClose} >
             <Modal.Body>
             <Form onSubmit={handleSubmit}>
                 <Form.Row>
                     <Form.Group as={Col} >
                     <Form.Label>Nuevo registro de Glucosa para {actividad.name}: </Form.Label>
-                    <Form.Control name="Glucosa" type="number" placeholder="Nivel de Glucosa"
+                    <Form.Control name="Glucosa" type="number" placeholder="Nivel de Glucosa" step="0.01"
                           onChange={handleChangeInput}
                     />
                     </Form.Group>
@@ -127,23 +140,11 @@ function ActividadItem({actividad}) {
           </Modal.Header>
           <Modal.Body className="show-grid">
             <Container>
-              <Row>
-                <Col xs={12} md={8}>
-                  Valor: 3.2
-                </Col>
-                <Col xs={6} md={4}>
-                  Fecha: 21/02/21
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} md={8}>
-                 Valor: 4.6
-                </Col>
-                <Col xs={6} md={4}>
-                  Fechas: 11/01/21
-                </Col>
-    
-              </Row>
+              {
+                GlucosaHistorial.map(historial => { 
+                  return <GlucosaList key={historial._id} historial={historial} /* deletePaciente={deletePaciente} *//>
+                })
+              } 
             </Container>
           </Modal.Body>
           <Modal.Footer>

@@ -13,8 +13,7 @@ function Paciente(token) {
     const [page, setPage] = useState(1);
     const [result, setResult] = useState(0);
 
-    const [GlucosaHsitorial,setGlucosaHistorial] = useState([])
-
+   
     useEffect(() =>{
         const getPacientes = async() => {
             const result = await axios.get(`/api/findPaciente?limit=${page*5}&${sort}&email=${search}`)
@@ -32,20 +31,12 @@ function Paciente(token) {
              })
              setPacientes(res.data)
             }
-            const getHistorialGlucosa =async()=>{
-                const res= await axios.get("/api/getGlucosa",{
-                   headers: {Authorization: token}
-                })
-                setGlucosaHistorial(res.data)
-               }    
-        
         getCommonUser()
-        getHistorialGlucosa()
     }
     },[token,callback])
 
+   
     return {
-    GlucosaHsitorial:[GlucosaHsitorial,setGlobalPaciente],
     pacientes:[pacientes,setPacientes],
     callback:[callback,setCallback],
     idPaciente:[idPaciente,setidPaciente],

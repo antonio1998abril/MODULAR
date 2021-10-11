@@ -67,8 +67,8 @@ module.exports = {
         source: '/api/postGlucosa',
         destination: 'http://localhost:5000/api/postGlucosa'
       },{
-        source:'/api/getGlucosa',
-        destination: 'http://localhost:5000/api/getGlucosa'
+        source:'/api/getGlucosa/:id',
+        destination: 'http://localhost:5000/api/getGlucosa/:id'
       }
     ]
   }

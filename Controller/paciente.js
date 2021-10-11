@@ -31,11 +31,21 @@ const controller = {
         }).catch(next) 
     
     },
-    DeletePaciente: async (req,res,next) => {
-        await Paciente.findByIdAndDelete(req.params.id).then(() =>{
-            res.json({msg:"Eliminado"})
-        }).catch(next) 
-    
+    DeletePaciente: async (req,res,next) => {      
+        const patient = await Paciente.findById(req.params.id).select('Encargado_id');
+        
+        if(patient.Encargado_id == req.user.id) {
+            await Paciente.findByIdAndDelete(req.params.id).then(() =>{
+                res.json({msg:"Eliminado"})
+            }).catch(next)
+        }else {
+            Paciente.findByIdAndUpdate(
+                {_id: req.params.id},
+                { $pull:{MedicoDeCabecera:req.user.id}})
+           .then(() =>{
+               res.json({msg:"Eliminado"})
+           }).catch(next)
+        }
     },
     /* DATOS DEL ECXPEDIETN ASI ARRIAB */
 

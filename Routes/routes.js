@@ -32,7 +32,8 @@ const routes = {
     .get('/getGlucosa/:id',auth,GlucosaController.getGlucosaList)
 
     /* ACTIVIDADES */
-    .post('createACT',auth,ActController.getAct)
+    .post('/postACT',auth,ActController.postAct)
+    .get('/getAct/:id',auth,ActController.getAct)
 
     
 }

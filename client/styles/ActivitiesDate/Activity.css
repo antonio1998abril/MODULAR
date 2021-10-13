@@ -8,3 +8,28 @@ padding-right: 2.5rem;
     box-shadow: 0 0 25px rgb(233, 195, 10); 
     border-style: none;
    }
+
+
+.addACT{
+    margin-top: -19px;
+    color:orange;
+    transition: all 0.5s ease;
+    float: right;
+    font-size: 2.50rem;
+}
+
+.addACT:hover{
+    color: orangered;
+
+}
+.hover-card{
+    transition: all 0.5s ease;
+}
+ .hover-card:hover{
+    box-shadow: 0 0 25px rgb(201, 201, 201); 
+}
+.line {
+    
+}
+
+

@@ -2,8 +2,11 @@ const Act = require ("../Models/ActividadesSchema");
 
 const controller = {
     getAct : async  (req, res, next) => {
-        await Act.find({Paciente_id:req.params.id}).lean().then(activities => {
-            res.json(activities)
+        await Act.find({paciente_id:req.params.id}).lean().then(activities => {
+            res.json({
+                size:activities.length,
+                activities:activities
+            })
         }).catch(next)
     },
     postAct : async(req,res,next) => {

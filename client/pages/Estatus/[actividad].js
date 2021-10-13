@@ -1,7 +1,71 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import Link from 'next/link';
+import axios from 'axios';
+import {Form,Col,Button,Modal} from 'react-bootstrap'; 
+import { useRouter } from 'next/router'
+import { GlobalState } from '../../components/GlobalState';
+import swal from 'sweetalert'
 function Actividad() {
+  const router = useRouter()
+  const initialState = {
+    Activityname:'',
+    Content:'',
+    DateToComplete:'',
+    paciente_id:router.query.actividad
+  }
+  
+  const state = useContext(GlobalState)
+  const [token] = state.token
+  const [callback,setCallback]=state.Paciente.callback;
+  const [onEdit,setOnEdit] =useState(false);
+
+  const [newAct,setNewAct] = useState(initialState)
+  const [ListPacienteAct, setListPacienteAct] = useState([]);
+  const [sizeAct,setSizeAct] = useState()
+  const [show, setShow] = useState(false);
+  const handleShow =()=>setShow(true);
+  
+  const handleClose = () => {
+    setShow(false);
+    setNewAct(initialState);
+  }
+  const handleChangeInput=e=>{
+    const {name,value}=e.target
+    setNewAct({...newAct,[name]:value})
+}
+  useEffect(() => {
+    let timeFunc = setTimeout(async() => {
+       const res = await axios.get(`/api/getAct/${router.query.actividad}`,{
+        headers:{Authorization:token}
+      }) 
+
+    },200);
+    return () => clearTimeout(timeFunc); 
+  }, [callback])
+
+
+  const TaskSubmit = async e => {
+    e.preventDefault()
+    try{
+      console.log("No")
+       await axios.post('/api/postACT',{...newAct},{
+        headers:{Authorization:token}
+    }) 
+     swal({icon:"success",text:`Activiad ${newAct.Activityname} agregada correctamente`,timer:"2000",buttons: false}); 
+     setShow(false);
+     setCallback(!callback)
+     setNewAct(initialState)
+    }catch(err){
+      swal({
+        title:"¡Ups",
+        text:err.response.data.msg,
+        icon:"error",
+        button:"OK"
+      })  
+    }
+  }
     return (
         <div>
         <div className="container-fluid">
@@ -64,7 +128,7 @@ function Actividad() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-6">
-            <h1>Mis Actividades</h1>
+            <h1 className="ubuntu"> Actividades del Paciente </h1>
           </div>
           <div className="col-sm-6 d-none d-sm-block">
             <ol className="breadcrumb float-sm-right">
@@ -75,17 +139,20 @@ function Actividad() {
       </div>
     </section>
 
-    <section className="content pb-3">
+    <section className="content pb-4">
       <div className="container-fluid h-100">
         <div className="paciente card-row card-secondary">
-          <div className="card-header-kaban">
-            <h3 className="card-title">
-              HACER
+          <div className="card-header-kaban line">
+         
+            <h3 className="card-title up-text">
+              Actividades 
             </h3>
-            <FontAwesomeIcon className="circlePaciente" icon={faPlusCircle} />
+            <FontAwesomeIcon onClick={handleShow} className="addACT" icon={faPlusCircle} />
+           
           </div>
+          
           <div className="card-body">
-            <div className="paciente card-info card-outline">
+            <div className="paciente card-info card-outline hover-card">
               <div className="card-header-paciente ">
                 <h5 className="card-title">COORRER</h5>
                 <div className="card-tools">
@@ -96,9 +163,10 @@ function Actividad() {
                 </div>
               </div>
               <div className="card-body">
-
+d
               </div>
             </div>
+
             <div className="paciente card-primary card-outline">
               <div className="card-header-paciente">
                 <h5 className="card-title">MEDICINA</h5>
@@ -172,6 +240,46 @@ function Actividad() {
       </div>
     </section>
   </div>
+
+  <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+              <Modal.Title>{onEdit ? `Update` : "Crea una Nueva actividad"}</Modal.Title>
+          </Modal.Header>
+            <Modal.Body>
+            <Form onSubmit={TaskSubmit}>
+                <Form.Row>
+                    <Form.Group as={Col} >
+                    <Form.Label>Nombre de la Actividad</Form.Label>
+                    <Form.Control name="Activityname" type="text" placeholder=" Actividad"
+                         value={newAct.Activityname} onChange={handleChangeInput}
+                    />
+                    </Form.Group>
+
+                    <Form.Group  className="mb-4">
+                    <Form.Label>Realizar</Form.Label>
+                    <Form.Control  as="textarea" name="Content" type="text" className="form-control font-weight-bold" placeholder="Realizar" 
+                         value={newAct.Content} onChange={handleChangeInput}
+                    />
+                    </Form.Group>
+                </Form.Row>
+                <Form.Group >
+                    <Form.Label>Fecha Para Completar</Form.Label>
+                    <Form.Control name="DateToComplete" type="date" placeholder="Inicio Enfermedad"  min="1900-01-01" max="2021-12-31"
+                     value={newAct.DateToComplete} onChange={handleChangeInput}
+                    />
+                </Form.Group>
+            <Button variant="primary" type="submit" >
+            {onEdit ? "Actualizar" : "Hecho"}
+            </Button>
+            </Form>
+            </Modal.Body>
+
+          <Modal.Footer>
+              <Button variant="danger" onClick={handleClose}>
+                Cerrar
+              </Button>
+          </Modal.Footer>
+        </Modal>
         </div>
     )
 }

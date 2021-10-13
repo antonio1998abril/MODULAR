@@ -1,5 +1,5 @@
-import React, { useContext,useEffect, useState } from 'react'
-import {Form,Col,Button,Modal} from 'react-bootstrap' 
+import React, { useContext,useEffect, useState } from 'react';
+import {Form,Col,Button,Modal} from 'react-bootstrap'; 
 import { GlobalState } from '../GlobalState';
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -37,33 +37,19 @@ function CreatePaciente() {
         const {name,value}=e.target
         setPaciente({...paciente,[name]:value})
     }
-/*     {
-        source: '/api/getpaciente',
-        destination: 'http://localhost:5000/api/getpaciente'
-      },
-      {
-        source: '/api/createpaciente',
-        destination: 'http://localhost:5000/api/createpaciente'
-      },
-      {
-        source: '/api/deletepaciente',
-        destination: 'http://localhost:5000/api/deletepaciente'
-      } */
-
     /* POST AND PUT */
     const handleSubmit=async e=>{
         e.preventDefault()
         try{
-                await axios.post('/api/createpaciente',{...paciente},{
-                    headers:{Authorization:token}
-                })
-                swal({icon:"success",text:`Nuevo Paciente Agregado ${paciente.name}`,timer:"2000",buttons: false});
+            await axios.post('/api/createpaciente',{...paciente},{
+                headers:{Authorization:token}
+            })
+            swal({icon:"success",text:`Nuevo Paciente Agregado ${paciente.name}`,timer:"2000",buttons: false});
             setShow(false);
             setPaciente(initialState)
             setidPaciente('')
             setCallback(!callback)
         }catch(err){
-            console.log(err.response)
             swal({
                 title:"¡Ups",
                 text:err.response.data.msg,
@@ -135,7 +121,6 @@ function CreatePaciente() {
                     />
                 </Form.Group>
 
-                
                 <Form.Group>
                     <Form.Label>Email</Form.Label>
                     <Form.Control name="email"  rows={3} placeholder="Email" 
@@ -149,7 +134,6 @@ function CreatePaciente() {
                      value={paciente.edad} onChange={handleChangeInput}
                     />
                 </Form.Group>
-
 
                 <Form.Group >
                     <Form.Label>Sexo Biologico </Form.Label>
@@ -166,7 +150,6 @@ function CreatePaciente() {
                      value={paciente.diabetesTipo} onChange={handleChangeInput}
                     />
                 </Form.Group>
-
 
                 <Form.Group >
                     <Form.Label>Inicio Enfermedad</Form.Label>

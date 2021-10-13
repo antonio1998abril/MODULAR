@@ -69,7 +69,16 @@ module.exports = {
       },{
         source:'/api/getGlucosa/:id',
         destination: 'http://localhost:5000/api/getGlucosa/:id'
-      }
+      },
+      /* ACT */
+      {
+        source: '/api/postACT',
+        destination: 'http://localhost:5000/api/postACT'
+      },
+      {
+        source: '/api/getAct/:id',
+        destination: 'http://localhost:5000/api/getAct/:id'
+      },
     ]
   }
 }

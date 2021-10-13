@@ -7,6 +7,8 @@ import {Form,Col,Button,Modal} from 'react-bootstrap';
 import { useRouter } from 'next/router'
 import { GlobalState } from '../../components/GlobalState';
 import swal from 'sweetalert'
+import ListAct from '../../components/Item/ListAct/Listact'
+
 function Actividad() {
   const router = useRouter()
   const initialState = {
@@ -41,6 +43,7 @@ function Actividad() {
         headers:{Authorization:token}
       }) 
 
+    setListPacienteAct(res.data.activities)
     },200);
     return () => clearTimeout(timeFunc); 
   }, [callback])
@@ -49,7 +52,6 @@ function Actividad() {
   const TaskSubmit = async e => {
     e.preventDefault()
     try{
-      console.log("No")
        await axios.post('/api/postACT',{...newAct},{
         headers:{Authorization:token}
     }) 
@@ -143,76 +145,17 @@ function Actividad() {
       <div className="container-fluid h-100">
         <div className="paciente card-row card-secondary">
           <div className="card-header-kaban line">
-         
             <h3 className="card-title up-text">
               Actividades 
             </h3>
             <FontAwesomeIcon onClick={handleShow} className="addACT" icon={faPlusCircle} />
-           
           </div>
-          
           <div className="card-body">
-            <div className="paciente card-info card-outline hover-card">
-              <div className="card-header-paciente ">
-                <h5 className="card-title">COORRER</h5>
-                <div className="card-tools">
-                  <a href="#" className="btn btn-tool btn-link">#3</a>
-                  <a href="#" className="btn btn-tool">
-                    <i className="fas fa-pen"></i>
-                  </a>
-                </div>
-              </div>
-              <div className="card-body">
-d
-              </div>
-            </div>
-
-            <div className="paciente card-primary card-outline">
-              <div className="card-header-paciente">
-                <h5 className="card-title">MEDICINA</h5>
-                <div className="card-tools">
-                  <a href="#" className="btn btn-tool btn-link">#4</a>
-                  <a href="#" className="btn btn-tool">
-                    <i className="fas fa-pen"></i>
-                  </a>
-                </div>
-              </div>
-              <div className="card-body">
-
-
-              </div>
-            </div>
-            <div className="paciente card-primary card-outline">
-              <div className="card-header-paciente">
-                <h5 className="card-title">CITA</h5>
-                <div className="card-tools">
-                  <a href="#" className="btn btn-tool btn-link">#6</a>
-                  <a href="#" className="btn btn-tool">
-                    <i className="fas fa-pen"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="paciente card-light card-outline">
-              <div className="card-header-paciente">
-                <h5 className="card-title">COMER</h5>
-                <div className="card-tools">
-                  <a href="#" className="btn btn-tool btn-link">#7</a>
-                  <a href="#" className="btn btn-tool">
-                    <i className="fas fa-pen"></i>
-                  </a>
-                </div>
-
-              </div>
-              <div className="card-body">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa.
-                  Cum sociis natoque penatibus et magnis dis parturient montes,
-                  nascetur ridiculus mus.
-                </p>
-              </div>
-            </div>
+          {
+            ListPacienteAct.map((act,index) => {
+              return <ListAct key={act._id} act={act} index={index}/>
+            })
+          }
           </div>
         </div>
         <div className="paciente card-row card-primary">
@@ -235,8 +178,6 @@ d
             </div>
           </div>
         </div>
-
-
       </div>
     </section>
   </div>

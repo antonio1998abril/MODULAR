@@ -25,11 +25,13 @@ function Actividad() {
 
   const [newAct,setNewAct] = useState(initialState)
   const [ListPacienteAct, setListPacienteAct] = useState([]);
-  const [sizeAct,setSizeAct] = useState()
-  const [show, setShow] = useState(false);
+  const [show, setShow] = state.Paciente.show;
+  const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
+
   const handleShow =()=>setShow(true);
   
   const handleClose = () => {
+    modalsetOnEdit(false)
     setShow(false);
     setNewAct(initialState);
   }
@@ -44,7 +46,7 @@ function Actividad() {
       }) 
 
     setListPacienteAct(res.data.activities)
-    },200);
+    },1000);
     return () => clearTimeout(timeFunc); 
   }, [callback])
 
@@ -184,7 +186,7 @@ function Actividad() {
 
   <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-              <Modal.Title>{onEdit ? `Update` : "Crea una Nueva actividad"}</Modal.Title>
+              <Modal.Title>{modalOnEdit ? `Actualiza` : "Crea Una Nueva actividad"}</Modal.Title>
           </Modal.Header>
             <Modal.Body>
             <Form onSubmit={TaskSubmit}>
@@ -210,7 +212,7 @@ function Actividad() {
                     />
                 </Form.Group>
             <Button variant="primary" type="submit" >
-            {onEdit ? "Actualizar" : "Hecho"}
+            {modalOnEdit ? "Actualizar" : "Hecho"}
             </Button>
             </Form>
             </Modal.Body>

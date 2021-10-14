@@ -12,8 +12,10 @@ function Paciente(token) {
     const [search,setSearch] = useState('')
     const [page, setPage] = useState(1);
     const [result, setResult] = useState(0);
+    /* CHANGE PATIENTS */
+    const [modalOnEdit,modalsetOnEdit] = useState(false);
+    const [show, setShow] = useState(false);
 
-   
     useEffect(() =>{
         const getPacientes = async() => {
             const result = await axios.get(`/api/findPaciente?limit=${page*5}&${sort}&email=${search}`)
@@ -44,6 +46,8 @@ function Paciente(token) {
     result: [result,setResult],
     search: [search,setSearch],
     sort: [sort, setSort],
+    modalOnEdit:[modalOnEdit,modalsetOnEdit],
+    show:[show, setShow],
     GlobalPaciente: [GlobalPaciente, setGlobalPaciente]
     }
 }

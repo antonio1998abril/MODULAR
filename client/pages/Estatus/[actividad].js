@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle,faTrashAlt, faSignOutAlt, faPencilAlt} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import axios from 'axios';
-import {Form,Col,Button,Modal} from 'react-bootstrap'; 
+import {Form,Col,Button,Modal, NavDropdown} from 'react-bootstrap'; 
 import { useRouter } from 'next/router'
 import { GlobalState } from '../../components/GlobalState';
 import swal from 'sweetalert'
@@ -69,6 +69,25 @@ function Actividad() {
         button:"OK"
       })  
     }
+  }
+
+  const actUp = () =>{
+    return (
+      <>
+        <div className="d-grid gap-2">
+            <Button variant="warning" size="sm">
+                Actualizar  <FontAwesomeIcon  icon={faPencilAlt} />    
+              </Button>&nbsp;&nbsp;
+
+              <Button variant="primary" size="sm">
+                Mover a terminados  <FontAwesomeIcon  icon={faSignOutAlt} />    
+              </Button>&nbsp;&nbsp;
+              <Button variant="danger" size="sm">
+                Eliminar Tarea     <FontAwesomeIcon  icon={faTrashAlt} />         
+              </Button>
+            </div>
+      </>
+    )
   }
     return (
         <div>
@@ -211,9 +230,11 @@ function Actividad() {
                      value={newAct.DateToComplete} onChange={handleChangeInput}
                     />
                 </Form.Group>
-            <Button variant="primary" type="submit" >
-            {modalOnEdit ? "Actualizar" : "Hecho"}
-            </Button>
+            
+            {
+              modalOnEdit ? actUp() : 
+                <Button variant="primary" type="submit" >Crear</Button>
+            }
             </Form>
             </Modal.Body>
 

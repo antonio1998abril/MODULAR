@@ -9,8 +9,6 @@ function Listact({act,index}) {
   const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
   const [Show,setShow] = state.Paciente.show;
 
-
-
   const changeState=()=>{
     modalsetOnEdit(true)
     setShow(true)
@@ -30,57 +28,6 @@ function Listact({act,index}) {
         {act.Content}
         </div>
       </div>
-
-{/*       <Modal show={Show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalOnEdit ?  `Update` : "Crea una Nueva actividad"}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Row>
-            <Form.Group as={Col} >
-                    <Form.Label>Nombre de la Actividad</Form.Label>
-                    <Form.Control name="Activityname" type="text" placeholder=" Actividad"
-                         
-                    />
-                    </Form.Group>
-
-                    <Form.Group  className="mb-4">
-                    <Form.Label>Realizar</Form.Label>
-                    <Form.Control  as="textarea" name="Content" type="text" className="form-control font-weight-bold" placeholder="Realizar" 
-                        
-                    />
-                    </Form.Group>
-            </Form.Row>
-            <Form.Group >
-                    <Form.Label>Fecha Para Completar</Form.Label>
-                    <Form.Control name="DateToComplete" type="date" placeholder="Inicio Enfermedad"  min="1900-01-01" max="2021-12-31"
-                     
-                    />
-                </Form.Group>
-            
-
-      <br/>
-            <div className="d-grid gap-2">
-            <Button variant="warning" size="sm">
-                Actualizar  <FontAwesomeIcon  icon={faPencilAlt} />    
-              </Button>&nbsp;&nbsp;
-
-              <Button variant="primary" size="sm">
-                Mover a terminados  <FontAwesomeIcon  icon={faSignOutAlt} />    
-              </Button>&nbsp;&nbsp;
-              <Button variant="danger" size="sm">
-                Eliminar Tarea     <FontAwesomeIcon  icon={faTrashAlt} />         
-              </Button>
-            </div>
-
-    
-             
-          
-          </Form>
-        </Modal.Body>
-        
-      </Modal> */}
       </>
     )
 }

@@ -78,7 +78,10 @@ module.exports = {
       {
         source: '/api/getAct/:id',
         destination: 'http://localhost:5000/api/getAct/:id'
-      },
+      },{
+        source: '/api/deleteAct/:id',
+        destination: 'http://localhost:5000/api/deleteAct/:id'
+      }
     ]
   }
 }

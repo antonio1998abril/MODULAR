@@ -2,23 +2,24 @@ const Act = require ("../Models/ActividadesSchema");
 
 const controller = {
     getAct : async  (req, res, next) => {
-        await Act.find({paciente_id:req.params.id}).lean().then(activities => {
+        console.log("URL",req.params.id)
+        await Act.find({paciente_id:req.params.id}).then(activities => {
             res.json({
-                size:activities.length,
                 activities:activities
             })
         }).catch(next)
     },
     postAct : async(req,res,next) => {
-        const {Activityname,Content,DateToComplete, paciente_id} = req.body;
+        const {TimeToComplete,Activityname,Content,DateToComplete, paciente_id} = req.body;
         
-        if(!Activityname || !Content || !DateToComplete || !paciente_id) return res.status(302).json({msg:"Completa todos los campos."})
+        if(!TimeToComplete || !Activityname || !Content || !DateToComplete || !paciente_id) return res.status(302).json({msg:"Completa todos los campos."})
 
         let ToComplete = new Date(DateToComplete)
         const newActivitiy = new Act({
             Activityname:Activityname,
             Content: Content,
-            DateToComplete:ToComplete,
+            DateToComplete:DateToComplete,
+            TimeToComplete:TimeToComplete,
             paciente_id:paciente_id
         })
         
@@ -30,36 +31,11 @@ const controller = {
         
     },
     deleteAct: async (req,res,next) => {
-        
+        await Act.findByIdAndRemove({_id:req.params.id}).then(()=>{
+            res.json({msg:"Actividad Elminada"})
+        }).catch(next) 
     }
 }
 
 module.exports = controller
 
-/* const ActivitySchema = new Schema({
-    Activityname:{
-        type: String,
-        required: true
-    },
-    Content: {
-        type:String,
-        required: true
-    },
-    DateToComplete:{
-        type:Date,
-        required: true
-    },
-    Status: {
-        default:false,
-        type:Boolean,
-        required: true
-    },
-    paciente_id:{
-        type:Schema.Types.ObjectId,
-        ref:'paciente'
-    }},
-    {
-    timestamps: true
-  })
-
-module.exports = ActivitySchema */

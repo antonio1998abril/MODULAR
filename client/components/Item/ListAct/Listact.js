@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenAlt, faTrashAlt, faSignOutAlt, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
-import { Modal ,Container,Col,Row,Button,Form} from 'react-bootstrap'
+import { faPenAlt} from '@fortawesome/free-solid-svg-icons';
 import { GlobalState } from '../../GlobalState';
 
 function Listact({act,index}) {
@@ -16,14 +15,12 @@ function Listact({act,index}) {
     setIdAct(act._id)
   }
   let complete = new Date( act.DateToComplete)
-
-
     return (
       <>
       <div className="paciente card-info card-outline hover-card">
         <div className="card-header-paciente ">
           <h5 className="card-title">{ act.Activityname}</h5><br/>
-          <span className="description"> <small>Completar antes de {complete.getUTCDate()}/{complete.getMonth()}/{complete.getFullYear()} a las {/* {complete.getHours()}:{d.getMinutes()} */} </small></span>
+          <span className="description"> <small>Completar antes de {complete.getUTCDate()}/{complete.getMonth()}/{complete.getFullYear()} a las {act.TimeToComplete} </small></span>
           <div className="card-tools">
             <a href="#" className="btn btn-tool btn-link">#{index+1}</a>&nbsp;
               <FontAwesomeIcon  onClick={changeState} color="orange" icon={faPenAlt} />

@@ -7,6 +7,7 @@ const controller = {
         }).catch(next)
     },
     postGlucosa : async(req,res,next) => {
+        if(!req.body.Glucosa) return res.status(302).json({msg:"Vacio no puede estar."})
         const newGlucosa = new Glucosa({
             Glucosa:req.body.Glucosa,
             paciente_id:req.body.PacienteId

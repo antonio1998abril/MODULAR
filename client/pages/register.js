@@ -6,7 +6,6 @@ import Router from 'next/router';
 import swal from 'sweetalert'
 import axios from 'axios';
 
-
 const initialState={
     name:'',
     email:'',

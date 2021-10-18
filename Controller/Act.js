@@ -14,7 +14,6 @@ const controller = {
         
         if(!TimeToComplete || !Activityname || !Content || !DateToComplete || !paciente_id) return res.status(302).json({msg:"Completa todos los campos."})
 
-        let ToComplete = new Date(DateToComplete)
         const newActivitiy = new Act({
             Activityname:Activityname,
             Content: Content,
@@ -28,11 +27,14 @@ const controller = {
         }).catch(next)
     },
     updateAct: async(req,res,next) => {
-        
+        const  {Activityname,Content,DateToComplete,TimeToComplete,Status} = req.body
+        await Act.findByIdAndUpdate({_id:req.params.id},{ Activityname,Content,DateToComplete,TimeToComplete,Status}).then(()=>{
+            return res.json({msg:"Actividad Actualizada"})
+        }).catch(next)
     },
     deleteAct: async (req,res,next) => {
         await Act.findByIdAndRemove({_id:req.params.id}).then(()=>{
-            res.json({msg:"Actividad Elminada"})
+            return res.json({msg:"Actividad Elminada"})
         }).catch(next) 
     }
 }

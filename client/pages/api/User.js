@@ -30,10 +30,6 @@ function User(token) {
             getUser()
         }
     },[token]);
-
-
-
-
     return {
         isLogged:[isLogged,setIsLogged],
         perfilInfo:[perfilInfo,setPerfilInfo],

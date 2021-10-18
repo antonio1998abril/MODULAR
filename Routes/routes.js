@@ -35,6 +35,7 @@ const routes = {
     .post('/postACT',auth,ActController.postAct)
     .get('/getAct/:id',auth,ActController.getAct)
     .delete('/deleteAct/:id',ActController.deleteAct)
+    .put('/upAct/:id',auth,ActController.updateAct)
 
     
 }

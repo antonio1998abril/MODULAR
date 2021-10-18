@@ -15,8 +15,6 @@ function Paciente(token) {
     /* CHANGE PATIENTS */
     const [modalOnEdit,modalsetOnEdit] = useState(false);
     const [show, setShow] = useState(false);
-    const [ListPacienteAct, setListPacienteAct] = useState([]);
-    const [IdparamsPatient,setIdparamsPatient] = useState();
     const [idAct,setIdAct] = useState('');
 
     useEffect(() =>{
@@ -37,13 +35,7 @@ function Paciente(token) {
              setPacientes(res.data)
             }
         getCommonUser()
-            
-  
-
-    }
-        
-     
-
+        }
     },[token,callback])
 
     return {
@@ -56,8 +48,6 @@ function Paciente(token) {
     sort: [sort, setSort],
     modalOnEdit:[modalOnEdit,modalsetOnEdit],
     show:[show, setShow],
-    listPacienteAct :[ListPacienteAct, setListPacienteAct],
-    idparamsPatient:[IdparamsPatient,setIdparamsPatient],
     idAct:[idAct,setIdAct],
     GlobalPaciente: [GlobalPaciente, setGlobalPaciente]
     }

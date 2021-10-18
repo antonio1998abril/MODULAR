@@ -42,10 +42,10 @@ module.exports = {
         source: '/api/getExpediente/:id',
         destination: 'http://localhost:5000/api/getExpediente/:id'
       },
-      {
+/*       {
         source: '/api/upExpediente/:id',
         destination: 'http://localhost:5000/api/upExpediente/:id'
-      },
+      }, */
       {
         source:'/api/NewHistorial/:id',
         destination:'http://localhost:5000/api/NewHistorial/:id'
@@ -81,6 +81,9 @@ module.exports = {
       },{
         source: '/api/deleteAct/:id',
         destination: 'http://localhost:5000/api/deleteAct/:id'
+      },{
+        source:'/api/upAct/:id',
+        destination: 'http://localhost:5000/api/upAct/:id'
       }
     ]
   }

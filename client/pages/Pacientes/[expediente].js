@@ -10,7 +10,6 @@ import ExpedienteItem from '../../components/Item/Expediente';
 import Link from 'next/link';
 import swal from 'sweetalert';
 
-
 const Expediente =({data}) =>{
   const state = useContext(GlobalState);
   const [loaded,setLoaded] = useState(false)
@@ -22,7 +21,6 @@ const Expediente =({data}) =>{
   const [actualRegimen] = useState(data[0].Regimen)
   const [allExpedientes] = useState([data[0].allExpedientes])
   const [callback,setCallback] = state.Paciente.callback
-
 
   const ExpedienteState = { 
     InicioEnfermedadMentales:actualExpediente.InicioEnfermedadMentales,

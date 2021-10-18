@@ -27,13 +27,13 @@ function Actividad() {
   const [newAct,setNewAct] = useState(initialState)
   const [show, setShow] = state.Paciente.show;
   const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit;
-  const [IdparamsPatient,setIdparamsPatient] = state.Paciente.idparamsPatient
   const [idAct,setIdAct] = state.Paciente.idAct
   /* Verify login */
   const [islogged]= state.User.isLogged;
   const [loaded,setLoaded] = useState(false);
   const handleShow =()=>setShow(true);
-  const [ListPacienteAct, setListPacienteAct] = state.Paciente.listPacienteAct
+  /* const [ListPacienteAct, setListPacienteAct] = state.Paciente.listPacienteAct */
+  const [ListPacienteAct, setListPacienteAct] = useState([]);
   
   const handleClose = () => {
     modalsetOnEdit(false)
@@ -56,51 +56,62 @@ function Actividad() {
     }else{ 
       setLoaded(true) 
     }
+
+
      if(idAct){
       modalsetOnEdit(true)
-        ListPacienteAct.forEach(list=>{
-            if(list._id ===idAct) {
-              setNewAct(list)
-                setShow(true);
-            }
+        ListPacienteAct.forEach(listAct=>{
+          if(listAct._id ===idAct) {
+            setNewAct(listAct)
+            setShow(true);
+          }
         })
     }else{
       modalsetOnEdit(false)
       setNewAct(initialState)
     }
 
-             /* ANOTHER FUNCTION */
-             let timeFunc = setTimeout(async() => {
-              console.log('buscar')
-              const list = await axios.get(`/api/getAct/${router.query.actividad}`,{
-               headers:{Authorization:token}
-             }) 
-       
-           setListPacienteAct(list.data.activities)
-           },2000);
-  
-           return () => clearTimeout(timeFunc);
- /*           
-    let timeparams = setTimeout(async() => {
-     setIdparamsPatient(router.query.actividad)
-   },200); */
 
-   return () => clearTimeout(timeparams);
-  
+    /* ANOTHER FUNCTION */
+    /* let timeFunc = setTimeout(async() => {
+        const list = await axios.get(`/api/getAct/${router.query.actividad}`,{
+          headers:{Authorization:token}
+        }) 
+      setListPacienteAct(list.data.activities)      
+    },1500);
+    return () => clearTimeout(timeFunc); */
 
-},[ idAct, ListPacienteAct,!islogged])
-
+},[ idAct,!islogged])
+useEffect(()=>{
+  if (token){
+    let timeFunc = setTimeout(async() => {
+      const list = await axios.get(`/api/getAct/${router.query.actividad}`,{
+        headers:{Authorization:token}
+      }) 
+    setListPacienteAct(list.data.activities)      
+  },1500);
+  return () => clearTimeout(timeFunc);
+  }
+},[token,callback])
 
   const TaskSubmit = async e => {
     e.preventDefault()
     try{
-       await axios.post('/api/postACT',{...newAct},{
-        headers:{Authorization:token}
-    }) 
-     swal({icon:"success",text:`Activiad ${newAct.Activityname} agregada correctamente`,timer:"2000",buttons: false}); 
-     setShow(false);
-     setCallback(!callback)
-     setNewAct(initialState)
+      if(modalOnEdit){
+         await axios.put(`/api/upAct/${idAct}`,{...newAct},{
+          headers:{Authorization:token}
+        })
+        swal({icon:"success",text:`Activiad Actualizada correctamente`,timer:"2000",buttons: false}); 
+      }else {
+        await axios.post('/api/postACT',{...newAct},{
+          headers:{Authorization:token}
+        }) 
+       swal({icon:"success",text:`Activiad ${newAct.Activityname} agregada correctamente`,timer:"2000",buttons: false}); 
+      }
+        modalsetOnEdit(false)
+        setShow(false);
+        setNewAct(initialState);
+        setCallback(!callback);
     }catch(err){
       swal({
         title:"¡Ups",
@@ -119,6 +130,8 @@ function Actividad() {
             setCallback(!callback)
         },1000)
         setShow(false);
+        setNewAct(initialState);
+        modalsetOnEdit(false);
     }catch(err){
         swal({
             title:"¡Ups",
@@ -126,16 +139,16 @@ function Actividad() {
             icon:"error",
             button:"OK"
         })
+      }
     }
 
-}
 
   const actUp = () =>{
     return (
       <>
         <div className="d-grid gap-2">
-            <Button variant="warning" size="sm">
-                Actualizar  <FontAwesomeIcon  icon={faPencilAlt} />    
+            <Button variant="warning" size="sm" type="submit">
+                Actualizar    <FontAwesomeIcon  icon={faPencilAlt} />    
               </Button>&nbsp;&nbsp;
               <Button variant="primary" size="sm">
                 Mover a Terminados  <FontAwesomeIcon  icon={faSignOutAlt} />    

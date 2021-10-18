@@ -122,11 +122,7 @@ const controller = {
 
             
     },    
-     updateRegimen: async (req,res, next) => {
-        await Regimen.findByIdAndUpdate({paciente_id:req.params.id},{Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo,Ejercicio,Comida}).then(()=>{
-            res.json({msg:"Regimen Actualizado Actualizado"})
-        }).catch(next) 
-        }, 
+
 
     /* Actaual EXPEDIENTE */
     CreateExpediente: async(req, res ,next) => {

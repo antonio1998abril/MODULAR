@@ -25,8 +25,6 @@ function ActividadItem({actividad}) {
 
   const [GlucosaHistorial,setGlucosaHistorial] = useState([])
 
-
-
   useEffect(()=>{
     const getHistorialGlucosa = async () =>{
       const res= await axios.get(`/api/getGlucosa/${actividad._id}`,{

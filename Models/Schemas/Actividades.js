@@ -12,7 +12,11 @@ const ActivitySchema = new Schema({
         required: true
     },
     DateToComplete:{
-        type:Date,
+        type:String,
+        required: true
+    },
+    TimeToComplete:{
+        type:String,
         required: true
     },
     Status: {

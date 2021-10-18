@@ -8,20 +8,25 @@ function Listact({act,index}) {
   const state = useContext(GlobalState)
   const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
   const [Show,setShow] = state.Paciente.show;
+  const [idAct,setIdAct] = state.Paciente.idAct
 
   const changeState=()=>{
     modalsetOnEdit(true)
     setShow(true)
+    setIdAct(act._id)
   }
+  let complete = new Date( act.DateToComplete)
+
 
     return (
       <>
       <div className="paciente card-info card-outline hover-card">
         <div className="card-header-paciente ">
-          <h5 className="card-title">{ act.Activityname}</h5>
+          <h5 className="card-title">{ act.Activityname}</h5><br/>
+          <span className="description"> <small>Completar antes de {complete.getUTCDate()}/{complete.getMonth()}/{complete.getFullYear()} a las {/* {complete.getHours()}:{d.getMinutes()} */} </small></span>
           <div className="card-tools">
             <a href="#" className="btn btn-tool btn-link">#{index+1}</a>&nbsp;
-              <FontAwesomeIcon /* onClick={handleShow} */ onClick={changeState} color="orange" icon={faPenAlt} />
+              <FontAwesomeIcon  onClick={changeState} color="orange" icon={faPenAlt} />
           </div>
         </div>
         <div className="card-body">

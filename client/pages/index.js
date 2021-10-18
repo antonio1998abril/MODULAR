@@ -11,9 +11,10 @@ import Link from 'next/link'
 
 export default function Home() {
     const state = useContext(GlobalState);
-    const [islogged]= state.User.isLogged
-    const [loaded,setLoaded] = useState(false)
-    const [singInData]= state.User.perfilInfo
+    const [islogged]= state.User.isLogged;
+    const [loaded,setLoaded] = useState(false);
+    const [singInData]= state.User.perfilInfo;
+    
     useEffect(() => {
       if(!islogged) {
         let timerFunc = setTimeout(() => {
@@ -66,10 +67,6 @@ export default function Home() {
       <div> <FontAwesomeIcon icon={faAppleAlt}  className="IconIndex"/></div>     
       </div>
       </Link>
-      
-
-      
-
     </div>
  </>
  

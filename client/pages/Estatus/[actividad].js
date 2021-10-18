@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { GlobalState } from '../../components/GlobalState';
 import swal from 'sweetalert'
 import ListAct from '../../components/Item/ListAct/Listact'
+import Router from 'next/router';
 
 function Actividad() {
   const router = useRouter()
@@ -15,40 +16,79 @@ function Actividad() {
     Activityname:'',
     Content:'',
     DateToComplete:'',
+    TimeToComplete:'',
+    Status: '',
     paciente_id:router.query.actividad
   }
   
   const state = useContext(GlobalState)
   const [token] = state.token
   const [callback,setCallback]=state.Paciente.callback;
-  const [onEdit,setOnEdit] =useState(false);
-
   const [newAct,setNewAct] = useState(initialState)
-  const [ListPacienteAct, setListPacienteAct] = useState([]);
   const [show, setShow] = state.Paciente.show;
-  const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
-
+  const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit;
+  const [IdparamsPatient,setIdparamsPatient] = state.Paciente.idparamsPatient
+  const [idAct,setIdAct] = state.Paciente.idAct
+  /* Verify login */
+  const [islogged]= state.User.isLogged;
+  const [loaded,setLoaded] = useState(false);
   const handleShow =()=>setShow(true);
+  const [ListPacienteAct, setListPacienteAct] = state.Paciente.listPacienteAct
   
   const handleClose = () => {
     modalsetOnEdit(false)
     setShow(false);
     setNewAct(initialState);
+    setIdAct('');
   }
   const handleChangeInput=e=>{
     const {name,value}=e.target
     setNewAct({...newAct,[name]:value})
-}
-  useEffect(() => {
-    let timeFunc = setTimeout(async() => {
-       const res = await axios.get(`/api/getAct/${router.query.actividad}`,{
-        headers:{Authorization:token}
-      }) 
+  }
+  
+  useEffect(()=>{    
+    if(!islogged) {
+      let timerFunc = setTimeout(() => {
+        Router.push('/login')
+      }, 100);
 
-    setListPacienteAct(res.data.activities)
-    },1000);
-    return () => clearTimeout(timeFunc); 
-  }, [callback])
+      return () => clearTimeout(timerFunc);
+    }else{ 
+      setLoaded(true) 
+    }
+     if(idAct){
+      modalsetOnEdit(true)
+        ListPacienteAct.forEach(list=>{
+            if(list._id ===idAct) {
+              setNewAct(list)
+                setShow(true);
+            }
+        })
+    }else{
+      modalsetOnEdit(false)
+      setNewAct(initialState)
+    }
+
+             /* ANOTHER FUNCTION */
+             let timeFunc = setTimeout(async() => {
+              console.log('buscar')
+              const list = await axios.get(`/api/getAct/${router.query.actividad}`,{
+               headers:{Authorization:token}
+             }) 
+       
+           setListPacienteAct(list.data.activities)
+           },2000);
+  
+           return () => clearTimeout(timeFunc);
+ /*           
+    let timeparams = setTimeout(async() => {
+     setIdparamsPatient(router.query.actividad)
+   },200); */
+
+   return () => clearTimeout(timeparams);
+  
+
+},[ idAct, ListPacienteAct,!islogged])
 
 
   const TaskSubmit = async e => {
@@ -71,6 +111,25 @@ function Actividad() {
     }
   }
 
+  const deleteAct = async(id)=>{
+    try{
+        const deleteAct=axios.delete(`/api/deleteAct/${id}`)
+        await deleteAct
+        swal({icon:"success",text:"Actividad Eliminada",timer:"2000", buttons: false}).then(function(){
+            setCallback(!callback)
+        },1000)
+        setShow(false);
+    }catch(err){
+        swal({
+            title:"¡Ups",
+            text: err.response.data.msg,
+            icon:"error",
+            button:"OK"
+        })
+    }
+
+}
+
   const actUp = () =>{
     return (
       <>
@@ -78,17 +137,20 @@ function Actividad() {
             <Button variant="warning" size="sm">
                 Actualizar  <FontAwesomeIcon  icon={faPencilAlt} />    
               </Button>&nbsp;&nbsp;
-
               <Button variant="primary" size="sm">
-                Mover a terminados  <FontAwesomeIcon  icon={faSignOutAlt} />    
+                Mover a Terminados  <FontAwesomeIcon  icon={faSignOutAlt} />    
               </Button>&nbsp;&nbsp;
-              <Button variant="danger" size="sm">
-                Eliminar Tarea     <FontAwesomeIcon  icon={faTrashAlt} />         
+              <Button variant="danger" size="sm" onClick={()=>deleteAct(newAct._id)} >
+                Eliminar Tarea     <FontAwesomeIcon  icon={faTrashAlt}  />         
               </Button>
             </div>
       </>
     )
   }
+
+
+
+  if (!loaded) { return <div></div> } 
     return (
         <div>
         <div className="container-fluid">
@@ -143,10 +205,7 @@ function Actividad() {
           </div>
         </div>
       </div> 
-
-{/* ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss */}
-
-<div className="kanban" /* style="min-height: 1191px;" */>
+  <div className="kanban" /* style="min-height: 1191px;" */>
     <section className="content-header">
       <div className="container-fluid">
         <div className="row">
@@ -172,17 +231,17 @@ function Actividad() {
             <FontAwesomeIcon onClick={handleShow} className="addACT" icon={faPlusCircle} />
           </div>
           <div className="card-body">
-          {
+            {
             ListPacienteAct.map((act,index) => {
               return <ListAct key={act._id} act={act} index={index}/>
             })
-          }
+          }  
           </div>
         </div>
         <div className="paciente card-row card-primary">
           <div className="card-header-kaban">
             <h3 className="card-title">
-              Hecho
+              Actividades Terminadas
             </h3>
           </div>
           <div className="card-body">
@@ -205,7 +264,7 @@ function Actividad() {
 
   <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-              <Modal.Title>{modalOnEdit ? `Actualiza` : "Crea Una Nueva actividad"}</Modal.Title>
+              <Modal.Title>{modalOnEdit ? `Actualizar Actividad` : "Crea Una Nueva Actividad"}</Modal.Title>
           </Modal.Header>
             <Modal.Body>
             <Form onSubmit={TaskSubmit}>
@@ -218,16 +277,22 @@ function Actividad() {
                     </Form.Group>
 
                     <Form.Group  className="mb-4">
-                    <Form.Label>Realizar</Form.Label>
+                    <Form.Label>Descripcion de la Actividad</Form.Label>
                     <Form.Control  as="textarea" name="Content" type="text" className="form-control font-weight-bold" placeholder="Realizar" 
                          value={newAct.Content} onChange={handleChangeInput}
                     />
                     </Form.Group>
                 </Form.Row>
                 <Form.Group >
-                    <Form.Label>Fecha Para Completar</Form.Label>
-                    <Form.Control name="DateToComplete" type="date" placeholder="Inicio Enfermedad"  min="1900-01-01" max="2021-12-31"
+                    <Form.Label>Completar antes de la Fecha</Form.Label>
+                    <Form.Control name="DateToComplete"  type='date'   min="2017-01-01" max="2050-12-31"
                      value={newAct.DateToComplete} onChange={handleChangeInput}
+                    />
+                </Form.Group>
+                <Form.Group >
+                    <Form.Label>Completar antes de la Hora</Form.Label>
+                    <Form.Control name="TimeToComplete"  type='time'  
+                     value={newAct.TimeToComplete} onChange={handleChangeInput}
                     />
                 </Form.Group>
             

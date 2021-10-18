@@ -39,7 +39,7 @@ function Result() {
             <div className="card-body">
                 <div className="row">
                     <div className="col-12">
-                        <h4> Buscando</h4>
+                        <h4> Resultado</h4>
                             {
                                 pacientes.map(paciente => {
                                     return <SearchItem key={paciente._id} paciente={paciente}/>

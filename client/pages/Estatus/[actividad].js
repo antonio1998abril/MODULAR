@@ -9,6 +9,7 @@ import { GlobalState } from '../../components/GlobalState';
 import swal from 'sweetalert'
 import ListAct from '../../components/Item/ListAct/Listact'
 import Router from 'next/router';
+import Doneact from '../../components/Item/ListAct/Doneact';
 
 function Actividad() {
   const router = useRouter()
@@ -34,6 +35,7 @@ function Actividad() {
   const handleShow =()=>setShow(true);
   /* const [ListPacienteAct, setListPacienteAct] = state.Paciente.listPacienteAct */
   const [ListPacienteAct, setListPacienteAct] = useState([]);
+  const [ListDone,setListAct]  = useState([]);
   
   const handleClose = () => {
     modalsetOnEdit(false)
@@ -56,8 +58,6 @@ function Actividad() {
     }else{ 
       setLoaded(true) 
     }
-
-
      if(idAct){
       modalsetOnEdit(true)
         ListPacienteAct.forEach(listAct=>{
@@ -88,8 +88,9 @@ useEffect(()=>{
       const list = await axios.get(`/api/getAct/${router.query.actividad}`,{
         headers:{Authorization:token}
       }) 
+    setListAct(list.data.doneAct)
     setListPacienteAct(list.data.activities)      
-  },1500);
+  },500);
   return () => clearTimeout(timeFunc);
   }
 },[token,callback])
@@ -112,6 +113,7 @@ useEffect(()=>{
         setShow(false);
         setNewAct(initialState);
         setCallback(!callback);
+        setIdAct('')
     }catch(err){
       swal({
         title:"¡Ups",
@@ -124,14 +126,23 @@ useEffect(()=>{
 
   const deleteAct = async(id)=>{
     try{
-        const deleteAct=axios.delete(`/api/deleteAct/${id}`)
-        await deleteAct
-        swal({icon:"success",text:"Actividad Eliminada",timer:"2000", buttons: false}).then(function(){
-            setCallback(!callback)
-        },1000)
-        setShow(false);
-        setNewAct(initialState);
-        modalsetOnEdit(false);
+        swal({
+          title:"Seguro?",
+          text: "Quieres Eliminar esta Actividad?",
+          icon:"warning",
+          buttons:["No","Yes"]
+        }).then(async(res)=> {
+          if(res) {
+            const deleteAct=axios.delete(`/api/deleteAct/${id}`)
+            await deleteAct
+            swal({icon:"success",text:"Actividad Eliminada",timer:"2000", buttons: false}).then(function(){
+                setCallback(!callback)
+            },1000)
+            setShow(false);
+            setNewAct(initialState);
+            modalsetOnEdit(false);
+          }
+        })
     }catch(err){
         swal({
             title:"¡Ups",
@@ -139,6 +150,36 @@ useEffect(()=>{
             icon:"error",
             button:"OK"
         })
+      }
+    }
+
+    const doneAct = async(id)=> {
+      try{
+        swal({
+          title:"Seguro?",
+          text: "Quieres Mover a terminados esta Actividad?",
+          icon:"warning",
+          buttons:["No","Yes"]
+        }).then(async(res)=> {
+          if(res) {
+            const moveAct=axios.put(`/api/doneAct/${id}`)
+            await moveAct
+            swal({icon:"success",text:"Actividad Ralizada",timer:"2000", buttons: false}).then(function(){
+                setCallback(!callback)
+            },1000)
+            setShow(false);
+            setNewAct(initialState);
+            modalsetOnEdit(false);
+          }
+        })
+
+      }catch(err){
+        swal({
+          title:"¡Ups",
+          text: err.response.data.msg,
+          icon:"error",
+          button:"OK"
+      })
       }
     }
 
@@ -150,7 +191,7 @@ useEffect(()=>{
             <Button variant="warning" size="sm" type="submit">
                 Actualizar    <FontAwesomeIcon  icon={faPencilAlt} />    
               </Button>&nbsp;&nbsp;
-              <Button variant="primary" size="sm">
+              <Button variant="primary" size="sm" onClick={()=>doneAct(newAct._id)}>
                 Mover a Terminados  <FontAwesomeIcon  icon={faSignOutAlt} />    
               </Button>&nbsp;&nbsp;
               <Button variant="danger" size="sm" onClick={()=>deleteAct(newAct._id)} >
@@ -257,19 +298,12 @@ useEffect(()=>{
               Actividades Terminadas
             </h3>
           </div>
-          <div className="card-body">
-            <div className="paciente card-primary card-outline">
-              <div className="card-header-paciente">
-                <h5 className="card-title">comer</h5>
-                <div className="card-tools">
-                  <a href="#" className="btn btn-tool btn-link">#5</a>
-                  <a href="#" className="btn btn-tool">
-                    <i className="fas fa-pen"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+
+           {
+            ListDone.map((act,index) => {
+              return <Doneact key={act._id} act={act} index={index}/>
+            })
+          } 
         </div>
       </div>
     </section>
@@ -277,7 +311,7 @@ useEffect(()=>{
 
   <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-              <Modal.Title>{modalOnEdit ? `Actualizar Actividad` : "Crea Una Nueva Actividad"}</Modal.Title>
+              <Modal.Title>{modalOnEdit ? `Actualizar actividad` : "Crea una nueva actividad"}</Modal.Title>
           </Modal.Header>
             <Modal.Body>
             <Form onSubmit={TaskSubmit}>

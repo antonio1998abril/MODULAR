@@ -2,10 +2,19 @@ const Act = require ("../Models/ActividadesSchema");
 
 const controller = {
     getAct : async  (req, res, next) => {
-        console.log("URL",req.params.id)
         await Act.find({paciente_id:req.params.id}).then(activities => {
+            const doneact = [];
+            const pending = [];
+            for (i = 0; i < activities.length; i++){
+                if(activities[i].Status === true){
+                    doneact.push(activities[i])
+                } else {
+                pending.push(activities[i])
+                } 
+            } 
             res.json({
-                activities:activities
+                activities:pending,
+                doneAct:doneact
             })
         }).catch(next)
     },
@@ -36,6 +45,24 @@ const controller = {
         await Act.findByIdAndRemove({_id:req.params.id}).then(()=>{
             return res.json({msg:"Actividad Elminada"})
         }).catch(next) 
+    },
+    DoneAct: async(req,res,next) =>{
+        await Act.findByIdAndUpdate({_id:req.params.id},{Status:true}).then(()=>{
+            return res.json({msg:"Activdad Hecha"})
+        })
+    },
+    Backoff: async(req, res, next) =>{
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        let yyyy = today.getFullYear();
+
+        
+        today =  yyyy + '-' + mm + '-' + dd;
+
+        await Act.findByIdAndUpdate({_id:req.params.id},{Status:false},{DateToComplete:today}).then(()=>{
+            return res.json({msg:"Activdad Hecha"})
+        })
     }
 }
 

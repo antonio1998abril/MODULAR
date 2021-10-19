@@ -84,6 +84,12 @@ module.exports = {
       },{
         source:'/api/upAct/:id',
         destination: 'http://localhost:5000/api/upAct/:id'
+      },{
+        source:'/api/doneAct/:id',
+        destination: 'http://localhost:5000/api/doneAct/:id'
+      },{
+        source:'/api/backOff/:id',
+        destination: 'http://localhost:5000/api/backOff/:id'
       }
     ]
   }

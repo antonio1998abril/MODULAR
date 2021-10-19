@@ -22,7 +22,6 @@ function Info() {
           buttons:["No","Yes"]
       }).then(async (res)=>{
           if(res){
-       /*      let hello = async () => { return "Hello" }; */
        const deletePaciente=axios.delete(`/api/deletePaciente/${id}`,{
          headers:{Authorization:token}
        })

@@ -245,6 +245,9 @@ height: 1px;
   border-top: 3px solid #17a2b8;
 }
 
+.card-danger.card-outline {
+  border-top: 3px solid #b85217;
+}
 .kanban .btn-tool.btn-link {
   text-decoration: underline;
   padding-left: 0;

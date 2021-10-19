@@ -8,11 +8,14 @@ function Listact({act,index}) {
   const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
   const [Show,setShow] = state.Paciente.show;
   const [idAct,setIdAct] = state.Paciente.idAct
+  const [callback,setCallback]=state.Paciente.callback;
 
   const changeState=()=>{
     modalsetOnEdit(true)
     setShow(true)
     setIdAct(act._id)
+    console.log(act.Activityname)
+    setCallback(!callback)
   }
   let complete = new Date( act.DateToComplete)
     return (

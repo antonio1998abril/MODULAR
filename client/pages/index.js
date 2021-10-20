@@ -34,8 +34,8 @@ export default function Home() {
   <>
     <div className="card-body col-12">
       <div className="callout callout-info">
-          <h5><i className="fas fa-info"></i> Nota:</h5>
-          <h1>Estatus Valores Globales:</h1>
+          <h6><i className="fas fa-info"></i> Nota:</h6>
+          <h4>Estatus Valores Globales:</h4>
       </div>
     </div>
 
@@ -48,14 +48,14 @@ export default function Home() {
       </Link>
       <Link href="/Admin/Citas">
       <div className="card dates ">
-      <div className="titleIndex"><b>Estatus de Citas : 80%</b></div>
+      <div className="titleIndex"><b>Estatus de Citas 80%</b></div>
       <div> <FontAwesomeIcon icon={faClipboardCheck}   className="IconIndex"/></div>
      
       </div>
       </Link>
       <Link href="/Admin/Citas">
       <div className="card activities ">
-      <div className="titleIndex"><b> Estatus de Actividad : 20%</b></div>
+      <div className="titleIndex"><b> Estatus de Actividad 20%</b></div>
       <div> <FontAwesomeIcon icon={faWalking}  className="IconIndex"/></div>
      
       </div>
@@ -63,7 +63,7 @@ export default function Home() {
       <Link href="/Admin/Citas">
     
       <div className="card nutrition ">
-      <div className="titleIndex"><b> Estatus de Nutricion : 60%</b></div>
+      <div className="titleIndex"><b> Estatus de Nutricion 60%</b></div>
       <div> <FontAwesomeIcon icon={faAppleAlt}  className="IconIndex"/></div>     
       </div>
       </Link>

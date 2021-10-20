@@ -19,11 +19,11 @@
 .gridIndex {
     display: grid;
     grid-template-columns: 50% 50% ;
-    gap:1em;
+    gap:0.5em;
 }
 
 .gridIndex div {
-    padding: 1em;
+    padding: 0.5em;
     
 }
 
@@ -37,7 +37,7 @@ div .cardheart {
 
 
 .titleIndex {
-    font-size: 65px;
+    font-size: 60px;
     color:#fff;
     font-family: "ubuntu";
 }
@@ -66,10 +66,11 @@ div .patient {
 }
 
 .IconIndex{
-    font-size: 250px;
+    font-size: 200px;
     position: absolute;
-    right: 15px;
+    right: 10px;
     color:rgba(0,0,0,.15);
+    padding-top: 1rem;
 }
 
 @media (max-width: 1841px) {

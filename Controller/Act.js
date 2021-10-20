@@ -57,11 +57,10 @@ const controller = {
         let mm = String(today.getMonth() + 1).padStart(2, '0'); 
         let yyyy = today.getFullYear();
 
-        
         today =  yyyy + '-' + mm + '-' + dd;
-
-        await Act.findByIdAndUpdate({_id:req.params.id},{Status:false},{DateToComplete:today}).then(()=>{
-            return res.json({msg:"Activdad Hecha"})
+       
+        await Act.findByIdAndUpdate({_id:req.params.id},{DateToComplete:today,Status:false}).then(()=>{
+            return res.json({msg:"Activdad Retornada"})
         })
     }
 }

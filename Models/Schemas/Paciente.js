@@ -40,14 +40,14 @@ const PacienteSchema = new Schema({
         type:String,
         required: true
     },
-    Citas:[{
+/*     Citas:[{
         type:Schema.Types.ObjectId,
         ref:'citas'
-      }],
-    Activities:[{
+      }], */
+  /*   Activities:[{
         type:Schema.Types.ObjectId,
         ref:'actividades'
-      }],
+      }], */
     allExpedientes:[{
         type:Schema.Types.ObjectId,
         ref:'expediente'

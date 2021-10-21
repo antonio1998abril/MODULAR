@@ -5,9 +5,11 @@ const auth = require('../Middleware/auth');
 const BuscarController = require('../Controller/Buscar');
 const GlucosaController = require('../Controller/Glucosa');
 const ActController = require('../Controller/Act');
-const Reminder = require('../Models/ActividadesSchema');
+const Activities = require('../Models/ActividadesSchema');
 const nodemailer=require('nodemailer')
 const Paciente = require('../Models/PacienteSchema')
+const util = require('util');
+
 
 const routes = {
     user: express.Router()
@@ -52,18 +54,16 @@ function tick(){
     var minutes=new Date().getMinutes();
     var seconds=new Date().getSeconds();
     const time=hours+':'+minutes+':'+seconds
-    if(time >= "14:00:0"  && time <= "19:24:00"){
+    if(time >= "10:00:0"  && time <= "19:00:00"){
         getremind()
     }
    
 }
-setInterval(tick,20000);
+setInterval(tick,100000);
 
 
 function getremind(){
-    console.log("recordar")
     const getAct = async()=> {
-        const  ListReminderDate = [];
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -71,58 +71,46 @@ function getremind(){
               pass: process.env.PASSEMAIL
             }
           });
+          let ListReminder = await Activities.find({Status:false}).lean().populate('paciente_id')
+          ListReminder = JSON.stringify(ListReminder) 
+          ListReminder = JSON.parse(ListReminder)
+          //ListReminder  = util.inspect(ListReminder, false, null)
+          // ListReminder = JSON.stringify(ListReminder) 
+          //ListReminder = JSON.parse(ListReminder)
+        /*   console.log(ListReminder[0])  */
 
-          const ListReminder = await Reminder.find().lean();
-          const ListPatient = await Paciente.find().lean();
-        
-      
-            for (i =0 ; i< ListReminder.length; i++ ) {
+             //agarrar la fecha actual y de la busqueda de los usuarios agregarle dos dias y si conincide con la fecha actual pumm enviar
+           /*    let g =ListReminder[0].paciente_id
+              console.log(g.name)
+              console.log(ListReminder[0].Activityname) */
+            if (ListReminder.length >= 0){
+             for (i =0 ; i< ListReminder.length; i++ ) {
+                 
+                let info =ListReminder[i].paciente_id
+                const State =  new Object({
+                    name: info.name,
+                    lastname:info.lastname,
+                    email:info.email,
+                    Activityname:ListReminder[i].Activityname,
+                    DateToComplete:ListReminder[i].DateToComplete,
+                    TimeToComplete:ListReminder[i].TimeToComplete
+                })
+                
 
-                for (i =0 ; i< ListPatient.length; i++ ) {
-                  if (ListReminder[i].paciente_id === ListPatient[i]._id) {
-                      console.log("coincide")
-                    const State =  new Object({
-                        name: ListPatient[i].name,
-                        lastname:ListPatient[i].lastname,
-                        email:ListPatient[i].email,
-                        Activityname:ListReminder[i].Activityname,
-                        DateToComplete:ListReminder[i].DateToComplete,
-                        TimeToComplete:ListReminder[i].TimeToComplete
-                    })
-                    console.log("Objext",State) 
-                    
-                   /*  ListReminderDate.push(State) */
-                } 
-              
-            }
-        }
-        
-       
-               
-
-
-
-            
-      /*       for (i=0; i< act.length; i++){
-                console.log(act[i].DateToComplete)
-                const setInfo = {
-
-                } */
-/*                   let mailOptions = {
+             console.log("Mensaje enviado")
+/*                  let mailOptions = {
                     from: process.env.MESSAGEEMAIL,
-                    to: act[i].email,
-                    subject: 'Thank you :C',
-                    text: 'Thank you to respond the form but you dont coincides with our requeriments',
-                };
-        
-                transporter.sendMail(mailOptions, function(error, info){ 
+                    to: info.email,
+                    subject: `La actividad ${State.Activityname} vence pronto!!! `,
+                    text: `La actividad ${State.Activityname} asignada a ${State.name} ${State.lastname} debera completarse pronto antes del ${State.DateToComplete} a las ${State.TimeToComplete}` ,
+                }; 
+                 transporter.sendMail(mailOptions, function(error, info){ 
                     if (error) { console.log(error); } else {console.log('Email sent: ' + info.response); }
-                }); 
-              */
-          /*   } */
-
-           
-        
+                });  */
+    
+              
+            }        
+        }
     }
 
     getAct()

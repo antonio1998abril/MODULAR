@@ -1,4 +1,5 @@
 const Act = require ("../Models/ActividadesSchema");
+const Paciente = require("../Models/PacienteSchema")
 
 const controller = {
     getAct : async  (req, res, next) => {
@@ -20,7 +21,6 @@ const controller = {
     },
     postAct : async(req,res,next) => {
         const {TimeToComplete,Activityname,Content,DateToComplete, paciente_id} = req.body;
-        
         if(!TimeToComplete || !Activityname || !Content || !DateToComplete || !paciente_id) return res.status(302).json({msg:"Completa todos los campos."})
 
         const newActivitiy = new Act({
@@ -30,7 +30,6 @@ const controller = {
             TimeToComplete:TimeToComplete,
             paciente_id:paciente_id
         })
-        
         await newActivitiy.save().then(()=> {
             return res.json({msg:"Nueva Actividad Agregada"})
         }).catch(next)
@@ -42,7 +41,9 @@ const controller = {
         }).catch(next)
     },
     deleteAct: async (req,res,next) => {
-        await Act.findByIdAndRemove({_id:req.params.id}).then(()=>{
+       /* ELIMINA DE MANERA LOGICA PERO NO REAL PERO TIENEN QUE ESTAR INVERTIDOS LOS AWAITS */
+        await Act.findByIdAndRemove({_id:req.params.id}).then(async()=>{
+            /* await Paciente.findOneAndUpdate({Activities:req.params.id},{ $pull: {Activities:req.params.id } })  */
             return res.json({msg:"Actividad Elminada"})
         }).catch(next) 
     },

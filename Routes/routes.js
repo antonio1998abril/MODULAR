@@ -7,8 +7,8 @@ const GlucosaController = require('../Controller/Glucosa');
 const ActController = require('../Controller/Act');
 const Activities = require('../Models/ActividadesSchema');
 const nodemailer=require('nodemailer')
-const Paciente = require('../Models/PacienteSchema')
 const util = require('util');
+const moment = require('moment')
 
 
 const routes = {
@@ -52,17 +52,16 @@ tick()
 function tick(){
     var hours =new Date().getHours();
     var minutes=new Date().getMinutes();
-    var seconds=new Date().getSeconds();
-    const time=hours+':'+minutes+':'+seconds
-    if(time >= "10:00:0"  && time <= "19:00:00"){
-        getremind()
+    const time=hours+':'+minutes
+    if(time >= "10:00"  && time <= "19:00"){
+        getremind(time)
     }
    
 }
-setInterval(tick,100000);
+setInterval(tick,30000);
 
 
-function getremind(){
+function getremind(time){
     const getAct = async()=> {
         let transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -71,9 +70,34 @@ function getremind(){
               pass: process.env.PASSEMAIL
             }
           });
-          let ListReminder = await Activities.find({Status:false}).lean().populate('paciente_id')
-          ListReminder = JSON.stringify(ListReminder) 
-          ListReminder = JSON.parse(ListReminder)
+
+        let ListReminder = await Activities.find({Status:false}).lean().populate('paciente_id')
+        ListReminder = JSON.stringify(ListReminder) 
+        ListReminder = JSON.parse(ListReminder)
+
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth()).padStart(2, '0'); 
+        let yyyy = today.getFullYear();
+        /* FECHA DE HOY */
+        today =  yyyy + '-' + mm + '-' + dd; 
+
+        let tomorrowDay = moment(today, "YYYY.MM.DD");
+        tomorrowDay =tomorrowDay.add(1, 'days').toDate().getDate();
+/* let cca = moment(today).add(2, 'months')
+console.log(cca.toDate().getMonth()) */
+
+        let tomorrow = new Date();
+        let tomorrowMonth =  moment(new Date()).add(1, 'M').toDate();
+        /* FECHA DE MAÑANA */
+        tomorrow =  tomorrowMonth.getFullYear() + '-' + tomorrowMonth.getMonth() + '-' + tomorrowDay ;
+        /* time with 15 minutos de antelacion */
+        /* HORA MAS QUINCE MINUTOS */
+        let minutes15 = moment(new Date()).add(15, 'm').toDate();
+        let Remember15 = minutes15.getHours()+':'+minutes15.getMinutes();
+        
+
+
           //ListReminder  = util.inspect(ListReminder, false, null)
           // ListReminder = JSON.stringify(ListReminder) 
           //ListReminder = JSON.parse(ListReminder)
@@ -95,9 +119,20 @@ function getremind(){
                     DateToComplete:ListReminder[i].DateToComplete,
                     TimeToComplete:ListReminder[i].TimeToComplete
                 })
+                /* comparar fecha del  usuario con la variable tomorrow */
+                if (ListReminder[i].DateToComplete == tomorrow){
+                    let getTimeToRemember = moment(tomorrow + ListReminder[i].TimeToComplete , "YYYY.MM.DD HH.mm").toDate(); 
+                    let RemHour = getTimeToRemember.getHours() + 2
+                    let RemMinu = getTimeToRemember.getMinutes()
+                    /* hora del usuario a completar */
+                    getTimeToRemember = RemHour+':'+RemMinu
+                  if(getTimeToRemember == time  || ListReminder[i].TimeToComplete == Remember15){
+                    
+                    console.log("MENSAJE ENVIADO")
+                  }
+                    
+                } 
                 
-
-             console.log("Mensaje enviado")
 /*                  let mailOptions = {
                     from: process.env.MESSAGEEMAIL,
                     to: info.email,
@@ -109,7 +144,12 @@ function getremind(){
                 });  */
     
               
-            }        
+            }  
+            console.log("**********************************")
+            console.log("Tiempo 15 MINUTOS ANTES: ",Remember15)
+            console.log("Tiempo comparar dos horas despues pero de la hora de la cita: ",time)
+            console.log("Fecha un dia despues",tomorrow)
+            console.log("**********************************")
         }
     }
 

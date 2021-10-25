@@ -90,6 +90,11 @@ module.exports = {
       },{
         source:'/api/backOff/:id',
         destination: 'http://localhost:5000/api/backOff/:id'
+      },
+      /* GRAPSH */
+      {
+        source:'/api/graph/:id',
+        destination: 'http://localhost:5000/api/graph/:id'
       }
     ]
   }

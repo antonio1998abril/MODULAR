@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenAlt} from '@fortawesome/free-solid-svg-icons';
 import { GlobalState } from '../../GlobalState';
+const moment = require('moment') 
 
 function Listact({act,index}) {
   const state = useContext(GlobalState)
@@ -18,6 +19,7 @@ function Listact({act,index}) {
     setCallback(!callback)
   }
   let complete = new Date( act.DateToComplete)
+  complete = moment(complete).add(1, 'M').toDate();
     return (
       <>
       <div className="paciente card-info card-outline hover-card">

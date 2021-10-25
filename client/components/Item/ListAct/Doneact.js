@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply,faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import { GlobalState } from '../../GlobalState'
 import axios from 'axios';
+const moment = require('moment') 
 
 function Doneact({act,index}) {
     const state = useContext(GlobalState)
@@ -76,6 +77,7 @@ function Doneact({act,index}) {
         }
 
     let complete = new Date( act.DateToComplete)
+    complete = moment(new Date()).add(1, 'M').toDate();
       return (
         <>
         <div className="card-body">

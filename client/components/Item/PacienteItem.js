@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash,faFileMedical,faEdit,faPhone,faMailBulk} from '@fortawesome/free-solid-svg-icons'
+import { faTrash,faFileMedical,faEdit,faPhone,faMailBulk,faChartLine} from '@fortawesome/free-solid-svg-icons'
 import { GlobalState } from '../GlobalState';
 import Link from 'next/link';
 import Image from 'next/image'
@@ -48,7 +48,14 @@ function PacienteItem({paciente,deletePaciente}) {
                  <Link href="/Pacientes/[expediente]" as={`/Pacientes/${paciente._id}`}>
                 <a  className="btn btn-sm btn-primary">
                     <FontAwesomeIcon className="iconCard"  icon={faFileMedical} /> Ver Expediente Completo
+                </a></Link> &nbsp;<br/> <br/>
+
+                <Link href="/Evolucion/[evolucion]" as={`/Evolucion/${paciente._id}`}>
+                <a  className="btn btn-sm btn-info">
+                    <FontAwesomeIcon className="iconCard"  icon={faChartLine} /> Ver Evolucion del Paciente
                 </a></Link> 
+
+
                   </div>
                 </div>
             </div>

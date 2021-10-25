@@ -67,7 +67,7 @@ div .patient {
 
 .IconIndex{
     font-size: 200px;
-    position: absolute;
+    position: relative;
     right: 10px;
     color:rgba(0,0,0,.15);
     padding-top: 1rem;
@@ -84,7 +84,7 @@ div .patient {
 
 @media (max-width: 1541px) {
     .titleIndex {
-        font-size: 52px;
+        font-size: 50px;
     }
     .IconIndex{
         margin-top: -15px;
@@ -96,8 +96,7 @@ div .patient {
         font-size: 40px;
     }
     .IconIndex{
-        font-size: 200px;
-        margin-top: -30px;
+        font-size: 140px;
     }
 }
 

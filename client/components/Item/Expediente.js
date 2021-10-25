@@ -37,19 +37,6 @@ function Expediente({data,Deletehistorial}) {
             <Modal.Body>
             <Modal.Title>Datos de Laboratorio</Modal.Title>
           
-
- 
-    <div className="form-group">
-      <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
-      <div className="input-group">
-        <div className="input-group-prepend">
-          <span className="input-group-text"></span>
-        </div>
-        <label type="text" className="form-control font-weight-bold">
-        {data.GlucosaSangre}
-        </label>
-      </div>
-    </div>
     <div className="form-group">
       <label  className="heading font-weight-bold">Nivel de Microalbuminuria:</label>
       <div className="input-group">
@@ -94,28 +81,19 @@ function Expediente({data,Deletehistorial}) {
         </label>
       </div>
     </div>
+
     <div className="form-group">
-      <label  className="heading font-weight-bold">Dialisis general:</label>
+      <label  className="heading font-weight-bold">Niveles de colesterol:</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>
         </div>
         <label type="text" className="form-control font-weight-bold">
-        {data.dialisis}
+        {data.NivelCoresterol}
         </label>
       </div>
     </div>
-    <div className="form-group">
-      <label  className="heading font-weight-bold">Presion General</label>
-      <div className="input-group">
-        <div className="input-group-prepend">
-          <span className="input-group-text"></span>
-        </div>
-        <label type="text" className="form-control font-weight-bold">
-        {data.presion}
-        </label>
-      </div>
-    </div>
+
             </Modal.Body>
 
             <Modal.Body>

@@ -8,10 +8,6 @@ const UserExpediente = new Schema({
         required: false,
         default:''
     },
-    presion:{
-        type:String,
-        required: false
-    },
     Medicamentos:{
         type:String,
         required: false,
@@ -28,11 +24,6 @@ const UserExpediente = new Schema({
         default:''
     },
     EstatusDental:{
-        type:String,
-        required: false,
-        default:''
-    },
-    GlucosaSangre:{
         type:String,
         required: false,
         default:''
@@ -63,11 +54,6 @@ const UserExpediente = new Schema({
         default:''
     },
     Cuerpodaño:{
-        type:String,
-        required: false,
-        default:''
-    },
-    dialisis:{
         type:String,
         required: false,
         default:''

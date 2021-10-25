@@ -76,8 +76,8 @@ function Doneact({act,index}) {
           }
         }
 
-    let complete = new Date( act.DateToComplete)
-    complete = moment(new Date()).add(1, 'M').toDate();
+    //let complete = new Date( act.DateToComplete)
+    let complete = moment(new Date(act.DateToComplete)).add(1, 'M').toDate();
       return (
         <>
         <div className="card-body">

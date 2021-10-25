@@ -66,18 +66,17 @@ const controller = {
             Alergias :req.body.Alergias,
             Antecedentes: req.body.Antecedentes ,
             EstatusDental:req.body.EstatusDental ,
-            GlucosaSangre: req.body.GlucosaSangre ,
             HemoglobinaGlucosilada: req.body.HemoglobinaGlucosilada,
             Microalbuminuria: req.body.Microalbuminuria,
             NivelCoresterol: req.body.NivelCoresterol,
             NivelTrigliseridos: req.body.NivelTrigliseridos,
             Electrocadriograma: req.body.Electrocadriograma,
             Cuerpodaño:req.body.Cuerpodaño,
-            dialisis: req.body.dialisis,
+            
             OtrasEnfermedades:req.body.OtrasEnfermedades,
             FactorRiesgo: req.body.FactorRiesgo,
             EstadoMental: req.body.EstadoMental, 
-            presion:req.body.presion,
+            
             StatusViejoExpediente:true,
 
             //INFORMACION DEL REGIMEN ALIMENTICIO
@@ -96,10 +95,10 @@ const controller = {
             newExpediente.save(); 
             await Paciente.findByIdAndUpdate({_id:req.params.id},{
                 Expediente: {
-                InicioEnfermedadMentales:'', Medicamentos:'', Alergias:'', Antecedentes:'',EstatusDental:'',GlucosaSangre:'',
+                InicioEnfermedadMentales:'', Medicamentos:'', Alergias:'', Antecedentes:'',EstatusDental:'',
                 HemoglobinaGlucosilada:'', Microalbuminuria:'',  NivelCoresterol:'',
-                NivelTrigliseridos:'', Electrocadriograma:'',Cuerpodaño:'',dialisis:'',OtrasEnfermedades:'',
-                FactorRiesgo:'',EstadoMental:'',presion:''}, 
+                NivelTrigliseridos:'', Electrocadriograma:'',Cuerpodaño:'',OtrasEnfermedades:'',
+                FactorRiesgo:'',EstadoMental:''}, 
                 Regimen:    {
                     Lunes:'', Martes:'', Miercoles:'',Jueves:'',Viernes:'',Sabado:'',Domingo:'',Ejercicio:'',Comida:''
                 }
@@ -133,9 +132,9 @@ const controller = {
 
             const newExpediente  = new Expediente ({
                 Medicamentos, Alergias,Antecedentes,InicioEnfermedadMentales,
-                GlucosaSangre,EstatusDental,HemoglobinaGlucosilada, Microalbuminuria,  NivelCoresterol,
-                NivelTrigliseridos, Electrocadriograma,Cuerpodaño,dialisis,OtrasEnfermedades,
-                FactorRiesgo,EstadoMental,presion,paciente_id:req.params.id
+                EstatusDental,HemoglobinaGlucosilada, Microalbuminuria,  NivelCoresterol,
+                NivelTrigliseridos, Electrocadriograma,Cuerpodaño,OtrasEnfermedades,
+                FactorRiesgo,EstadoMental,paciente_id:req.params.id
             });
             await Paciente.findByIdAndUpdate({_id:req.params.id},{
                 Expediente:newExpediente

@@ -31,17 +31,17 @@ function ExpedienteSearch({data}) {
           
 
  
-    <div className="form-group">
+{/*     <div className="form-group">
       <label  className="heading font-weight-bold">Nivel de Glucosa general:</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>
         </div>
         <label type="text" className="form-control font-weight-bold">
-        {data.GlucosaSangre}
+        {data.GlucosaSangre} {presion} {dialisis}
         </label>
       </div>
-    </div>
+    </div> */}
     <div className="form-group">
       <label  className="heading font-weight-bold">Nivel de Microalbuminuria:</label>
       <div className="input-group">
@@ -87,27 +87,17 @@ function ExpedienteSearch({data}) {
       </div>
     </div>
     <div className="form-group">
-      <label  className="heading font-weight-bold">Dialisis general:</label>
+      <label  className="heading font-weight-bold">Nivel Colesterol:</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>
         </div>
         <label type="text" className="form-control font-weight-bold">
-        {data.dialisis}
+        {data.NivelCoresterol}
         </label>
       </div>
     </div>
-    <div className="form-group">
-      <label  className="heading font-weight-bold">Presion General</label>
-      <div className="input-group">
-        <div className="input-group-prepend">
-          <span className="input-group-text"></span>
-        </div>
-        <label type="text" className="form-control font-weight-bold">
-        {data.presion}
-        </label>
-      </div>
-    </div>
+
             </Modal.Body>
 
             <Modal.Body>

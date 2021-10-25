@@ -28,18 +28,16 @@ const Expediente =({data}) =>{
     Alergias:actualExpediente.Alergias, 
     Antecedentes:actualExpediente.Antecedentes,
     EstatusDental:actualExpediente.EstatusDental,
-    GlucosaSangre:actualExpediente.GlucosaSangre,
     HemoglobinaGlucosilada:actualExpediente. HemoglobinaGlucosilada, 
     Microalbuminuria:actualExpediente.Microalbuminuria,  
     NivelCoresterol:actualExpediente.NivelCoresterol,
     NivelTrigliseridos:actualExpediente.NivelTrigliseridos, 
     Electrocadriograma:actualExpediente.Electrocadriograma,
     Cuerpodaño:actualExpediente.Cuerpodaño,
-    dialisis:actualExpediente.dialisis,
     OtrasEnfermedades:actualExpediente.OtrasEnfermedades,
     FactorRiesgo:actualExpediente.FactorRiesgo,
     EstadoMental:actualExpediente.EstadoMental,
-    presion:actualExpediente.presion
+  
   }
   
   const RegimenState = {
@@ -207,15 +205,6 @@ if (!loaded) { return <div></div> }
 
               <form className="form-horizontal"  onSubmit={handleSubmitExpediente}>
                 <div className="card-body expe-row">
-
-                <div className="form-group ">
-                    <label className="col-sm-12 col-form-label">Nivel de Glucosa General</label>
-                    <div className="col-sm-12">
-                      <input type="text" name="GlucosaSangre"   value={expediente.GlucosaSangre}
-                      onChange={handleChangeExpediente} className="form-control"  placeholder="Glucosa"/>
-                    </div>
-                </div>
-
                 
                 <div className="form-group ">
                     <label  className="col-sm-12 col-form-label">Nivel Hemoglobina Gloucosilada</label>
@@ -260,24 +249,6 @@ if (!loaded) { return <div></div> }
                       <input type="text"  name="Electrocadriograma"
                       value={expediente.Electrocadriograma} 
                       onChange={handleChangeExpediente} className="form-control"  placeholder="Electrocadriograma"/>
-                    </div>
-                </div>
-
-                <div className="form-group ">
-                    <label className="col-sm-12 col-form-label">Dialisis</label>
-                    <div className="col-sm-12">
-                      <input type="text"  name="dialisis"
-                      value={expediente.dialisis} 
-                      onChange={handleChangeExpediente} className="form-control"  placeholder="Resultado"/>
-                    </div>
-                </div>
-
-                <div className="form-group ">
-                    <label className="col-sm-12 col-form-label">Presion General</label>
-                    <div className="col-sm-12">
-                      <input type="text"  name="presion"
-                      value={expediente.presion} 
-                      onChange={handleChangeExpediente} className="form-control"  placeholder="Presion"/>
                     </div>
                 </div>
 

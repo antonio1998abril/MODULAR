@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusSquare,faChartLine,faProcedures} from '@fortawesome/free-solid-svg-icons'
+import { faPlusSquare,faProcedures,faFolderPlus} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import Image from 'next/image'
 import profilePic from '../../public/testuser.png'
@@ -11,16 +11,24 @@ import { GlobalState } from '../GlobalState';
 import  GlucosaList  from '../Item/GlucosaList';
 
 function ActividadItem({actividad}) {
-  const initialState = {
+  const initialStateGlucosa = {
     Glucosa:'',
     PacienteId:actividad._id
+  }
+  const initialStatePresion = {
+    Presion:'',
+    pacientId:actividad._id
+  }
+  const initialStateDialisis = {
+    Dialisis:'',
+    pacientesId:actividad._id
   }
 
   const [modalShow, setModalShow] = useState(false);
   const [modalAdd, setModalAdd] = useState(false);
   const state = useContext(GlobalState);
   const [token] = state.token
-  const [glucosa,setGlucosa] = useState(initialState);
+  const [glucosa,setGlucosa] = useState(initialStateGlucosa);
   const [callback,setCallback]=state.Paciente.callback
 
   const [GlucosaHistorial,setGlucosaHistorial] = useState([])
@@ -41,7 +49,7 @@ function ActividadItem({actividad}) {
   }
   const handleClose=()=>{
     setModalAdd(false);
-    setGlucosa(initialState)
+    setGlucosa(initialStateGlucosa)
   } 
   const handleSubmit = async  e => {
     e.preventDefault()
@@ -67,7 +75,7 @@ function ActividadItem({actividad}) {
           <tr>
             <td>
               <Link href="/Estatus/[actividad]" as={`/Estatus/${actividad._id}`}>
-                <a className="btn btn-danger btn-sm" >
+                <a className="btn btn-info btn-sm" >
                     <FontAwesomeIcon className="circlePaciente" icon={faProcedures} />
                 </a></Link>  
             </td>
@@ -91,10 +99,28 @@ function ActividadItem({actividad}) {
                 <span className="badge badge-success">Success</span>
             </td>
             <td className="project-actions text-right">
-              <a className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>
-                <FontAwesomeIcon icon={faChartLine} />&nbsp;
-               Niveles de Glucosa
-              </a>
+            <br/>
+            <button className="btn btn-dark btn-sm" onClick={() => setModalDialisisSchow(true)}>
+                <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
+               Dias en que se realizo dialisis
+            </button>&nbsp;<br/><br/>
+
+            <button className="btn btn-dark btn-sm" onClick={() => setModalPresionShow(true)}>
+                <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
+                Niveles de Presion
+            </button>&nbsp;<br/> <br/>
+               
+            <button className="btn btn-dark btn-sm" onClick={() => setModalShow(true)}>
+                <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
+                Niveles de Glucosa
+            </button>&nbsp;
+
+{/*               <a className="btn btn-dark btn-sm" onClick={() => setModalShow(true)}>
+                <FontAwesomeIcon icon={faExclamationTriangle} />&nbsp;
+               Niveles de Glucosa moment('2019-10-17T02:00:00.000Z').format('YYYY-MM-DD');
+              </a> */}
+
+              <br/><br/>
               <div className="ButtonGlucosa">
                 <FontAwesomeIcon className="commonButton" color="orange" icon={faPlusSquare} size="3x"  onClick={() => setModalAdd(true)} />
               </div>

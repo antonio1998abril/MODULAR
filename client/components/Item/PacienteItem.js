@@ -53,7 +53,7 @@ function PacienteItem({paciente,deletePaciente}) {
                 <Link href="/Evolucion/[evolucion]" as={`/Evolucion/${paciente._id}`}>
                 <a  className="btn btn-sm btn-info">
                     <FontAwesomeIcon className="iconCard"  icon={faChartLine} /> Ver Evolucion del Paciente
-                </a></Link> 
+                </a></Link> &nbsp;
 
 
                   </div>

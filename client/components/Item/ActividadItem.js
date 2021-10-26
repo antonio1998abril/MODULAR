@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusSquare,faProcedures,faFolderPlus} from '@fortawesome/free-solid-svg-icons'
+import { faPlusSquare,faProcedures,faFolderPlus,faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import Image from 'next/image'
 import profilePic from '../../public/testuser.png'
@@ -25,7 +25,15 @@ function ActividadItem({actividad}) {
   }
 
   const [modalShow, setModalShow] = useState(false);
+  
+  const [modalGlucosaShow,setModalGlucosaShow] = useState(false);
+  const [modalPresionShow,setModalPresionShow] = useState(false);
+  const [modalDialisisShow,setModalDialisisShow] = useState(false);
+
   const [modalAdd, setModalAdd] = useState(false);
+
+
+
   const state = useContext(GlobalState);
   const [token] = state.token
   const [glucosa,setGlucosa] = useState(initialStateGlucosa);
@@ -60,6 +68,8 @@ function ActividadItem({actividad}) {
        swal({icon:"success",title:result.data.msg, text:`Nuevo registro de glucosa para ${actividad.name}`,timer:"2000",buttons: false});
        setCallback(!callback);
        setModalAdd(false);
+       setModalShow(false);
+       setModalGlucosaShow(false);
     }catch(err){
       swal({
         title:"ERROR",
@@ -100,7 +110,7 @@ function ActividadItem({actividad}) {
             </td>
             <td className="project-actions text-right">
             <br/>
-            <button className="btn btn-dark btn-sm" onClick={() => setModalDialisisSchow(true)}>
+            <button className="btn btn-dark btn-sm" onClick={() => setModalDialisisShow(true)}>
                 <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
                Dias en que se realizo dialisis
             </button>&nbsp;<br/><br/>
@@ -128,29 +138,97 @@ function ActividadItem({actividad}) {
           </tr>
 
           <MydModalWithGrid show={modalShow}  onHide={() => setModalShow(false)} />
-{/* Value continue  */}
+
           <Modal show={modalAdd} onHide={handleClose} >
+          <Modal.Header closeButton>
+          <Modal.Title>Agregar Nuevos registros para {actividad.name}:</Modal.Title>
+        </Modal.Header>
             <Modal.Body>
-            <Form onSubmit={handleSubmit}>
-                <Form.Row>
-                    <Form.Group as={Col} >
-                    <Form.Label>Nuevo registro de Glucosa para {actividad.name}: </Form.Label>
-                    <Form.Control name="Glucosa" type="number" placeholder="Nivel de Glucosa" step="0.01"
-                          onChange={handleChangeInput}
-                    />
-                    </Form.Group>
-                </Form.Row>
-                <Button variant="primary" type="submit" >
-                  Crear
-                </Button>
-            </Form>
+              <div className="ButtonGlucosa ">
+                <FontAwesomeIcon  className="setup noBackGroundIcon"  icon={faPlusCircle} size="3x"  onClick={() => setModalDialisisShow(true)} />
+                <div className = "text-Satus-Icon" ><b> Agregar Dialisis</b> </div> 
+              </div>
+                  <br/>
+              <div className="ButtonGlucosa ">
+                <FontAwesomeIcon  className=" setup noBackGroundIcon" icon={faPlusCircle} size="3x"  onClick={() => setModalGlucosaShow(true)} />
+                <div className = "text-Satus-Icon" ><b> Agregar Glucosa</b> </div> 
+              </div>
+                  <br/>
+              <div className="ButtonGlucosa ">
+                <FontAwesomeIcon className="setup noBackGroundIcon" icon={faPlusCircle} size="3x"  onClick={() => setModalPresionShow(true)} />
+                <div className = "text-Satus-Icon" ><b> Agregar Presion</b> </div> 
+              </div>
+
             </Modal.Body>
+            <br/>
+            
           <Modal.Footer>
               <Button variant="danger" onClick={handleClose}>
                 Cerrar
               </Button>
           </Modal.Footer>
         </Modal>  
+
+
+        {/* MODAL PRESION */}
+        <Modal show={modalPresionShow} onHide={() => setModalPresionShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>PRESION</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setModalPresionShow(false)}>
+            Close
+          </Button>
+          <Button variant="primary" >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* GLUCOSA */}
+
+      <Modal show={modalGlucosaShow} onHide={() => setModalGlucosaShow(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Glucosa</Modal.Title>
+        </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleSubmit}> 
+              <Form.Row>
+                <Form.Group as={Col} >
+                    <Form.Label>Nuevo registro de Glucosa para {actividad.name}: </Form.Label>
+                      <Form.Control name="Glucosa" type="number" placeholder="Nivel de Glucosa" step="0.01"onChange={handleChangeInput}/>
+                </Form.Group>
+              </Form.Row>
+                <Button variant="primary" type="submit" >
+                  Crear
+                </Button>
+            </Form> 
+            </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setModalGlucosaShow(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/*  DIALISIS*/}
+        <Modal show={modalDialisisShow} onHide={() => setModalDialisisShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Dialisis</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() =>setModalDialisisShow(false)}>
+            Close
+          </Button>
+          <Button variant="primary" >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+
      </>
     )
 

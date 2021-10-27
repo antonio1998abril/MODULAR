@@ -13,14 +13,18 @@ const controller = {
             paciente_id:req.body.PacienteId
         })
         await newGlucosa.save().then(async ()=> {
-            return res.json({msg:"Nuevo Valor Agregado"})
+            return res.json({msg:"Registro Guardado"})
         }).catch(next)
     },
     updateGlucosa: async(req,res,next) => {
-        
+        await Glucosa.findByIdAndUpdate({_id:req.params.id},{Glucosa:req.body.Glucosa}).then(() => {
+            return res.json({msg:"Glucosa Actulizada"})
+        }).catch(next)
     },
     deleteGlucosa: async (req,res,next) => {
-        
+        await Glucosa.findByIdAndRemove({_id:req.params.id}).then(async () => {
+            return res.json({msg:"Glucosa Eliminada"})
+        }).catch(next)
     }
 }
 

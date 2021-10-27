@@ -16,6 +16,7 @@ function SearchItem({paciente}) {
     const [addPaciente, setaddPaciente] = useState(initialState)
     /* FIN AGREGAR PACIENTE */
     const state = useContext(GlobalState);
+    const [callback,setCallback]=state.Paciente.callback
     const [medico,setMedico] = useState(false);
     const [role] = (paciente.Encargado_id.role)
     useEffect(() =>  {
@@ -44,6 +45,7 @@ function SearchItem({paciente}) {
                 headers:{Authorization:token}
             })
             swal({icon:"success",title:result.data.msg, text:`Nuevo paciente ${paciente.name}`,timer:"2000",buttons: false});
+            setCallback(!callback);
         }catch (err) {
             swal({
                 title:"¡Hubo un Error Con este Paciente",

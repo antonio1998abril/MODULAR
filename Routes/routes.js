@@ -44,10 +44,13 @@ const routes = {
     .delete('/DeleteHistorial/:id',PacienteController.DeleteExpediente)
     .post('/addCopy',auth,PacienteController.addCopy)
 
-    /* GLUCOSA */
+    /* GLUCOSA  PRESION DIALISIS */
     .post('/postGlucosa',auth,GlucosaController.postGlucosa)
     .get('/getGlucosa/:id',auth,GlucosaController.getGlucosaList)
-
+    .put('/upGlucosa/:id',auth,GlucosaController.updateGlucosa)
+    .delete('/deleteGlucosa/:id',auth,GlucosaController.deleteGlucosa)
+    /* GLUCOSA  PRESION DIALISIS*/
+    
     /* ACTIVIDADES */
     .post('/postACT',auth,ActController.postAct)
     .get('/getAct/:id',auth,ActController.getAct)

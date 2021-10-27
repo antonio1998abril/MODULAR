@@ -63,14 +63,23 @@ module.exports = {
         source: '/api/addCopy',
         destination: 'http://localhost:5000/api/addCopy'
       }, 
+
+      /* GLUCOSA PRESION DIALISIS */
       {
         source: '/api/postGlucosa',
         destination: 'http://localhost:5000/api/postGlucosa'
       },{
         source:'/api/getGlucosa/:id',
         destination: 'http://localhost:5000/api/getGlucosa/:id'
+      },{
+        source:'/api/upGlucosa/:id',
+        destination: 'http://localhost:5000/api/upGlucosa/:id'
+      },{
+        source:'/api/deleteGlucosa/:id',
+        destination: 'http://localhost:5000/api/deleteGlucosa/:id'
       },
-      /* ACT */
+      /* GLUCOSA PRESION DIALISIS */
+      /* ACTIVIDADES */
       {
         source: '/api/postACT',
         destination: 'http://localhost:5000/api/postACT'

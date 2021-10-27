@@ -25,21 +25,24 @@ function ActividadItem({actividad}) {
   }
 
   const [modalShow, setModalShow] = useState(false);
-  
+  const [modalPresion,setModalPresion] = useState(false);
+  const [modalDialis,setModalDialisis] = useState(false);
   const [modalGlucosaShow,setModalGlucosaShow] = useState(false);
   const [modalPresionShow,setModalPresionShow] = useState(false);
   const [modalDialisisShow,setModalDialisisShow] = useState(false);
-
   const [modalAdd, setModalAdd] = useState(false);
-
-
-
   const state = useContext(GlobalState);
   const [token] = state.token
+
   const [glucosa,setGlucosa] = useState(initialStateGlucosa);
+  const [presion,setPresion] = useState(initialStatePresion);
+  const [dialisis,setDialisis] = useState(initialStateDialisis);
+
   const [callback,setCallback]=state.Paciente.callback
 
-  const [GlucosaHistorial,setGlucosaHistorial] = useState([])
+  const [GlucosaHistorial,setGlucosaHistorial] = useState([]);
+  const [PresionHistorial,setPresionHistorial] = useState([]);
+  const [dialisisHistorial,setDialisisHistorial] = useState([]);
 
   useEffect(()=>{
     const getHistorialGlucosa = async () =>{
@@ -59,13 +62,25 @@ function ActividadItem({actividad}) {
     setModalAdd(false);
     setGlucosa(initialStateGlucosa)
   } 
+
+  /* wait icon */
+function iconWait (){
+  setModalShow(false)
+  swal({
+    title:"Eliminado",
+    icon:"***",
+    button:"OK"
+})
+}
+
+/* CREATE */
   const handleSubmit = async  e => {
     e.preventDefault()
     try {
        const result= await axios.post('/api/postGlucosa',{...glucosa},{
          headers:{Authorization:token}
        })
-       swal({icon:"success",title:result.data.msg, text:`Nuevo registro de glucosa para ${actividad.name}`,timer:"2000",buttons: false});
+       swal({icon:"success",title:result.data.msg, text:`Guardado Registro para:  ${actividad.name}`,timer:"2000",buttons: false});
        setCallback(!callback);
        setModalAdd(false);
        setModalShow(false);
@@ -77,6 +92,35 @@ function ActividadItem({actividad}) {
         icon:"error",
         button:"OK"
     })
+    }
+  }
+
+
+  /* DELETE */
+  const deleteRegisterGlucosa = async (id) => {
+    try {
+      swal({
+        title:"Seguro?",
+          text: "Deseas eliminar este registro de glucosa?",
+          icon:"warning",
+          buttons:["No","si"]
+      }).then(async (res) => {
+      if(res) {
+          let deleteRegister = axios.delete(`/api/deleteGlucosa/${id}`,{
+            headers:{Authorization:token}
+          })
+          await deleteRegister 
+          setCallback(!callback)
+          swal({icon:"success",text:"Registro Eliminado",timer:"2000", buttons: false}).then(function(){},1500)
+        }
+      })
+    }catch(err) {
+      swal({
+        title:"¡Ups",
+        text: err.response.data.msg,
+        icon:"error",
+        button:"OK"
+        })
     }
   }
  
@@ -110,12 +154,12 @@ function ActividadItem({actividad}) {
             </td>
             <td className="project-actions text-right">
             <br/>
-            <button className="btn btn-dark btn-sm" onClick={() => setModalDialisisShow(true)}>
+            <button className="btn btn-dark btn-sm" onClick={() => setModalDialisis(true)}>
                 <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
                Dias en que se realizo dialisis
             </button>&nbsp;<br/><br/>
 
-            <button className="btn btn-dark btn-sm" onClick={() => setModalPresionShow(true)}>
+            <button className="btn btn-dark btn-sm" onClick={() => setModalPresion(true)}>
                 <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
                 Niveles de Presion
             </button>&nbsp;<br/> <br/>
@@ -124,7 +168,6 @@ function ActividadItem({actividad}) {
                 <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
                 Niveles de Glucosa
             </button>&nbsp;
-
 {/*               <a className="btn btn-dark btn-sm" onClick={() => setModalShow(true)}>
                 <FontAwesomeIcon icon={faExclamationTriangle} />&nbsp;
                Niveles de Glucosa moment('2019-10-17T02:00:00.000Z').format('YYYY-MM-DD');
@@ -138,6 +181,9 @@ function ActividadItem({actividad}) {
           </tr>
 
           <MydModalWithGrid show={modalShow}  onHide={() => setModalShow(false)} />
+          <PresionModalWithGrid show={modalPresion} onHide={() =>  setModalPresion(false)}/>
+          <DialisoisModalWithGrid show={modalDialis} onHide = { () => setModalDialisis(false)}/> 
+          
 
           <Modal show={modalAdd} onHide={handleClose} >
           <Modal.Header closeButton>
@@ -226,9 +272,6 @@ function ActividadItem({actividad}) {
           </Button>
         </Modal.Footer>
       </Modal>
-
-
-
      </>
     )
 
@@ -244,7 +287,7 @@ function ActividadItem({actividad}) {
             <Container>
               {
                 GlucosaHistorial.map(historial => { 
-                  return <GlucosaList key={historial._id} historial={historial} /* deletePaciente={deletePaciente} *//>
+                  return <GlucosaList key={historial._id} historial={historial} deleteRegisterGlucosa={deleteRegisterGlucosa}/* deletePaciente={deletePaciente} *//>
                 })
               } 
             </Container>
@@ -255,5 +298,56 @@ function ActividadItem({actividad}) {
         </Modal>    
       );
     }
+
+    function PresionModalWithGrid(props) {
+      return (
+        <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Historial de tomas de Presion
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="show-grid">
+            <Container>
+              {
+               // GlucosaHistorial.map(historial => { 
+                //  return <GlucosaList key={historial._id} historial={historial} /* deletePaciente={deletePaciente} *//>
+               // })
+              } 
+            </Container>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={props.onHide}>Cerrar</Button>
+          </Modal.Footer>
+        </Modal>    
+      );
+    }
+
+    function DialisoisModalWithGrid(props) {
+      return (
+        <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Historial de Dialisis
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="show-grid">
+            <Container>
+             {
+              ////  GlucosaHistorial.map(historial => { 
+                 /// return <GlucosaList key={historial._id} historial={historial} /* deletePaciente={deletePaciente} *//>
+                ///})
+              } 
+            </Container>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={props.onHide}>Cerrar</Button>
+          </Modal.Footer>
+        </Modal>    
+      );
+    }
   }
+
+
+  
 export default ActividadItem

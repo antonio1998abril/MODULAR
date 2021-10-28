@@ -17,6 +17,9 @@ function Paciente(token) {
     const [show, setShow] = useState(false);
     const [idAct,setIdAct] = useState('');
 
+
+
+
     useEffect(() =>{
         const getPacientes = async() => {
             const result = await axios.get(`/api/findPaciente?limit=${page*5}&${sort}&email=${search}`)

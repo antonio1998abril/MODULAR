@@ -352,7 +352,7 @@ useEffect(()=>{
 
           <Modal.Footer>
               <Button variant="danger" onClick={handleClose}>
-                Cerrar
+                Cancelar
               </Button>
           </Modal.Footer>
         </Modal>

@@ -24,6 +24,9 @@ function ActividadItem({actividad}) {
     pacientesId:actividad._id
   }
 
+  
+  const  [UpValueEvaluacion, setUpValueEvaluacion] =useState('')
+
   const [modalShow, setModalShow] = useState(false);
   const [modalPresion,setModalPresion] = useState(false);
   const [modalDialis,setModalDialisis] = useState(false);
@@ -38,12 +41,13 @@ function ActividadItem({actividad}) {
   const [presion,setPresion] = useState(initialStatePresion);
   const [dialisis,setDialisis] = useState(initialStateDialisis);
 
-  const [callback,setCallback]=state.Paciente.callback
+  const [callback,setCallback]=state.Paciente.callback;
 
   const [GlucosaHistorial,setGlucosaHistorial] = useState([]);
   const [PresionHistorial,setPresionHistorial] = useState([]);
   const [dialisisHistorial,setDialisisHistorial] = useState([]);
 
+  console.log(GlucosaHistorial)
   useEffect(()=>{
     const getHistorialGlucosa = async () =>{
       const res= await axios.get(`/api/getGlucosa/${actividad._id}`,{
@@ -63,16 +67,10 @@ function ActividadItem({actividad}) {
     setGlucosa(initialStateGlucosa)
   } 
 
-  /* wait icon */
-function iconWait (){
-  setModalShow(false)
-  swal({
-    title:"Eliminado",
-    icon:"***",
-    button:"OK"
-})
-}
 
+  /* UPDATE */
+
+/* END UPDATE */
 /* CREATE */
   const handleSubmit = async  e => {
     e.preventDefault()
@@ -285,11 +283,12 @@ function iconWait (){
           </Modal.Header>
           <Modal.Body className="show-grid">
             <Container>
-              {
-                GlucosaHistorial.map(historial => { 
-                  return <GlucosaList key={historial._id} historial={historial} deleteRegisterGlucosa={deleteRegisterGlucosa}/* deletePaciente={deletePaciente} *//>
+               {
+              GlucosaHistorial.map(historial => { 
+                  return <GlucosaList key={historial._id} historial={historial} deleteRegisterGlucosa={deleteRegisterGlucosa}/>
                 })
-              } 
+              }  
+     
             </Container>
           </Modal.Body>
           <Modal.Footer>

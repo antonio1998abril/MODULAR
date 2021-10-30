@@ -47,7 +47,6 @@ function ActividadItem({actividad}) {
   const [PresionHistorial,setPresionHistorial] = useState([]);
   const [dialisisHistorial,setDialisisHistorial] = useState([]);
 
-  console.log(GlucosaHistorial)
   useEffect(()=>{
     const getHistorialGlucosa = async () =>{
       const res= await axios.get(`/api/getGlucosa/${actividad._id}`,{

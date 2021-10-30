@@ -22,6 +22,7 @@ const controller = {
         }).catch(next)
     },
     deleteGlucosa: async (req,res,next) => {
+        console.log(req.params.id)
         await Glucosa.findByIdAndRemove({_id:req.params.id}).then(async () => {
             return res.json({msg:"Glucosa Eliminada"})
         }).catch(next)

@@ -4,6 +4,7 @@ const PacienteController = require('../Controller/paciente')
 const auth = require('../Middleware/auth');
 const BuscarController = require('../Controller/Buscar');
 const GlucosaController = require('../Controller/Glucosa');
+const PresionController = require('../Controller/Presion');
 const ActController = require('../Controller/Act');
 const Activities = require('../Models/ActividadesSchema');
 const GraphController = require('../Controller/graphs')
@@ -49,6 +50,11 @@ const routes = {
     .get('/getGlucosa/:id',auth,GlucosaController.getGlucosaList)
     .put('/upGlucosa/:id',auth,GlucosaController.updateGlucosa)
     .delete('/deleteGlucosa/:id',auth,GlucosaController.deleteGlucosa)
+    
+    .post('/postPresion',auth,PresionController.postPresion)
+    .get('/getPresion/:id',auth,PresionController.getPresionList)
+    .put('/upPresion/:id',auth,PresionController.updatePresion)
+    .delete('/deletePresion/:id',auth,PresionController.deletePresion)
     /* GLUCOSA  PRESION DIALISIS*/
     
     /* ACTIVIDADES */

@@ -77,6 +77,18 @@ module.exports = {
       },{
         source:'/api/deleteGlucosa/:id',
         destination: 'http://localhost:5000/api/deleteGlucosa/:id'
+      },{
+        source:'/api/postPresion',
+        destination: 'http://localhost:5000/api/dpostPresion'
+      },{
+        source:'/api/getPresion/:id',
+        destination: 'http://localhost:5000/api/getPresion/:id'
+      },{
+        source:'/api/upPresion/:id',
+        destination: 'http://localhost:5000/api/upPresion/:id'
+      },{
+        source:'/api/deletePresion/:id',
+        destination: 'http://localhost:5000/api/deletePresion/:id'
       },
       /* GLUCOSA PRESION DIALISIS */
       /* ACTIVIDADES */

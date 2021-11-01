@@ -8,7 +8,9 @@ import { Modal ,Container,Col,Row,Button,Form} from 'react-bootstrap'
 import axios from 'axios';
 import swal from 'sweetalert';
 import { GlobalState } from '../GlobalState';
-import  GlucosaList  from '../Item/GlucosaList';
+import  GlucosaList  from './ListStatus/GlucosaList';
+import  PresionList  from './ListStatus/PresionList';
+import  DiaList  from './ListStatus/DialisisList';
 
 function ActividadItem({actividad}) {
   const initialStateGlucosa = {
@@ -17,16 +19,12 @@ function ActividadItem({actividad}) {
   }
   const initialStatePresion = {
     Presion:'',
-    pacientId:actividad._id
+    PacienteId:actividad._id
   }
   const initialStateDialisis = {
     Dialisis:'',
-    pacientesId:actividad._id
+    PacienteId:actividad._id
   }
-
-  
-  const  [UpValueEvaluacion, setUpValueEvaluacion] =useState('')
-
   const [modalShow, setModalShow] = useState(false);
   const [modalPresion,setModalPresion] = useState(false);
   const [modalDialis,setModalDialisis] = useState(false);
@@ -49,23 +47,49 @@ function ActividadItem({actividad}) {
 
   useEffect(()=>{
     const getHistorialGlucosa = async () =>{
-      const res= await axios.get(`/api/getGlucosa/${actividad._id}`,{
+      const resG= await axios.get(`/api/getGlucosa/${actividad._id}`,{
         headers: {Authorization: token}
      })
-     setGlucosaHistorial(res.data)
+     setGlucosaHistorial(resG.data)
+
+     const resP= await axios.get(`/api/getPresion/${actividad._id}`,{
+      headers: {Authorization: token}
+     })
+     setPresionHistorial(resP.data)
+
+     const resD= await axios.get(`/api/getDia/${actividad._id}`,{
+      headers: {Authorization: token}
+     })
+     setDialisisHistorial(resD.data)
+
     }
     getHistorialGlucosa()
   },[callback])
   
+  /* SET GLUCOSA, PRESION, DIALISIS  */
   const handleChangeInput= e =>{
     const {name,value} = e.target
     setGlucosa({...glucosa,[name]:value})
   }
+
+  const handleChangePresion= e =>{
+    const {name,value} = e.target
+    setPresion({...presion,[name]:value})
+  }
+
+  const handleChangeDialisis= e =>{
+    const {name,value} = e.target
+    setDialisis({...dialisis,[name]:value})
+  }
+
+
   const handleClose=()=>{
     setModalAdd(false);
     setGlucosa(initialStateGlucosa)
+    setPresion(initialStatePresion)
+    setDialisis(initialStateDialisis)
   } 
-
+  /* SET GLUCOSA, PRESION, DIALIISIS */
 
   /* UPDATE */
 
@@ -77,11 +101,54 @@ function ActividadItem({actividad}) {
        const result= await axios.post('/api/postGlucosa',{...glucosa},{
          headers:{Authorization:token}
        })
-       swal({icon:"success",title:result.data.msg, text:`Guardado Registro para:  ${actividad.name}`,timer:"2000",buttons: false});
+       swal({icon:"success",title:result.data.msg, text:`Nuevo Registro para:  ${actividad.name}`,timer:"2000",buttons: false});
        setCallback(!callback);
        setModalAdd(false);
        setModalShow(false);
        setModalGlucosaShow(false);
+    }catch(err){
+      swal({
+        title:"ERROR",
+        text: err.response.data.msg,
+        icon:"error",
+        button:"OK"
+    })
+    }
+  }
+
+  const handleSubmitPresion = async  e => {
+    e.preventDefault()
+    try {
+       const result= await axios.post('/api/postPresion',{...presion},{
+         headers:{Authorization:token}
+       })
+       swal({icon:"success",title:result.data.msg, text:`Nuevo  Registro para:  ${actividad.name}`,timer:"2000",buttons: false});
+       setCallback(!callback);
+       setModalAdd(false);
+       setModalPresion(false)
+       setModalPresionShow(false);
+    }catch(err){
+      swal({
+        title:"ERROR",
+        text: err.response.data.msg,
+        icon:"error",
+        button:"OK"
+    })
+    }
+  }
+  
+
+  const handleSubmitDialisis = async  e => {
+    e.preventDefault()
+    try {
+       const result= await axios.post('/api/postDia',{...dialisis},{
+         headers:{Authorization:token}
+       })
+       swal({icon:"success",title:result.data.msg, text:`Nuevo  Registro para:  ${actividad.name}`,timer:"2000",buttons: false});
+       setCallback(!callback);
+       setModalAdd(false);
+       setModalDialisis(false)
+       setModalDialisisShow(false);
     }catch(err){
       swal({
         title:"ERROR",
@@ -104,6 +171,61 @@ function ActividadItem({actividad}) {
       }).then(async (res) => {
       if(res) {
           let deleteRegister = axios.delete(`/api/deleteGlucosa/${id}`,{
+            headers:{Authorization:token}
+          })
+          await deleteRegister 
+          setCallback(!callback)
+          swal({icon:"success",text:"Registro Eliminado",timer:"2000", buttons: false}).then(function(){},1500)
+        }
+      })
+    }catch(err) {
+      swal({
+        title:"¡Ups",
+        text: err.response.data.msg,
+        icon:"error",
+        button:"OK"
+        })
+    }
+  }
+
+  const deleteRegisterPresion = async (id) => {
+    try {
+      swal({
+        title:"Seguro?",
+          text: "Deseas eliminar este registro de presion?",
+          icon:"warning",
+          buttons:["No","si"]
+      }).then(async (res) => {
+      if(res) {
+          let deleteRegister = axios.delete(`/api/deletePresion/${id}`,{
+            headers:{Authorization:token}
+          })
+          await deleteRegister 
+          setCallback(!callback)
+          swal({icon:"success",text:"Registro Eliminado",timer:"2000", buttons: false}).then(function(){},1500)
+        }
+      })
+    }catch(err) {
+      swal({
+        title:"¡Ups",
+        text: err.response.data.msg,
+        icon:"error",
+        button:"OK"
+        })
+    }
+  }
+
+
+  const deleteRegisterDialisis = async (id) => {
+    try {
+      swal({
+        title:"Seguro?",
+          text: "Deseas eliminar este registro de Dialisis?",
+          icon:"warning",
+          buttons:["No","si"]
+      }).then(async (res) => {
+      if(res) {
+          let deleteRegister = axios.delete(`/api/deleteDia/${id}`,{
             headers:{Authorization:token}
           })
           await deleteRegister 
@@ -207,7 +329,7 @@ function ActividadItem({actividad}) {
             
           <Modal.Footer>
               <Button variant="danger" onClick={handleClose}>
-                Cerrar
+                Cancelar
               </Button>
           </Modal.Footer>
         </Modal>  
@@ -216,15 +338,25 @@ function ActividadItem({actividad}) {
         {/* MODAL PRESION */}
         <Modal show={modalPresionShow} onHide={() => setModalPresionShow(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>PRESION</Modal.Title>
+          <Modal.Title>Presion</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Body>
+          <Form onSubmit={handleSubmitPresion}> 
+              <Form.Row>
+                <Form.Group as={Col} >
+                    <Form.Label>Nuevo registro de Presion para {actividad.name}: </Form.Label>
+                      <Form.Control name="Presion" type="number" placeholder="Nivel de Presion" step="00.01"onChange={handleChangePresion}/>
+                </Form.Group>
+              </Form.Row>
+                <Button variant="primary" type="submit" >
+                  Crear
+                </Button>
+            </Form>
+
+          </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setModalPresionShow(false)}>
-            Close
-          </Button>
-          <Button variant="primary" >
-            Save Changes
+            Cerrar
           </Button>
         </Modal.Footer>
       </Modal>
@@ -239,7 +371,7 @@ function ActividadItem({actividad}) {
               <Form.Row>
                 <Form.Group as={Col} >
                     <Form.Label>Nuevo registro de Glucosa para {actividad.name}: </Form.Label>
-                      <Form.Control name="Glucosa" type="number" placeholder="Nivel de Glucosa" step="0.01"onChange={handleChangeInput}/>
+                      <Form.Control name="Glucosa" type="number" placeholder="Nivel de Glucosa" step="00.01"onChange={handleChangeInput}/>
                 </Form.Group>
               </Form.Row>
                 <Button variant="primary" type="submit" >
@@ -249,23 +381,33 @@ function ActividadItem({actividad}) {
             </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setModalGlucosaShow(false)}>
-            Close
+            Cancelar
           </Button>
         </Modal.Footer>
       </Modal>
 
-      {/*  DIALISIS*/}
-        <Modal show={modalDialisisShow} onHide={() => setModalDialisisShow(false)}>
+      {/*   DIALISIS*/}
+
+      <Modal show={modalDialisisShow}  onHide={() => setModalDialisisShow(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Dialisis</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Body>
+            <Form onSubmit={handleSubmitDialisis}> 
+              <Form.Row>
+                <Form.Group as={Col} >
+                    <Form.Label>Nuevo registro de Dialisis para {actividad.name}: </Form.Label>
+                      <Form.Control name="Dialisis" type="date"   onChange={handleChangeDialisis} min="1900-01-01" max="2021-12-31"/>
+                </Form.Group>
+              </Form.Row>
+                <Button variant="primary" type="submit" >
+                  Crear
+                </Button>
+            </Form> 
+            </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() =>setModalDialisisShow(false)}>
-            Close
-          </Button>
-          <Button variant="primary" >
-            Save Changes
+            Cancelar
           </Button>
         </Modal.Footer>
       </Modal>
@@ -308,9 +450,9 @@ function ActividadItem({actividad}) {
           <Modal.Body className="show-grid">
             <Container>
               {
-               // GlucosaHistorial.map(historial => { 
-                //  return <GlucosaList key={historial._id} historial={historial} /* deletePaciente={deletePaciente} *//>
-               // })
+                PresionHistorial.map(historial => { 
+                 return <PresionList key={historial._id} historial={historial} deleteRegisterPresion = {deleteRegisterPresion} />
+               })
               } 
             </Container>
           </Modal.Body>
@@ -332,9 +474,9 @@ function ActividadItem({actividad}) {
           <Modal.Body className="show-grid">
             <Container>
              {
-              ////  GlucosaHistorial.map(historial => { 
-                 /// return <GlucosaList key={historial._id} historial={historial} /* deletePaciente={deletePaciente} *//>
-                ///})
+              dialisisHistorial.map(historial => { 
+                 return <DiaList key={historial._id} historial={historial} deleteRegisterDialisis = {deleteRegisterDialisis} />
+                })
               } 
             </Container>
           </Modal.Body>

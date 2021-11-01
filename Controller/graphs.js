@@ -6,22 +6,36 @@ const controller = {
         const GlucosaData = await Glucosa.find({paciente_id:req.params.id})
         const allData = await Paciente.findById({_id:req.params.id}).lean().populate('allExpedientes')
         const listHemoglobinaGlucosilada = []
-        const HemoglobinaGlucosilada = []
-        const Microalbuminuria = []
+        const ListMicroalbuminuria = []
+
+        const ListNivelCoresterol = []
+        const ListNivelTrigliseridos = []
+        const ListEstadoMental = []
+        const ListOtrasEnfermedades = []
+        const ListElectrocadriograma = []
+
+        const LisGlucosa = []
+        const ListPresion = []
+        const ListDialisis = []
         let obj =JSON.parse(JSON.stringify(allData.allExpedientes));
        
 
         for (i=0; i< allData.allExpedientes.length; i++){          
             for (i in obj){
+                console.log(obj[i].NivelCoresterol)
                 let getDate = new Date(obj[i].updatedAt);
                 let RealDate = moment(getDate,'YYYY-MM-DD').add(1,'M').format("YYYY-MM-DD, hh:mm A");
                 listHemoglobinaGlucosilada.push({date:RealDate,value: obj[i].HemoglobinaGlucosilada}) 
+                ListMicroalbuminuria.push({date:RealDate,value: obj[i].Microalbuminuria})
+
+                ListNivelCoresterol.push({date:RealDate,value: obj[i].NivelCoresterol})
+                ListNivelTrigliseridos .push({date:RealDate,value: obj[i].NivelTrigliseridos })
+                ListEstadoMental.push({date:RealDate,value: obj[i].EstadoMental})
+                ListOtrasEnfermedades.push({date:RealDate,value: obj[i].OtrasEnfermedades})
+                ListElectrocadriograma.push({date:RealDate,value: obj[i].Electrocadriograma})
              }
-
-
         }
-        console.log(listHemoglobinaGlucosilada)
-     
+ 
       
   
       /*       await Paciente.findById({_id:req.params.id}).lean().populate('allExpedientes').then(result => {
@@ -38,7 +52,14 @@ console.log(GlucosaData.allExpedientes.length)
             }).catch(next) */
 
 
-          res.json("HOLA")
+          res.json({
+            ListMicroalbuminuria:ListMicroalbuminuria, 
+            ListNivelCoresterol:ListNivelCoresterol, 
+            ListNivelTrigliseridos:ListNivelTrigliseridos,
+            ListEstadoMental:ListEstadoMental, 
+            ListOtrasEnfermedades:ListOtrasEnfermedades,
+            ListElectrocadriograma:ListElectrocadriograma,
+          })
     }
     
 }

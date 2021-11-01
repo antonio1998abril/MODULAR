@@ -1,9 +1,12 @@
 const Paciente = require("../Models/PacienteSchema")
 const Glucosa = require("../Models/GlucosaSchema")
+const Presion = require("../Models/PresionSchema")
+
 const moment = require('moment')
 const controller = {
     getGraphs : async  (req, res, next) => {
         const GlucosaData = await Glucosa.find({paciente_id:req.params.id})
+        const PresionData = await Presion.find({paciente_id:req.params.id})
         const allData = await Paciente.findById({_id:req.params.id}).lean().populate('allExpedientes')
         const listHemoglobinaGlucosilada = []
         const ListMicroalbuminuria = []
@@ -13,16 +16,18 @@ const controller = {
         const ListEstadoMental = []
         const ListOtrasEnfermedades = []
         const ListElectrocadriograma = []
-
-        const LisGlucosa = []
+        const ListGlucosaSangre = []
+        const ListCuerpodao = []
+    
+        const ListGlucosa = []
         const ListPresion = []
-        const ListDialisis = []
+
+        const dateExpediente = []
         let obj =JSON.parse(JSON.stringify(allData.allExpedientes));
        
 
         for (i=0; i< allData.allExpedientes.length; i++){          
             for (i in obj){
-                console.log(obj[i].NivelCoresterol)
                 let getDate = new Date(obj[i].updatedAt);
                 let RealDate = moment(getDate,'YYYY-MM-DD').add(1,'M').format("YYYY-MM-DD, hh:mm A");
                 listHemoglobinaGlucosilada.push({date:RealDate,value: obj[i].HemoglobinaGlucosilada}) 
@@ -33,25 +38,22 @@ const controller = {
                 ListEstadoMental.push({date:RealDate,value: obj[i].EstadoMental})
                 ListOtrasEnfermedades.push({date:RealDate,value: obj[i].OtrasEnfermedades})
                 ListElectrocadriograma.push({date:RealDate,value: obj[i].Electrocadriograma})
+                ListGlucosaSangre.push({date:RealDate, value: obj[i].GlucosaSangre})
+                ListCuerpodao.push({date:RealDate, value: obj[i].ListCuerpodaño})
+                dateExpediente.push({date:RealDate})
+
              }
         }
- 
-      
-  
-      /*       await Paciente.findById({_id:req.params.id}).lean().populate('allExpedientes').then(result => {
-                let obj = JSON.stringify(result.allExpedientes)
-                    obj = JSON.parse(result.allExpedientes)
-console.log(GlucosaData.allExpedientes.length)
-                const HemoglobinaGlucosilada = [];
-                        for (i = 0; i < result.allExpedientes.length; i++) {
-                let Hemo= result.allExpedientes.HemoglobinaGlucosilada[i]
-                } 
-                console.log(obj)
-            console.log("infoGlucosa",GlucosaData)
-                res.json(result)
-            }).catch(next) */
-
-
+        for (i= 0; i < GlucosaData.length; i++) {
+            getDate = new Date(GlucosaData[i].updatedAt);
+            RealDate = moment(getDate,'YYYY-MM-DD').add(1,'M').format("YYYY-MM-DD, hh:mm A");
+            ListGlucosa.push({date:RealDate,value: GlucosaData[i].Glucosa})
+        }
+        for (i= 0; i < PresionData.length; i++) {
+            getDate = new Date(PresionData[i].updatedAt);
+            RealDate = moment(getDate,'YYYY-MM-DD').add(1,'M').format("YYYY-MM-DD, hh:mm A");
+            ListPresion.push({date:RealDate, value: PresionData[i].Presion})
+        }
           res.json({
             ListMicroalbuminuria:ListMicroalbuminuria, 
             ListNivelCoresterol:ListNivelCoresterol, 
@@ -59,6 +61,8 @@ console.log(GlucosaData.allExpedientes.length)
             ListEstadoMental:ListEstadoMental, 
             ListOtrasEnfermedades:ListOtrasEnfermedades,
             ListElectrocadriograma:ListElectrocadriograma,
+            ListGlucosa:ListGlucosa,
+            ListPresion:ListPresion
           })
     }
     

@@ -12,6 +12,7 @@ const controller = {
             Presion:req.body.Presion,
             paciente_id:req.body.PacienteId
         })
+        console.log(newPresion)
         await newPresion.save().then(async ()=> {
             return res.json({msg:"Registro Guardado"})
         }).catch(next)

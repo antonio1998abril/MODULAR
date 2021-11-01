@@ -79,7 +79,7 @@ module.exports = {
         destination: 'http://localhost:5000/api/deleteGlucosa/:id'
       },{
         source:'/api/postPresion',
-        destination: 'http://localhost:5000/api/dpostPresion'
+        destination: 'http://localhost:5000/api/postPresion'
       },{
         source:'/api/getPresion/:id',
         destination: 'http://localhost:5000/api/getPresion/:id'
@@ -89,6 +89,19 @@ module.exports = {
       },{
         source:'/api/deletePresion/:id',
         destination: 'http://localhost:5000/api/deletePresion/:id'
+      },/*  */
+      {
+        source:'/api/postDia',
+        destination: 'http://localhost:5000/api/postDia'
+      },{
+        source:'/api/getDia/:id',
+        destination: 'http://localhost:5000/api/getDia/:id'
+      },{
+        source:'/api/upDia/:id',
+        destination: 'http://localhost:5000/api/upDia/:id'
+      },{
+        source:'/api/deleteDia/:id',
+        destination: 'http://localhost:5000/api/deleteDia/:id'
       },
       /* GLUCOSA PRESION DIALISIS */
       /* ACTIVIDADES */

@@ -1,33 +1,26 @@
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import {Row,Col,Form} from 'react-bootstrap'
-import { GlobalState } from '../GlobalState'
+import { GlobalState } from '../../GlobalState'
 const moment = require('moment')
 
-function GlucosaList({historial,deleteRegisterGlucosa}) {
+function DialisisList({historial,deleteRegisterDialisis}) {
     const state = useContext(GlobalState)
     const [token] = state.token
     const [callback,setCallback]=state.Paciente.callback;
-    let  getDate = new Date(historial.updatedAt)
+    let getDate = new Date(historial.updatedAt)
     let date = moment(getDate,'YYYY-MM-DD').format("YYYY-MM-DD, hh:mm A");
     const [labelEnable,setlabelEnable] = useState(false);
-    const  [UpValueEvaluacion, setUpValueEvaluacion] =useState('')
-
-    const initialStateGlucosa = {
-        Glucosa:'',
-      }
+    const initialStatePresion = {  Dialisis:'' };
+    const [dialisis,setDialisis] = useState(initialStatePresion);
     
-    const [glucosa,setGlucosa] = useState(initialStateGlucosa);
-
     const handleChangeInput= e =>{
         const {name,value} = e.target
-        setGlucosa({...glucosa,[name]:value})
+        setDialisis({...dialisis,[name]:value})
       }
-
-    
-    const updateRegisterGlucosa = async e => {
+    const updateRegisterPresion = async e => {
         try {    
-            await axios.put(`/api/upGlucosa/${historial._id}`,{...glucosa},{
+            await axios.put(`/api/upDia/${historial._id}`,{...dialisis},{
                 headers:{Authorization:token}
               })
               swal({icon:"success",text:`Registro Actualizado`,timer:"2000",buttons: false});  
@@ -42,29 +35,24 @@ function GlucosaList({historial,deleteRegisterGlucosa}) {
         }
     }
 
-
-
-
     const labelUp = () => {
         return (
-            <>
-            <Col className="labelCommon"   md={3} >
-            <Form.Control name="Glucosa" className="labelCommon"  type="number" size="sm" defaultValue={historial.Glucosa}  onChange={handleChangeInput}/>
-            </Col>
-            </>
+        <>
+      
+            <Form.Control  type="date" name="Dialisis" className="labelCommon" min="1900-01-01" max="2021-12-31"  size="sm" defaultValue={historial.Dialisis}  onChange={handleChangeInput}/>
+
+        </>
         )
     }
     const  buttonBlock = () => {
         return (
             <>
-                <button className="btn badge badge-dark" onClick={() => updateRegisterGlucosa(historial._id)} type="submit">Actualizar</button>
+                <button className="btn badge badge-dark" onClick={() => updateRegisterPresion(historial._id)} type="submit">Actualizar</button>
             </>
         )
     }
-
     const changeState=()=>{
         setlabelEnable(true);
-        setUpValueEvaluacion(historial._id)
       }
     
     return (
@@ -72,18 +60,13 @@ function GlucosaList({historial,deleteRegisterGlucosa}) {
         
             <Row>
                 <Form.Label  className="textList" lg={10} >
-                En la fecha {date} se registro el nivel de glucosa de &nbsp; { labelEnable ? labelUp(): ( <b>{historial.Glucosa} </b>  )}
+                Dialisis registrado en la fecha  &nbsp; { labelEnable ? labelUp(): ( <b>{historial.Dialisis} </b>  )} &nbsp;&nbsp;
                 </Form.Label>
-        
-                <button type="submit" className="btn badge badge-danger" onClick={() => deleteRegisterGlucosa(historial._id)}>Eliminar</button>&nbsp;
-              
+                <button type="submit" className="btn badge badge-danger" onClick={() => deleteRegisterDialisis(historial._id)}>Eliminar</button>&nbsp;
                  {labelEnable ?  buttonBlock() : (<button className="btn badge badge-warning" onClick = {changeState}>Actualizar</button>)} 
-               
             </Row>
-        
             <br/>
         </>
     )
 }
-
-export default GlucosaList
+export default DialisisList

@@ -207,18 +207,18 @@ if (!loaded) { return <div></div> }
                 <div className="card-body expe-row">
                 
                 <div className="form-group ">
-                    <label  className="col-sm-12 col-form-label">Nivel Hemoglobina Gloucosilada</label>
+                    <label  className="col-sm-12 col-form-label">Nivel Hemoglobina Glicosilada (HbA1c) </label>
                     <div className="col-sm-12">
-                      <input type="text" name="HemoglobinaGlucosilada"
-                      value={expediente.HemoglobinaGlucosilada} 
-                      onChange={handleChangeExpediente} className="form-control"  placeholder="Hemoglobina Gloucosilada"/>
+                      <input name="HemoglobinaGlucosilada" min="0" max="20"
+                      value={expediente.HemoglobinaGlucosilada} type="number"
+                      onChange={handleChangeExpediente}  className="form-control"  placeholder="Hemoglobina Glicosilada"/>
                     </div>
                 </div>
 
                 <div className="form-group ">
-                    <label  className="col-sm-12 col-form-label">Nivel de Microalbuminuria</label>
+                    <label  className="col-sm-12 col-form-label">Nivel de Microalbuminuria por mg/24 horas</label>
                     <div className="col-sm-12">
-                      <input type="text"  name="Microalbuminuria"
+                      <input type="number"  min="0" max="500" name="Microalbuminuria"
                       value={expediente.Microalbuminuria} 
                       onChange={handleChangeExpediente} className="form-control"  placeholder="Microalbuminuria"/>
                     </div>
@@ -226,29 +226,29 @@ if (!loaded) { return <div></div> }
 
                 
                 <div className="form-group ">
-                    <label  className="col-sm-12 col-form-label">Nivel de Colesterol</label>
+                    <label  className="col-sm-12 col-form-label">Nivel de Colesterol por mg/dl</label>
                     <div className="col-sm-12">
-                      <input type="text"  name="NivelCoresterol"
+                      <input type="number" max="0" max="300"  name="NivelCoresterol"
                       value={expediente.NivelCoresterol} 
                       onChange={handleChangeExpediente} className="form-control"  placeholder="Colesterol"/>
                     </div>
                 </div>
                 <div className="form-group ">
-                    <label  className="col-sm-12 col-form-label">Nivel de Trigliseridos</label>
+                    <label  className="col-sm-12 col-form-label">Nivel de Trigliseridos por (mg/dl)</label>
                     <div className="col-sm-12">
-                      <input type="text"  name="NivelTrigliseridos"
-                      value={expediente.NivelTrigliseridos} 
+                      <input type="number"  name="NivelTrigliseridos"
+                      value={expediente.NivelTrigliseridos}  min="000.000" max="1000"
                       onChange={handleChangeExpediente} className="form-control"  placeholder="Trigliseridos"/>
                     </div>
                 </div>
 
                 
                 <div className="form-group ">
-                    <label className="col-sm-12 col-form-label">Electrocadriograma</label>
+                    <label className="col-sm-12 col-form-label">Frecuencia Cardiaca por minuto</label>
                     <div className="col-sm-12">
-                      <input type="text"  name="Electrocadriograma"
+                      <input type="number"  max=""name="Electrocadriograma"
                       value={expediente.Electrocadriograma} 
-                      onChange={handleChangeExpediente} className="form-control"  placeholder="Electrocadriograma"/>
+                      onChange={handleChangeExpediente} className="form-control"  placeholder="0.00"/>
                     </div>
                 </div>
 

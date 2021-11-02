@@ -10,6 +10,7 @@ import profilePic from '../../public/testuser.png'
 function PacienteItem({paciente,deletePaciente}) {
     const state = useContext(GlobalState);
     const [idPaciente,setidPaciente] = state.Paciente.idPaciente
+    const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
 
     const changeState=()=>{
         modalsetOnEdit(true)

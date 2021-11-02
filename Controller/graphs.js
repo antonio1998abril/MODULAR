@@ -62,7 +62,9 @@ const controller = {
             ListOtrasEnfermedades:ListOtrasEnfermedades,
             ListElectrocadriograma:ListElectrocadriograma,
             ListGlucosa:ListGlucosa,
-            ListPresion:ListPresion
+            ListPresion:ListPresion,
+            ListHemoglobinaGlucosilada:listHemoglobinaGlucosilada,
+            Name:allData.name +" " + allData.lastname
           })
     }
     

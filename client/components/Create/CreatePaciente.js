@@ -14,7 +14,8 @@ function CreatePaciente() {
         sexo:'',
         edad:'', 
         diabetesTipo:'',
-        IncioEnfermedad:''
+        IncioEnfermedad:'',
+        altura:''
     }
 
     const [show, setShow] = useState(false);
@@ -76,7 +77,7 @@ function CreatePaciente() {
 
             <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-              <Modal.Title>{onEdit ? `Update` : "Crea un Nuevo paciente"}</Modal.Title>
+              <Modal.Title>{onEdit ? `Update` : "Crea un nuevo paciente"}</Modal.Title>
           </Modal.Header>
             <Modal.Body>
                 {/* Send a image */}

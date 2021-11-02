@@ -119,6 +119,30 @@ body {
       }
   }
 
+
+  /* GRAPHS CUSTOMIZATION */
+.graphjs {
+   /*width:calc(100vw - 40px);*/
+   width: 90%;
+   /*height: calc(100vh - 40px);*/
+   height: 100%;
+   background-color: #fff;
+   padding: 10px;
+   box-sizing: border-box;
+   margin:20px;
+   border: 1px solid rgba(0,0,0,.125);
+   border-radius: 0.25rem;
+   word-wrap: break-word;
+   min-width: 0;
+   word-wrap: break-word;
+   transition: all 0.5s ease; 
+}
+
+.graphjs:hover {
+  box-shadow: 0 0 15px rgb(209, 209, 209);
+}
+
+
 @import url("Sidebar/sidebar.css");
 @import url("DataStatus/table.css");
 @import url("Table/table.css");
@@ -130,4 +154,4 @@ body {
 @import url("Pacientes/pacientes.css");
 @import url("Result/result.css");  
 @import url("Create/Create.css"); 
-@import url("ActivitiesDate/Activity.css")
+@import url("ActivitiesDate/Activity.css");

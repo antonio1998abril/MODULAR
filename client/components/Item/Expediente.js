@@ -38,7 +38,7 @@ function Expediente({data,Deletehistorial}) {
             <Modal.Title>Datos de Laboratorio</Modal.Title>
           
     <div className="form-group">
-      <label  className="heading font-weight-bold">Nivel de Microalbuminuria:</label>
+      <label  className="heading font-weight-bold">Nivel de Microalbuminuria por mg/24 horas:</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>
@@ -49,7 +49,7 @@ function Expediente({data,Deletehistorial}) {
       </div>
     </div>
     <div className="form-group">
-      <label  className="heading font-weight-bold">Nivel de Hemoglobina Glucosilada:</label>
+      <label  className="heading font-weight-bold">Nivel Hemoglobina Glicosilada (HbA1c) :</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>
@@ -60,7 +60,7 @@ function Expediente({data,Deletehistorial}) {
       </div>
     </div>
     <div className="form-group">
-      <label  className="heading font-weight-bold">Nivel de Trigliseridos:</label>
+      <label  className="heading font-weight-bold">Nivel de Trigliseridos por (mg/dl):</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>
@@ -71,7 +71,7 @@ function Expediente({data,Deletehistorial}) {
       </div>
     </div>
     <div className="form-group">
-      <label  className="heading font-weight-bold">Electrocadriograma:</label>
+      <label  className="heading font-weight-bold">Frecuencia Cardiaca por minuto:</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>
@@ -83,7 +83,7 @@ function Expediente({data,Deletehistorial}) {
     </div>
 
     <div className="form-group">
-      <label  className="heading font-weight-bold">Niveles de colesterol:</label>
+      <label  className="heading font-weight-bold">Nivel de Colesterol por mg/dl:</label>
       <div className="input-group">
         <div className="input-group-prepend">
           <span className="input-group-text"></span>

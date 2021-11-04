@@ -11,23 +11,19 @@
 }
 
 .post .user-block {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     width: 100%;
 }
-
-.user-block {
-    float:left;
+.post .user-block {
+  padding-top: -2rem;
 }
 
-.user-block img {
-    float: left;
-    height: 40px;
-    width: 40px;
-}
-.img-circle {
+ .img-circle {
     border-radius: 50%;
-}
- .img-bordered-sm {
+
+
+} 
+.img-bordered-sm {
      border: 2px solid #adb5bd;
      padding: 2px;
  }
@@ -40,7 +36,7 @@
 .user-block .username {
     font-size: 16px;
     font-weight: 1000;
-    margin-top: -1px;
+    margin-top: -40px;
     font-family: 'Arvo';
 }
 

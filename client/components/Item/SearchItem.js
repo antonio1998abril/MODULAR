@@ -59,7 +59,10 @@ function SearchItem({paciente}) {
     <>
         <div className="post">
             <div className="user-block">
-                <Image className="img-circle img-bordered-sm" src={profilePic} width="20" height="20" alt="user image"/>
+              
+                <Image className=" img-circle img-bordered-sm" src={paciente.images.url} width="40" height="40" alt="user image"/>
+  
+               
                     <span className="username">
                         <a href="#">{paciente.name} {paciente.lastname}</a>
                     </span>

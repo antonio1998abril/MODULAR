@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare,faProcedures,faFolderPlus,faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import Image from 'next/image'
+
 import profilePic from '../../public/testuser.png'
 import { Modal ,Container,Col,Row,Button,Form} from 'react-bootstrap'
 import axios from 'axios';
@@ -255,7 +256,7 @@ function ActividadItem({actividad}) {
             <td>
               <ul className="list-inline">
                 <li className="list-inline-item">
-                    <Image alt="Avatar" className="table-avatar" src={profilePic}/>
+                    <Image alt="Avatar" className="table-avatar"  width="140" height="140"  src={actividad.images.url}/>
                 </li>
               </ul>
             </td>

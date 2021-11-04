@@ -55,7 +55,7 @@ const controller = {
         
         
         
-        if (existeEmail || existeTel ) return res.status(302).json({msg:"Este Usuario ya esta Registrado, con Email o Telefono iguales, Buscalo en la seccion."})
+        if (!existeEmail || !existeTel ) return res.status(302).json({msg:"Este Usuario ya esta Registrado, con Email o Telefono iguales, Buscalo en la seccion."})
         
         
         if (!name || !lastname  || !tel  || !email || !peso || !sexo || !edad || !diabetesTipo  || !IncioEnfermedad || !images || !altura) return res.status(302).json({msg:"Completa todos los campos."})

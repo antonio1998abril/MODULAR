@@ -38,6 +38,7 @@ const routes = {
     .get('/getpaciente',auth,PacienteController.GetPaciente)
     .post('/createpaciente',auth,PacienteController.NewPaciente)
     .delete('/deletePaciente/:id',auth,PacienteController.DeletePaciente)
+    .put('/putPaciente/:id',PacienteController.UpdatePaciente)
     /*Expedienete */
     .post('/createExpediente/:id',auth,PacienteController.CreateExpediente)
     .post('/createRegimen/:id',auth,PacienteController.createRegimen)

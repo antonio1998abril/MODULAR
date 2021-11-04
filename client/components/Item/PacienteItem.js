@@ -10,10 +10,9 @@ import profilePic from '../../public/testuser.png'
 function PacienteItem({paciente,deletePaciente}) {
     const state = useContext(GlobalState);
     const [idPaciente,setidPaciente] = state.Paciente.idPaciente
-    const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
-
-    const changeState=()=>{
-        modalsetOnEdit(true)
+    /* const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit */
+       /* modalsetOnEdit(true) */
+    const changeStateEdit=()=>{
         setidPaciente(paciente._id)
     }
     return (
@@ -42,18 +41,18 @@ function PacienteItem({paciente,deletePaciente}) {
                   <FontAwesomeIcon className="iconCard"  icon={faTrash} />
                 </a>&nbsp;
 
-                <a onClick={changeState} className="btn btn-sm bg-warning">
+                <a onClick={changeStateEdit} className="btn btn-sm bg-warning">
                   <FontAwesomeIcon className="iconCard"  icon={faEdit} /> Edit
                 </a>&nbsp;
                 
                  <Link href="/Pacientes/[expediente]" as={`/Pacientes/${paciente._id}`}>
                 <a  className="btn btn-sm btn-primary">
-                    <FontAwesomeIcon className="iconCard"  icon={faFileMedical} /> Ver Expediente Completo
+                    <FontAwesomeIcon className="iconCard"  icon={faFileMedical} /> Expediente Completo
                 </a></Link> &nbsp;<br/> <br/>
 
                 <Link href="/Evolucion/[evolucion]" as={`/Evolucion/${paciente._id}`}>
                 <a  className="btn btn-sm btn-info">
-                    <FontAwesomeIcon className="iconCard"  icon={faChartLine} /> Ver Evolucion del Paciente
+                    <FontAwesomeIcon className="iconCard"  icon={faChartLine} /> Ver Evolucion por graficas
                 </a></Link> &nbsp;
 
 

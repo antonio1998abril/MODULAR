@@ -32,9 +32,17 @@ const PacienteSchema = new Schema({
         type:String,
         required: true
     },
+    altura:{
+        type:String,
+        required: true
+    },
     diabetesTipo:{
         type:String,
         required: true
+    },
+    images:{
+        type:Object,
+        required:false
     },
     IncioEnfermedad: {
         type:String,

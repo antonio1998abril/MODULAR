@@ -18,6 +18,18 @@ module.exports = {
         destination: 'http://localhost:5000/api/info'
       },
       ///PACIENTES
+            /* IMAGES */
+      {
+        source:'/api/destroy',
+        destination:'http://localhost:5000/api/destroy'
+      },{
+        source:'/api/upload',
+        destination:'http://localhost:5000/api/upload'
+      },
+      {
+        source:'/api/putPaciente/:id',
+        destination:'http://localhost:5000/api/putPaciente/:id'
+      },
       {
         source: '/api/getpaciente',
         destination: 'http://localhost:5000/api/getpaciente'
@@ -129,7 +141,8 @@ module.exports = {
       {
         source:'/api/graph/:id',
         destination: 'http://localhost:5000/api/graph/:id'
-      }
+      },
+
     ]
   }
 }

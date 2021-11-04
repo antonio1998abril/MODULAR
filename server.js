@@ -2,10 +2,11 @@ const express=require ('express')
 const app = express();
 require('dotenv').config()
 const cookieParser =require('cookie-parser')
+const fileUpload = require('express-fileupload');
 
 //my routes
 const Routes = require('./Routes/routes')
-
+const uploadRoute=require('./Routes/uploads')
 //Connect to data base
 const mongoose = require('mongoose');
 mongoose.set('runValidators', true);
@@ -24,12 +25,17 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
   }));
+
+  app.use(fileUpload({
+    useTempFiles:true
+  }))
+
 //used to on jsonwebtoken cookie
  app.use(cookieParser()) 
 
 app.use('/api',Routes.user)
 app.use('/api',Routes.paciente)
-
+app.use('/api',uploadRoute)
 
 app.use(function(err,req,res,next){
     res.json({error:err.message}) 

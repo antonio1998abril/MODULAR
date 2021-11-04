@@ -10,16 +10,16 @@ const controller = {
            }).catch(next)
     },
     NewPaciente: async (req,res,next)=>{
-        const {name,lastname,tel,email,peso,sexo,edad, diabetesTipo,IncioEnfermedad} = req.body
+        const {name,lastname,tel,email,peso,sexo,edad, diabetesTipo,IncioEnfermedad,images, altura} = req.body
         const existeEmail = await Paciente.findOne({email})
         const existeTel= await Paciente.findOne({tel})
         
         if (existeEmail || existeTel) return res.status(302).json({msg:"Este Usuario ya esta Registrado, con Email o Telefono iguales, Buscalo en la seccion."})
         
-        if (!name || !lastname  || !tel  || !email || !peso || !sexo || !edad || !diabetesTipo  || !IncioEnfermedad) return res.status(302).json({msg:"Completa todos los campos."})
+        if (!name || !lastname  || !tel  || !email || !peso || !sexo || !edad || !diabetesTipo  || !IncioEnfermedad || !images || !altura) return res.status(302).json({msg:"Completa todos los campos."})
 
         const newPaciente = new Paciente({
-            name, lastname, tel, peso, sexo, edad, diabetesTipo, email, IncioEnfermedad ,Encargado_id:req.user.id,Expediente:{
+            name, lastname, tel, peso, sexo, edad, diabetesTipo, email, altura,images,IncioEnfermedad ,Encargado_id:req.user.id,Expediente:{
                 InicioEnfermedadMentales:'', Medicamentos:'', Alergias:'', Antecedentes:'',EstatusDental:'',GlucosaSangre:'',
             HemoglobinaGlucosilada:'', Microalbuminuria:'',  NivelCoresterol:'',
             NivelTrigliseridos:'', Electrocadriograma:'',Cuerpodaño:'',dialisis:'',OtrasEnfermedades:'',presion:'',
@@ -46,6 +46,26 @@ const controller = {
                res.json({msg:"Eliminado"})
            }).catch(next)
         }
+    },
+    UpdatePaciente : async (req,res,next) => {
+        const {name,lastname,tel,email,peso,sexo,edad, diabetesTipo,IncioEnfermedad,images, altura} = req.body;
+       
+        const existeEmail = await Paciente.findOne({email},{_id:req.body._id})
+        const existeTel= await Paciente.findOne({tel},{_id:req.body._id})
+        
+        
+        
+        if (existeEmail || existeTel ) return res.status(302).json({msg:"Este Usuario ya esta Registrado, con Email o Telefono iguales, Buscalo en la seccion."})
+        
+        
+        if (!name || !lastname  || !tel  || !email || !peso || !sexo || !edad || !diabetesTipo  || !IncioEnfermedad || !images || !altura) return res.status(302).json({msg:"Completa todos los campos."})
+        await Paciente.findByIdAndUpdate({_id:req.params.id},{
+            name,lastname,tel,email,peso,sexo,edad, diabetesTipo,IncioEnfermedad,images, altura
+        }).then(() => {
+            res.json({msg:`usuario ${name} actualizado`})
+        }).catch(next)
+        
+
     },
     /* DATOS DEL ECXPEDIETN ASI ARRIAB */
 

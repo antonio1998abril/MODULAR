@@ -1,6 +1,12 @@
 module.exports = {
+  reactStrictMode: true, 
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
+  
   async rewrites() {
     return [
+      
       {
         source: '/api/register',
         destination: 'http://localhost:5000/api/register'

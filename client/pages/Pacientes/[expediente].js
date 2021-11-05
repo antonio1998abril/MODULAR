@@ -19,7 +19,7 @@ const Expediente =({data}) =>{
   const [actualPaciente]= useState(data[0])
   const [actualExpediente]= useState(data[0].Expediente)
   const [actualRegimen] = useState(data[0].Regimen)
-  const [allExpedientes] = useState([data[0].allExpedientes])
+  /* const [allExpedientes] = useState([data[0].allExpedientes]) */
   const [callback,setCallback] = state.Paciente.callback
 
   const ExpedienteState = { 

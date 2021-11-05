@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import {Navbar,Nav,Container,Image} from 'react-bootstrap';
+import {Navbar,Nav,Container} from 'react-bootstrap';
+import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
 import { GlobalState } from '../GlobalState';

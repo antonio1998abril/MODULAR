@@ -4,6 +4,7 @@ import { GlobalState } from '../GlobalState';
 import axios from 'axios';
 import swal from 'sweetalert';
 import Loader from '../../components/Loader/Loader'
+import Image from 'next/image'
 function CreatePaciente() {
     const initialState = {
         name:'',
@@ -189,7 +190,7 @@ function CreatePaciente() {
                     {
                         loading ? <div id="file_img"><Loader/></div>
                     :<div id="file_img" style={styleUpload}>
-                        <img src={images ? images.url:''} alt=""></img>
+                        <Image src={images ? images.url:''} alt=""/>
                         <span onClick={handleDestroy}>X</span>
                     </div>
                     }

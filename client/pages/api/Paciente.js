@@ -32,6 +32,7 @@ function Paciente(token) {
     },[callback,sort,search,page])
 
     useEffect(()=>{
+       
         if(token){
         const getCommonUser =async()=>{
              const res= await axios.get("/api/getpaciente",{
@@ -50,6 +51,7 @@ function Paciente(token) {
             const res2 = await axios.get("/api/GetNotification",{
                 headers: {Authorization: token}
             })
+           
             setNotifications(res2.data.data)
             setSizeBell(res2.data.sizeNoti)
            
@@ -59,10 +61,32 @@ function Paciente(token) {
         getCommonUser()
         getAllUser()
         getNotification()
+
+    
+
         }
     },[token,callback])
 
-    console.log(sizeBel)
+    const MINUTE_MS = 60000;
+
+    useEffect(() => {
+        const interval = setInterval(async () => {
+          console.log("Llamar cada minuto")
+                const res2 = await axios.get("/api/GetNotification",{
+                    headers: {Authorization: token}
+                })
+               
+                setNotifications(res2.data.data)
+                setSizeBell(res2.data.sizeNoti)
+               
+    
+
+         
+        }, MINUTE_MS);
+      
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+      }, [token,callback])
+  
     return {
     pacientes:[pacientes,setPacientes],
     callback:[callback,setCallback],

@@ -108,7 +108,7 @@ function tick(){
 var toExactMinute = 60000 - (new Date().getTime() % 60000);
 
 
-setInterval(tick,60000);//cada minuto
+setInterval(tick,50000);//cada minuto
 setInterval(Ftomorrow,86400000)//cada 24 horas
 
 ///CADA MINUTO

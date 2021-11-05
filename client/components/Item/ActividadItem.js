@@ -12,6 +12,7 @@ import { GlobalState } from '../GlobalState';
 import  GlucosaList  from './ListStatus/GlucosaList';
 import  PresionList  from './ListStatus/PresionList';
 import  DiaList  from './ListStatus/DialisisList';
+import DateGif from '../../public/date3.gif'
 
 function ActividadItem({actividad}) {
   const initialStateGlucosa = {
@@ -249,14 +250,15 @@ function ActividadItem({actividad}) {
           <tr>
             <td>
               <Link href="/Estatus/[actividad]" as={`/Estatus/${actividad._id}`}>
-                <a className="btn btn-info btn-sm" >
-                    <FontAwesomeIcon className="circlePaciente" icon={faProcedures} />
+                <a className="btn  btn-sm" >
+                   {/*  <FontAwesomeIcon className="circlePaciente" icon={faProcedures} /> */}
+                    <Image src={DateGif} alt="log-Activities" />
                 </a></Link>  
             </td>
             <td>
               <ul className="list-inline">
                 <li className="list-inline-item">
-                    <Image alt="Avatar" className="table-avatar"  width="140" height="140"  src={actividad.images.url}/>
+                    <Image alt="Avatar" className="table-avatar"  width="120" height="120"  src={actividad.images.url}/>
                 </li>
               </ul>
             </td>
@@ -273,17 +275,17 @@ function ActividadItem({actividad}) {
                 <span className="badge badge-success">Success</span>
             </td>
             <td className="project-actions text-right">
-            <br/>
+        
             <button className="btn btn-dark btn-sm" onClick={() => setModalDialisis(true)}>
                 <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
                Dias en que se realizo dialisis
-            </button>&nbsp;<br/><br/>
+            </button>&nbsp;
 
             <button className="btn btn-dark btn-sm" onClick={() => setModalPresion(true)}>
                 <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
                 Niveles de Presion
-            </button>&nbsp;<br/> <br/>
-               
+            </button>&nbsp;
+           
             <button className="btn btn-dark btn-sm" onClick={() => setModalShow(true)}>
                 <FontAwesomeIcon icon={faFolderPlus} />&nbsp;
                 Niveles de Glucosa
@@ -293,10 +295,10 @@ function ActividadItem({actividad}) {
                Niveles de Glucosa moment('2019-10-17T02:00:00.000Z').format('YYYY-MM-DD');
               </a> */}
 
-              <br/><br/>
-              <div className="ButtonGlucosa">
+          
+              <button className="btn  btn-sm">
                 <FontAwesomeIcon className="commonButton" color="orange" icon={faPlusSquare} size="3x"  onClick={() => setModalAdd(true)} />
-              </div>
+              </button>
             </td>
           </tr>
 

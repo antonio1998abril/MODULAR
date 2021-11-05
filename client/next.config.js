@@ -148,6 +148,11 @@ module.exports = {
         source:'/api/graph/:id',
         destination: 'http://localhost:5000/api/graph/:id'
       },
+      /* ADMIN TOOLS */
+      {
+        source:'/api/SuperGet',
+        destination: 'http://localhost:5000/api/SuperGet'
+      }
 
     ]
   }

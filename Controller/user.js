@@ -16,12 +16,12 @@ const verifyPass = (pass) =>{
 const controller = {
     register: async (req,res,next)=>{
         const {name,email,lastname,ocupation,password,repeat} = req.body
-        if (password != repeat) return res.status(302).json({msg:"Password doen't match"})
+        if (password != repeat) return res.status(302).json({msg:"No coincide las contraseñas"})
 
         const user =await User.findOne({email})
-        if (user) return res.status(302).json({msg:"The Email already exist"})
+        if (user) return res.status(302).json({msg:"El email ya existe"})
 
-        if (!verifyPass(password)) return res.status(302).json({msg:"Create a password with: 7 or more letters, using a capital letter or more, a number and any simbol like #, $, %, @"})
+        if (!verifyPass(password)) return res.status(302).json({msg:"Crea una contraseña con: 7 or mas letras, usando una letra mayuscula o mas, un numero and y algun simbolo como #, $, %, @"})
 
         const passwordHash = await bcrypt.hash(password,10)
         const newUser = new User({
@@ -74,19 +74,32 @@ const controller = {
             if(err) return res.status(302).json({msg: "Please Login or Register"})
 
             const accesstoken = createAccessToken({id: user.id, email:user.email})
-            console.log("acceso",accesstoken)
+      /*       console.log("acceso",accesstoken) */
             res.json({accesstoken})
         })
     },
     getUser: async(req,res,next) => {
         const user = await User.findById(req.user.id).select('-password')
         if(!user) return res.status(302).json({msg: "Error to get user."})
-
         res.json(user)
     },
     upDateInfo: async(req,res,next) => {
         const info = {name, lastname, email, password, ocupation, tel, ocupation, tel} = req.body;
+    },
+
+    /* Admin */
+    SuperGet: async(req,res,next) => {
+        const superAdminRole = await User.findOne({email:req.user.email}).select('role')
+        console.log(superAdminRole)
+        const AllUserRole = await User.find().lean();
+
+        if(superAdminRole.role == '3'){
+            res.json(AllUserRole)
+        }else {
+            res.json({msg:"No eres Admin"})
+        }
     }
+    
 }
 
 const createAccessToken = (user) =>{

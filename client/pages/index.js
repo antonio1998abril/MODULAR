@@ -34,28 +34,28 @@ export default function Home() {
   <>
     <div className="card-body col-12">
       <div className="callout callout-info">
-          <h6><i className="fas fa-info"></i> Nota:</h6>
-          <h4>Estatus Valores Globales:</h4>
+          <h6><i className="fas fa-info"></i> Bienvenido</h6>
+          <h4>Estatus Globales</h4>
       </div>
     </div>
 
     <div className="gridIndex">
       <Link href="/Admin/Citas">
       <div className="card cardheart">
-      <div className="titleIndex"><b>Estatus de Salud 50%</b></div>
+      <div className="titleIndex"><b>Estatus de Salud </b></div>
       <div> <FontAwesomeIcon icon={faHeartbeat}  className="IconIndex"/></div>
       </div>
       </Link>
-      <Link href="/Admin/Citas">
+{/*       <Link href="/Admin/Citas">
       <div className="card dates ">
-      <div className="titleIndex"><b>Estatus de Citas 80%</b></div>
+      <div className="titleIndex"><b></b></div>
       <div> <FontAwesomeIcon icon={faClipboardCheck}   className="IconIndex"/></div>
      
       </div>
-      </Link>
+      </Link> */}
       <Link href="/Admin/Citas">
       <div className="card activities ">
-      <div className="titleIndex"><b> Estatus de Actividad 20%</b></div>
+      <div className="titleIndex"><b> Estatus de Actividades </b></div>
       <div> <FontAwesomeIcon icon={faWalking}  className="IconIndex"/></div>
      
       </div>
@@ -63,7 +63,7 @@ export default function Home() {
       <Link href="/Admin/Citas">
     
       <div className="card nutrition ">
-      <div className="titleIndex"><b> Estatus de Nutricion 60%</b></div>
+      <div className="titleIndex"><b> </b></div>
       <div> <FontAwesomeIcon icon={faAppleAlt}  className="IconIndex"/></div>     
       </div>
       </Link>

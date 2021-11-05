@@ -8,7 +8,7 @@ const authAdmin = async (req, res, next) =>{
         })
 
         if (user.role === 1) 
-            return res.status(400).json({msg: 'Searcher resources denied'})
+            return res.status(400).json({msg: 'Denegado'})
             next()
         
 

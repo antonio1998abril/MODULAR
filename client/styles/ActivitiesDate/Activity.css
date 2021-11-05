@@ -1,5 +1,6 @@
 .ButtonGlucosa {
 padding-right: 2.5rem;
+
 }
 
 .text-Satus-Icon{
@@ -26,6 +27,7 @@ padding-right: 2.5rem;
 
 .commonButton {
     transition: all 0.5s ease;
+   
 }
 .commonButton:hover{
     box-shadow: 0 0 25px rgb(163, 147, 64); 

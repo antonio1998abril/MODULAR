@@ -32,11 +32,11 @@ function Pacienteestatus() {
         <Table className="text-center table-inverse  table-borderless shadow-lg  rounded projects" variant="light"   hover  size="sm" responsive="sm">
             <thead >
                 <tr>
-                    <th style={{width: "10%"}} >Actividades</th>
-                    <th style={{width: "10%"}} >Pacientes</th>
-                    <th style={{width: "20%"}}>Progresos</th>
+                    <th style={{width: "5%"}} >Actividades</th>
+                    <th style={{width: "10%"}} >Paciente</th>
+                    <th style={{width: "10%"}}>Progresos</th>
                     <th style={{width: "5%"}} className="text-center">Estatus</th>
-                    <th style={{width: "10%"}} className="text-center">Opciones</th>
+                    <th style={{width: "15%"}} className="text-center">Opciones</th>
                 </tr>
             </thead>
             <tbody className="table-hover">

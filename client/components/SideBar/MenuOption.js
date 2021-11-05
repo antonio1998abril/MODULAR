@@ -12,13 +12,6 @@ export const MenuOption = [
         cName:'nav-text',
         admin:false
     },{
-        title:'Buscar',
-        path:'/Result',
-        pathA:'/Result',
-        icon:<FontAwesomeIcon icon={faSearchPlus}   transform="shrink-3"  /> ,
-        cName:'nav-text',
-        admin:false
-    },{
         title:'Pacientes',
         path:'/Pacientes/info-pacientes',
         icon:<FontAwesomeIcon icon={faIdCardAlt}   transform="shrink-4" />,
@@ -30,13 +23,13 @@ export const MenuOption = [
         icon:<FontAwesomeIcon icon={faNotesMedical}  transform="shrink-3" /> ,
         cName:'nav-text',
         admin:false
-    }, {
+    },/*  {
         title:'Actividades',
         path:'/Admin/admin',
         icon:<FontAwesomeIcon icon={faBookMedical}   transform="shrink-3" />,
         cName:'nav-text',
         admin:false
-    },{
+    }, */{
         title:'Perfil',
         path:'/User/Config',
         icon:<FontAwesomeIcon icon={faCogs}  transform="shrink-4" />,

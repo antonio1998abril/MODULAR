@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalState } from '../../components/GlobalState';
 import Router from 'next/router';
-import {Modal,Button} from 'react-bootstrap';
+import {Modal,Button,Table} from 'react-bootstrap';
 import Image from 'next/image'
-import profilePic from '../../public/testuser.png'
+import profilePic from '../../public/testuser.png';
+
 function Config() {
     const state = useContext(GlobalState);
     const [islogged]= state.User.isLogged
@@ -16,7 +17,36 @@ function Config() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [iSuperAdmin]= state.User.super
+    const [AllData] = state.Paciente.AllSuperData;
 
+    console.log(AllData)
+
+const ToolAdmin = () => {
+  return (
+  <>
+  <React.Fragment>
+
+    <Table className="text-center table-inverse  table-borderless shadow-lg  rounded" variant="dark"   hover  size="sm" responsive="sm">
+            
+            <thead>
+                        <tr>
+                        <th>Nombre de Usuario</th>
+                        <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody className="table-hover">
+                        {
+                        /* categories.map(categories =>{
+                            return <Categories key={categories._id} categories={categories} deleteCategory={deleteCategory}/>
+                            }) */
+                        }
+                    </tbody>
+            </Table>
+            </React.Fragment>
+  </>
+  )
+}
     useEffect(() => {
       if(!islogged) {
         let timerFunc = setTimeout(() => {
@@ -75,8 +105,12 @@ function Config() {
                       <h5 className="description-header">Estatus</h5>
                       <span className="description-text">          
                       {
-                        isAdmin ? <h1>Administador</h1> : <h1>Usuario</h1>
-                      }</span>
+                        isAdmin ? <h1>Medico</h1> : <h1>Usuario</h1> 
+                      }
+                      {
+                        iSuperAdmin ? <h1>Admin</h1> : <h1></h1>
+                      }
+                      </span>
                     </div>
                   </div>
              
@@ -92,6 +126,12 @@ function Config() {
                 <button onClick={handleShow} className="btn btn-primary">Actualizar</button>
               </div>
             </div>
+            {
+              iSuperAdmin ? ToolAdmin() : <h1></h1>
+            }
+            
+
+
 
       
       </>

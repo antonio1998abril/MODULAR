@@ -16,8 +16,8 @@ function Paciente(token) {
     const [modalOnEdit,modalsetOnEdit] = useState(false);
     const [show, setShow] = useState(false);
     const [idAct,setIdAct] = useState('');
-
-
+    const [allSuper,setallSuper] = useState([]);
+    
 
 
     useEffect(() =>{
@@ -37,7 +37,18 @@ function Paciente(token) {
              })
              setPacientes(res.data)
             }
+        const getAllUser = async()=> {
+            const res= await axios.get("/api/SuperGet",{
+                headers: {Authorization: token}
+             })
+             setallSuper(res.data)
+           
+
+        }
+
+
         getCommonUser()
+        getAllUser()
         }
     },[token,callback])
 
@@ -52,7 +63,8 @@ function Paciente(token) {
     modalOnEdit:[modalOnEdit,modalsetOnEdit],
     show:[show, setShow],
     idAct:[idAct,setIdAct],
-    GlobalPaciente: [GlobalPaciente, setGlobalPaciente]
+    GlobalPaciente: [GlobalPaciente, setGlobalPaciente],
+    AllSuperData: [allSuper,setallSuper]
     }
 }
 

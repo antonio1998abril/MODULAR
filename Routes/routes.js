@@ -14,7 +14,8 @@ const User = require('../Models/UserSchema');
 const Notification = require('../Models/NotificacionesSchema')
 const nodemailer=require('nodemailer')
 const util = require('util');
-const moment = require('moment')
+const moment = require('moment');
+const authAdmin = require('../Middleware/authadmin');
 
 
 let transporter = nodemailer.createTransport({
@@ -75,6 +76,8 @@ const routes = {
 
     /* Grafica */
     .get('/graph/:id',GraphController.getGraphs)
+    /* ADMIN */
+    .get('/SuperGet',auth,UserController.SuperGet)
 }
 
 tick()/* CADA MINUTO */

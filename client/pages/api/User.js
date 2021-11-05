@@ -7,6 +7,8 @@ function User(token) {
     const [perfilInfo, setPerfilInfo] = useState([])
     const [callback,setCallback] = useState(false);
     const [isAdmin,setIsAdmin]=useState(false)
+
+    const [superAdmin,setSuperAdmin] = useState(false);
     useEffect(() => {
         if(token){
             const getUser = async () => {
@@ -17,6 +19,9 @@ function User(token) {
                     setIsLogged(true)
                     setPerfilInfo(res.data)
                     res.data.role == 1 ? setIsAdmin(true) :setIsAdmin(false)
+                    if(res.data.role == 3) setSuperAdmin(true),setIsAdmin(true)
+                   
+                   
                 } catch (err) {
                     swal({
                         title:"ERROR",
@@ -34,7 +39,9 @@ function User(token) {
         isLogged:[isLogged,setIsLogged],
         perfilInfo:[perfilInfo,setPerfilInfo],
         isAdmin:[isAdmin,setIsAdmin],
-        callback:[callback,setCallback]
+        callback:[callback,setCallback],
+        super: [superAdmin,setSuperAdmin],
+    
     }
 }
 

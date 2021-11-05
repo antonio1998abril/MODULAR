@@ -30,7 +30,7 @@ function Login() {
        try{
            await axios.post('/api/login',{...login})
            localStorage.setItem('firstLogin',true)
-            swal({icon:"success",text:"GOOD!!",timer:"2000"}).then(function(){
+            swal({icon:"success",text:"Bienvenido!!",timer:"2000"}).then(function(){
                 window.location.href="/";
             },2000)
 

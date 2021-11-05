@@ -2,6 +2,7 @@ const Paciente = require ("../Models/PacienteSchema")
 const User = require ("../Models/UserSchema")
 const Expediente = require ("../Models/ExpedienteSchema")
 /* Encargado_id:req.user.id */
+const Notifications = require ("../Models/NotificacionesSchema")
 
 const controller = {
     GetPaciente: async (req ,res ,next) => {
@@ -26,6 +27,7 @@ const controller = {
             FactorRiesgo:'',EstadoMental:''
             }, Regimen:{Lunes:'', Martes:'', Miercoles:'',Jueves:'',Viernes:'',Sabado:'',Domingo:'',Ejercicio:'',Comida:''}
         })
+        newPaciente.MedicoDeCabecera.push(req.user.id)
         await newPaciente.save().then(()=>{
             res.json({msg:"Nuevo paciente"})
         }).catch(next) 
@@ -55,7 +57,7 @@ const controller = {
         
         
         
-        if (!existeEmail || !existeTel ) return res.status(302).json({msg:"Este Usuario ya esta Registrado, con Email o Telefono iguales, Buscalo en la seccion."})
+        /* if (!existeEmail || !existeTel ) return res.status(302).json({msg:"Este Usuario ya esta Registrado, con Email o Telefono iguales, Buscalo en la seccion."}) */
         
         
         if (!name || !lastname  || !tel  || !email || !peso || !sexo || !edad || !diabetesTipo  || !IncioEnfermedad || !images || !altura) return res.status(302).json({msg:"Completa todos los campos."})
@@ -179,9 +181,22 @@ const controller = {
         }else {
             return res.status(302).json({msg:"Este Paciente ya ha sido Agregado"}) 
         }
-    }
+    },
 /* Agergar expediente */
-    
+    /* Notification */
+    getNotificacion :async (req,res,next) => {
+        const allNotification = await Notifications.find({user_id:req.user.id}).lean()
+        res.json({
+            data:allNotification,
+            sizeNoti: allNotification.length
+        })  
+
+        }, 
+        deleteNotifications :async(req,res,next) => {
+            await Notifications.findByIdAndRemove({_id:req.params.id}).then(()=>{
+                res.json({msg:"Notificacion Elminado"})
+            }).catch(next)  
+        }
     
     }
 module.exports = controller

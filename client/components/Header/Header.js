@@ -21,6 +21,7 @@ function Header() {
             window.location.href="/";
         },2000)
     }
+     const [sizeBel, setSizeBell]=state.Paciente.sizeBell
 
 
     const userLogged = () => {
@@ -42,7 +43,7 @@ function Header() {
                 
               <Link  href="/notification">
                         <div   className="bell-icon">
-                            <a><span >{1}</span>
+                            <a><span >{sizeBel}</span>
                             <FontAwesomeIcon icon={faBell } size="lg" className="bellStyle" /></a>
                         </div>
                     </Link>

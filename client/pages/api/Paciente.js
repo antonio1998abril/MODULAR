@@ -17,8 +17,10 @@ function Paciente(token) {
     const [show, setShow] = useState(false);
     const [idAct,setIdAct] = useState('');
     const [allSuper,setallSuper] = useState([]);
-    
+    const [idUserS,setIdUserS] = useState('');
 
+    const [notifications,setNotifications] = useState([]);
+    const [sizeBel, setSizeBell] = useState('');
 
     useEffect(() =>{
         const getPacientes = async() => {
@@ -42,16 +44,25 @@ function Paciente(token) {
                 headers: {Authorization: token}
              })
              setallSuper(res.data)
-           
+        }
 
+        const getNotification = async () => {
+            const res2 = await axios.get("/api/GetNotification",{
+                headers: {Authorization: token}
+            })
+            setNotifications(res2.data.data)
+            setSizeBell(res2.data.sizeNoti)
+           
         }
 
 
         getCommonUser()
         getAllUser()
+        getNotification()
         }
     },[token,callback])
 
+    console.log(sizeBel)
     return {
     pacientes:[pacientes,setPacientes],
     callback:[callback,setCallback],
@@ -64,7 +75,10 @@ function Paciente(token) {
     show:[show, setShow],
     idAct:[idAct,setIdAct],
     GlobalPaciente: [GlobalPaciente, setGlobalPaciente],
-    AllSuperData: [allSuper,setallSuper]
+    AllSuperData: [allSuper,setallSuper],
+    idUserS:[idUserS,setIdUserS],
+    notifications:[notifications,setNotifications],
+    sizeBell:[sizeBel, setSizeBell]
     }
 }
 

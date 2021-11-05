@@ -5,6 +5,7 @@ import {Modal,Button,Table} from 'react-bootstrap';
 import Image from 'next/image'
 import profilePic from '../../public/testuser.png';
 
+import ListSuper from '../../components/Item/ListAdminControl/UserStatus'
 function Config() {
     const state = useContext(GlobalState);
     const [islogged]= state.User.isLogged
@@ -14,36 +15,63 @@ function Config() {
 
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+      setShow(false);
+      modalsetOnEdit(false);
+    }
     const handleShow = () => setShow(true);
-
+  /* ROLE */
     const [iSuperAdmin]= state.User.super
     const [AllData] = state.Paciente.AllSuperData;
+    const [idUserS,setIdUserS] = state.Paciente.idUserS
+    const [ShowRole,setShowRole] = useState(false);
+    const [modalOnEdit,modalsetOnEdit] = state.Paciente.modalOnEdit
+    
+    console.log(idUserS)
+    useEffect(() => {
+      if(idUserS){
+        modalsetOnEdit(true)
+       
+          AllData.forEach(p => {
+              if(p._id === idUserS){
+                  /* setPaciente(paciente) */
+                  setShowRole(true);
+                
+              }
+          })
+      }else {
+         /*  setPaciente(initialState) */
+         modalsetOnEdit(false)
+      }
+  },[idUserS,AllData])
 
-    console.log(AllData)
+    
+    const deleteallS=async(id)=>{
+      console.log(AllData)
+    }
+
 
 const ToolAdmin = () => {
   return (
   <>
   <React.Fragment>
-
     <Table className="text-center table-inverse  table-borderless shadow-lg  rounded" variant="dark"   hover  size="sm" responsive="sm">
-            
             <thead>
                         <tr>
                         <th>Nombre de Usuario</th>
-                        <th>Opciones</th>
+                        <th>Correo</th>
+                        <th>Opciones Role</th>
                         </tr>
                     </thead>
                     <tbody className="table-hover">
                         {
-                        /* categories.map(categories =>{
-                            return <Categories key={categories._id} categories={categories} deleteCategory={deleteCategory}/>
-                            }) */
+                          AllData.map(allS =>{
+                            return <ListSuper key={allS._id} allS={allS} deleteallS={deleteallS}/>
+                            })
                         }
                     </tbody>
             </Table>
-            </React.Fragment>
+      </React.Fragment>
   </>
   )
 }
@@ -65,7 +93,7 @@ const ToolAdmin = () => {
 
     return (
         <>
-        <Modal show={show} onHide={handleClose}>
+{/*         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>Actualizar informacion</Modal.Title>
             </Modal.Header>
@@ -76,6 +104,23 @@ const ToolAdmin = () => {
             </Button>
             <Button variant="primary" onClick={handleClose}>
                 Save Changes
+            </Button>
+            </Modal.Footer>
+        </Modal>
+ */}
+
+
+        <Modal show={modalOnEdit} onHide={handleClose}  animation={false}>
+            <Modal.Header closeButton>
+            <Modal.Title>Actualizar Role del usuario</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Cambia el role</Modal.Body>
+            <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+                Cerrar
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+               Guardar
             </Button>
             </Modal.Footer>
         </Modal>
@@ -123,7 +168,7 @@ const ToolAdmin = () => {
                   </div>
               
                 </div>
-                <button onClick={handleShow} className="btn btn-primary">Actualizar</button>
+               {/*  <button onClick={handleShow} className="btn btn-primary">Actualizar</button> */}
               </div>
             </div>
             {

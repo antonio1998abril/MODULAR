@@ -2,9 +2,6 @@ const User = require ("../Models/UserSchema")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
-
-
 const verifyPass = (pass) =>{
     let charCheck = pass.length > 7 && pass.length < 31;
     let capitalCheck = /[A-Z]/g.test(pass);
@@ -90,7 +87,6 @@ const controller = {
     /* Admin */
     SuperGet: async(req,res,next) => {
         const superAdminRole = await User.findOne({email:req.user.email}).select('role')
-        console.log(superAdminRole)
         const AllUserRole = await User.find().lean();
 
         if(superAdminRole.role == '3'){

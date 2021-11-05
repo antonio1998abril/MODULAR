@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck,faInfo,faBan,faExclamationTriangle} from '@fortawesome/free-solid-svg-icons'
 import Router from 'next/router';
 import { GlobalState } from '../components/GlobalState';
+import Noti from '../components/Notifications/notification'
+import axios from 'axios';
 
 function Notification() {
   const state = useContext(GlobalState);
@@ -23,9 +23,40 @@ function Notification() {
 
   if (!loaded) { return <div></div> } 
 
+  const [notifications,setNotifications] = state.Paciente.notifications
+  const [callback,setCallback]=state.Paciente.callback
+ 
+  
+  const deleteNoti = async(id) => {
+    try {        
+      swal({
+        title:"Seguro?",
+        text: "Quieres Eliminar esta notificacion?",
+        icon:"warning",
+        buttons:["No","si"]
+    }).then(async (res)=>{
+        if(res){
+     const deleteNoti=axios.delete(`/api/deNotification/${id}`)
+     await deleteNoti
+        swal({icon:"success",text:"Notificacion Eliminado",timer:"2000", buttons: false}).then(function(){
+            setCallback(!callback)
+        },1000)
+      }
+    })
+  }catch(err){
+      swal({
+          title:"¡Ups",
+          text: err.response.data.msg,
+          icon:"error",
+          button:"OK"
+          })
+      }
+  }
+
+
     return (
         <div>
-          <div className="card">
+{/*           <div className="card">
             <div className="card-body row">
               <div className="col-5 text-center d-flex align-items-center justify-content-center">
                 <div className="">
@@ -56,7 +87,7 @@ function Notification() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
       <br/>
 
       <div className="col-md-12">
@@ -69,28 +100,12 @@ function Notification() {
               </div>
        
               <div className="card-body">
-                <div className="alert alert-danger alert-dismissible">
-                  <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
-                  <h5> <FontAwesomeIcon icon={faBan} /> Alert!</h5>
-                  Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my
-                  entire
-                  soul, like these sweet mornings of spring which I enjoy with my whole heart.
-                </div>
-                <div className="alert alert-info alert-dismissible">
-                  <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
-                  <h5> <FontAwesomeIcon icon={faInfo} /> Alert!</h5>
-                  Info alert preview. This alert is dismissable.
-                </div>
-                <div className="alert alert-warning alert-dismissible">
-                  <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
-                  <h5> <FontAwesomeIcon icon={faExclamationTriangle} /> Alert!</h5>
-                  Warning alert preview. This alert is dismissable.
-                </div>
-                <div className="alert alert-success alert-dismissible">
-                  <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
-                  <h5> <FontAwesomeIcon icon={faCheck} />Alert!</h5>
-                  Success alert preview. This alert is dismissable.
-                </div>
+                {
+                  notifications.map(noti =>{
+                    return <Noti key={noti._id} noti={noti} deleteNoti={deleteNoti}/>
+                  })
+                }
+
               </div>
         
             </div>

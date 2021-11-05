@@ -152,6 +152,17 @@ module.exports = {
       {
         source:'/api/SuperGet',
         destination: 'http://localhost:5000/api/SuperGet'
+      },
+      /* NOTIFICATION */
+      {
+        /* /GetNotification */
+        source:'/api/GetNotification',
+        destination: 'http://localhost:5000/api/GetNotification'
+      },
+      {
+        /* /GetNotification */
+        source:'/api/deNotification/:id',
+        destination: 'http://localhost:5000/api/deNotification/:id'
       }
 
     ]

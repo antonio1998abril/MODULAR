@@ -41,7 +41,7 @@ function User(token) {
         isAdmin:[isAdmin,setIsAdmin],
         callback:[callback,setCallback],
         super: [superAdmin,setSuperAdmin],
-    
+        
     }
 }
 

@@ -15,7 +15,6 @@ function Listact({act,index}) {
     modalsetOnEdit(true)
     setShow(true)
     setIdAct(act._id)
-    console.log(act.Activityname)
     setCallback(!callback)
   }
   let complete = new Date( act.DateToComplete)

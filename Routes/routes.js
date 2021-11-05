@@ -15,7 +15,7 @@ const Notification = require('../Models/NotificacionesSchema')
 const nodemailer=require('nodemailer')
 const util = require('util');
 const moment = require('moment');
-const authAdmin = require('../Middleware/authadmin');
+
 
 
 let transporter = nodemailer.createTransport({
@@ -195,11 +195,11 @@ function getremind(time){
                   }               
             }
           
-            console.log("**********************************")
+       /*      console.log("**********************************")
             console.log("Tiempo 15 MINUTOS ANTES: ",Remember15)
             console.log("Tiempo comparar dos horas despues pero de la hora de la cita: ",Remember2)
             console.log("Fecha un dia despues",tomorrow)
-            console.log("**********************************")
+            console.log("**********************************") */
         }
     }
 

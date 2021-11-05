@@ -39,9 +39,6 @@ function Header() {
                     <a className="aStyle" >Log out</a>
                 </button>
 
-             
-           
-                
               <Link  href="/notification">
                         <div   className="bell-icon">
                             <a><span >{sizeBel}</span>
@@ -65,7 +62,7 @@ function Header() {
             <Navbar className="borderHeader" expand="lg" sticky="top">
             <Container>
                 <Navbar.Brand href="/">
-                    <Image src="/logo2.png" alt="Diabetins" className="MagNet ubuntu"/>
+                    <Image src="/logo2.png" width="30 "height="30" alt="Diabetins" className="MagNet ubuntu"/>
                     &nbsp; Diabetins
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

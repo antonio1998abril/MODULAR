@@ -513,7 +513,7 @@ export default Expediente
 
  export const getServerSideProps = async ({query}) => { 
 
-  const res = await fetch(`http://localhost:5000/api/getExpediente/${query.expediente}`)
+  const res = await fetch(`https://backdiabetins.herokuapp.com/api/getExpediente/${query.expediente}`)
   const data = await res.json()
   const result =  JSON.stringify(data)
   if (!data) {

@@ -212,7 +212,7 @@ useEffect(()=>{
           <div className="col-12">
             <div className="paciente ">
               <div className="card-header">
-                <h3 className="card-title">Citas</h3>
+                <h3 className="card-title">Estatus de actividades</h3>
               </div>
          
               <div className="card-body">
@@ -238,7 +238,7 @@ useEffect(()=>{
                           Proxima
                         </div>
                       </div>
-                     cita: <br/> with Large Text <br/>
+                     cita: <br/> ejemplo <br/>
                       <small>hora:</small>
                     </div>
                   </div>
@@ -249,7 +249,7 @@ useEffect(()=>{
                           Pronto
                         </div>
                       </div>
-                     cita: <br/> with Extra Large Text <br/>
+                     cita: <br/> ejemplo <br/>
                       <small>hora:</small>
                     </div>
                   </div>
